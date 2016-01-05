@@ -37,8 +37,6 @@ struct RecItem{
   float score;
 };
 
-// 
-
 // 二人の人物の距離を基にした類似性スコアを返す関数
 float sim_distance(Prefs prefs, string person1, string person2);
 

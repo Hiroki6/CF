@@ -1,6 +1,10 @@
 #include <iostream>
 #include <math.h>
 #include <time.h>
+#include <cstring>
+#include <stdlib.h>
+#include <algorithm>
+#include <cstdlib>
 #include "CF.h"
 
 using namespace std;
@@ -199,7 +203,7 @@ vector<string> split(string str, string delim){
 // ユーザーIDの配列作成
 vector<string> create_userids(string file_pass){
 
-  fstream user_file(file_pass);
+  fstream user_file(file_pass.c_str());
   vector<string> user;
   vector<string> userlist;
   string one_user;
@@ -215,7 +219,7 @@ vector<string> create_userids(string file_pass){
 
 vector<Ratings> create_ratings(string file_pass){
 
-  fstream rating_file(file_pass);
+  fstream rating_file(file_pass.c_str());
   vector<string> rating;
   string delim = "::";
   string one_rate;
