@@ -6,32 +6,23 @@
 using namespace std;
 
 float sim_distance(Prefs prefs, string person1, string person2){
-  
-  // 二人とも評価しているアイテムのリストを作る
-  Item si;
-  
+ 
   // 共通するアイテムの差の平方の合計
   float sum_of_squares = 0;
 
   /*ここを並列化したい*/
   for( map<string, int>::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
     if( prefs[person2].find((*p1).first) != prefs[person2].end() ){
-      si.insert(map<string, int>::value_type( (*p1).first, 1) );
+      sum_of_squares = pow(prefs[person1][(*p1).first] - prefs[person2][(*p1).first], 2);
     }
   }
   
   // 両者ともに評価しているものが一つもなければ0を返す
-  if(si.empty()){
+  if(sum_of_squares == 0){
     return 0;
+  }else{
+    return 1.0/(1+sum_of_squares);
   }
-
-  // すべての差の平方を足し合わせる
-  /* ここも並列化できる */ 
-  for( map<string, int>::iterator si_it = si.begin(); si_it != si.end(); si_it++){
-    sum_of_squares = pow(prefs[person1][(*si_it).first] - prefs[person2][(*si_it).first],2);
-  }
-
-  return 1*1.0/(1+sum_of_squares);
 }
 
 float sim_pearson(Prefs prefs, string person1, string person2){
@@ -50,7 +41,7 @@ float sim_pearson(Prefs prefs, string person1, string person2){
   int pSum = 0;
 
   // 共通のアイテムの数
-  int n;
+  int n = 0;
 
   // ピアソン相関係数のための分子と分母
   float num;
@@ -61,11 +52,17 @@ float sim_pearson(Prefs prefs, string person1, string person2){
   /*ここを並列化したい*/
   for( map<string, int>::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
     if( prefs[person2].find((*p1).first) != prefs[person2].end() ){
-      si.insert(map<string, int>::value_type( (*p1).first, 1) );
+      //si.insert(map<string, int>::value_type( (*p1).first, 1) );
+      n++;
+      sum1 += prefs[person1][(*p1).first];
+      sum2 += prefs[person2][(*p1).first];
+      sum1Sq += pow(prefs[person1][(*p1).first],2);
+      sum2Sq += pow(prefs[person2][(*p1).first],2);
+      pSum += prefs[person1][(*p1).first] * prefs[person2][(*p1).first];
     }
   }
   
-  n = (unsigned int)si.size();
+  //n = (unsigned int)si.size();
   
   // 両者ともに評価しているものが一つもなければ0を返す
   if(n == 0){
@@ -74,6 +71,7 @@ float sim_pearson(Prefs prefs, string person1, string person2){
 
   // すべての嗜好を合計する
   /* ここも並列化できる */
+  /*
   for(  map<string, int>::iterator si_it = si.begin(); si_it != si.end(); si_it++){
       sum1 += prefs[person1][(*si_it).first];
       sum2 += prefs[person2][(*si_it).first];
@@ -81,7 +79,7 @@ float sim_pearson(Prefs prefs, string person1, string person2){
       sum2Sq += pow(prefs[person2][(*si_it).first],2);
       pSum += prefs[person1][(*si_it).first] * prefs[person2][(*si_it).first];
   }
-
+  */
   num = pSum * 1.0 - (sum1 * sum2 * 1.0/ n);
   den = sqrt((sum1Sq*1.0 - pow(sum1,2)*1.0/n) * (sum2Sq*1.0 - pow(sum2,2)*1.0/n));
 
@@ -111,7 +109,7 @@ vector<TopNUser> topMatches(Prefs prefs, string person, int n){
   }
   
   // scoresの大きい順に並べ替える(バブルソート)
-  //sort(scores.begin(), scores.end());
+  sort(scores.begin(), scores.end());
   
   return scores;
 }

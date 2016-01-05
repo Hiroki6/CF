@@ -22,51 +22,41 @@ def create_prefs(userlist,ratings):
 # 二人の人物の距離を基にした類似性スコアを返す
 def sim_distance(prefs, person1, person2):
     sum_of_squares = 0
-    # 二人とも評価しているアイテムのリストを得る
-    si = {}
-    for item in prefs[person1]:
-        if item in prefs[person2]:
-            si[item] = 1
-
-    # 両者ともに評価しているものが一つもなければ０を返す
-    if len(si) == 0:
-        return 0
 
     # すべての差の平方を足し合わせる
     sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item],2)
-                       for item in prefs[person1] if item in prefs[persozn2]])
+                       for item in prefs[person1] if item in prefs[person2]])
     
-    return 1.0/(1+sum_of_squares)
+    # 両者ともに評価しているものが一つもなければ０を返す
+    if sum_of_squares == 0:
+        return 0
+    else:
+        return 1.0/(1+sum_of_squares)
 
 # 二人の人物のピアソン相関係数を返す
 def sim_pearson(prefs, person1, person2):
     # 両者が互いに評価しているアイテムのリストを取得
-    si = {}
+    n = 0
+    sum1 = 0
+    sum2 = 0
+    sum1Sq = 0
+    sum2Sq = 0
+    pSum = 0
     for item in prefs[person1]:
         if item in prefs[person2]:
-            si[item] = 1
+            n += 1
+            sum1 += prefs[person1][item]
+            sum2 += prefs[person2][item]
+            sum1Sq += pow(prefs[person1][item],2)
+            sum2Sq += pow(prefs[person2][item],2)
+            pSum += prefs[person1][item] * prefs[person2][item]
 
-    # 要素の数を調べる
-    n = len(si)
-
-    # 共に評価しているアイテムがなければ０を返す
     if n == 0:
         return 0
 
-    # すべての嗜好を合計する
-    sum1 = sum([prefs[person1][item] for item in si])
-    sum2 = sum([prefs[person2][item] for item in si])
-
-    # 平方を合計する
-    sum1Sq = sum([pow(prefs[person1][item],2) for item in si])
-    sum2Sq = sum([pow(prefs[person2][item],2) for item in si])
-
-    # 積を合計する
-    pSum = sum([prefs[person1][item]*prefs[person2][item] for item in si])
-
     # ピアソンによるスコアを計算する
-    num = pSum - (sum1 * sum2/n)
-    den = sqrt((sum1Sq - pow(sum1, 2)/n)*(sum2Sq - pow(sum2, 2)/n))
+    num = pSum - (sum1 * sum2/n) # 分子
+    den = sqrt((sum1Sq - pow(sum1, 2)/n)*(sum2Sq - pow(sum2, 2)/n)) # 分母
     if den == 0:
         return 0
 
@@ -76,23 +66,22 @@ def sim_pearson(prefs, person1, person2):
 
 # 二人の人物のコサイン相関係数を返す
 def sim_cosine(prefs, person1, person2):
-    # 両者が互いに評価しているアイテムのリストを取得
-    si = {}
+
+    n = 0
+    nSum = 0
+    sum1 = 0
+    sum2 = 0
+
     for item in prefs[person1]:
         if item in prefs[person2]:
-            si[item] = 1
-
-    # 要素の数を調べる
-    n = len(si)
+            n += 1
+            nSUm += prefs[person1][item] * prefs[person2][item]
+            sum1 += prefs[person1][item]
+            sum2 += prefs[person2][item]
 
     if n == 0:
         return 0
 
-    # コサイン相関係数の分子部分
-    nSum = sum([prefs[person1][item] * prefs[person2][item] for item in si])
-    # コサイン相関係数の分母部分
-    sum1 = sum([prefs[person1][item] for item in si])
-    sum2 = sum([prefs[person2][item] for item in si])
     pSum = sqrt(sum1 * sum2)
 
     return nSum/pSum
@@ -102,7 +91,7 @@ def calc_score(prefs, person, target_item):
     # personの平均評価を計算する
     ave_person = sum([prefs[person][item]] for item in prefs[person]) / len(perfs[person])
 
-    for other in prefs:
+    #for other in prefs:
         
     
 # ディクショナリからprefsからpersonにもっともマッチするものたちを返す

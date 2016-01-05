@@ -1,5 +1,5 @@
 #include "CF.h"
-#include "Cf_function.cpp"
+//#include "Cf.cpp"
 #include <time.h>
 
 using namespace std;
@@ -11,9 +11,6 @@ int main(){
   int score;
   string user_name;
   int user_count = 0;
-  // ユーザー入力とアイテム入力続行のフラグ
-  string item_continue = "Y";
-  string user_continue = "Y";
   // トップレコメンデーションnのユーザー配列
   vector<TopNUser> similar_users;
   // 現在のユーザー
