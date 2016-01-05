@@ -24,7 +24,7 @@ struct TopNUser{
   }
 };
 
-// アイテムにを評価したユーザーID,アイテム名,評価を格納した構造体
+// アイテムを評価したユーザーID,アイテム名,評価を格納した構造体
 struct Ratings{
   string user_id;
   string item_id;
