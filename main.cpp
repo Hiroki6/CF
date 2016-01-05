@@ -1,5 +1,5 @@
 #include "CF.h"
-#include "Cf.cpp"
+#include "CF.cpp"
 #include <time.h>
 
 using namespace std;
