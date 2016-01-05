@@ -25,8 +25,8 @@ int main(){
   // ratings
   vector<Ratings> ratings;
   // ユーザーファイルと評価ファイルのパス
-  string user_filepass("../data/ml-1m/users.dat");
-  string rating_filepass("../data/ml-1m/ratings.dat");
+  string user_filepass("data/ml-1m/users.dat");
+  string rating_filepass("data/ml-1m/ratings.dat");
   // criticsの作成
   Prefs critics;
   clock_t start, end;
