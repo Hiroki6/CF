@@ -1,5 +1,4 @@
-#include "CF.h"
-#include "CF.cpp"
+#include "memory.h"
 #include <time.h>
 
 using namespace std;
@@ -28,10 +27,13 @@ int main(){
   Prefs critics;
   clock_t start, end;
 
+  start = clock();
   userids = create_userids(user_filepass);
   ratings = create_ratings(rating_filepass);
   critics = create_prefs(userids, ratings);
-  
+  end = clock();
+  cout<<(double)(end-start)/CLOCKS_PER_SEC<<endl;
+ 
   /*cout<<"現在のユーザー:";
   cin>>current_user;
   cout<<"何人の類似ユーザーを表示しますか:";

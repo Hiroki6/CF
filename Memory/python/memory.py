@@ -210,6 +210,7 @@ if __name__ == "__main__":
     for line in open("data/ml-1m/movies.dat"):
         movielist.append(line.replace("\n","").split('::'))
 
+    start = time.time()
     # ユーザーのデータ
     for line in open("data/ml-1m/users.dat"):
         userlist.append(line.replace("\n","").split('::'))
@@ -220,7 +221,6 @@ if __name__ == "__main__":
 
     # prefsの作成
     prefs = {}
-    start = time.time()
     prefs = create_prefs(userlist, ratelist)
     elapsed_time = time.time() - start
     print ("elapsed_time:{0}".format(elapsed_time)) + "[sec]"

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <cstdlib>
-#include "CF.h"
+#include "memory.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ float sim_distance(Prefs prefs, string person1, string person2){
   float sum_of_squares = 0;
 
   /*ここを並列化したい*/
-  for( map<string, int>::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
+  for( Item::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
     if( prefs[person2].find((*p1).first) != prefs[person2].end() ){
       sum_of_squares = pow(prefs[person1][(*p1).first] - prefs[person2][(*p1).first], 2);
     }
@@ -54,7 +54,7 @@ float sim_pearson(Prefs prefs, string person1, string person2){
   float pearson;
 
   /*ここを並列化したい*/
-  for( map<string, int>::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
+  for( Item::iterator p1 = prefs[person1].begin(); p1 != prefs[person1].end(); p1++){
     if( prefs[person2].find((*p1).first) != prefs[person2].end() ){
       //si.insert(map<string, int>::value_type( (*p1).first, 1) );
       n++;
@@ -96,17 +96,17 @@ vector<TopNUser> topMatches(Prefs prefs, string person, int n){
   vector<TopNUser> scores;
   float score;
   string user_name;
-  clock_t start,end;
+  //clock_t start,end;
   // personとそれ以外の人物の名前と類似度を含むディクショナリを返す
   /* ここの処理も並列化 */
-  for( map<string, Item>::iterator user = prefs.begin(); user != prefs.end(); user++){
+  for( Prefs::iterator user = prefs.begin(); user != prefs.end(); user++){
     if( (*user).first == person){
       continue;
     }
-    start = clock();
+    //start = clock();
     score = sim_pearson(prefs, person, (*user).first);
-    end = clock();
-    cout<<(double)(end-start)/CLOCKS_PER_SEC<<endl;
+    //end = clock();
+    //cout<<(double)(end-start)/CLOCKS_PER_SEC<<endl;
     user_name = (*user).first;
     TopNUser input_user = {user_name, score};
     scores.push_back(input_user);
@@ -120,9 +120,9 @@ vector<TopNUser> topMatches(Prefs prefs, string person, int n){
 
 void PrintPrefs(Prefs prefs){
 
-  for( map<string, Item>::iterator user = prefs.begin(); user != prefs.end(); user++){
+  for( Prefs::iterator user = prefs.begin(); user != prefs.end(); user++){
     cout<<"ユーザー名:"<<(*user).first<<endl;
-    for( map<string, int>::iterator item = prefs[(*user).first].begin(); item != prefs[(*user).first].end(); item++){
+    for( Item::iterator item = prefs[(*user).first].begin(); item != prefs[(*user).first].end(); item++){
       cout<<"アイテム名:"<<(*item).first<<"\t"<<"スコア:"<<(*item).second<<endl;
     }
   }
@@ -145,7 +145,7 @@ vector<RecItem> getRecommmendations(Prefs prefs, string person){
   int person_index;
   vector<RecItem> rankings;
   
-  for( map<string, Item>::iterator user = prefs.begin(); user != prefs.end(); user++){
+  for( Prefs::iterator user = prefs.begin(); user != prefs.end(); user++){
     
     // 自分自身とは比較しない
     if( (*user).first == person){
@@ -159,7 +159,7 @@ vector<RecItem> getRecommmendations(Prefs prefs, string person){
       continue;
     }
 
-    for( map<string, int>::iterator other = prefs[(*user).first].begin(); other != prefs[(*user).first].end(); other++){
+    for( Item::iterator other = prefs[(*user).first].begin(); other != prefs[(*user).first].end(); other++){
       // まだ評価されていないアイテムの得点のみの算出
       if( prefs[person].find( (*other).first ) == prefs[person].end() || prefs[person][(*other).first] == 0 ){
         totals.insert(map<string, float>::value_type( (*other).first, 0.0) );

@@ -1,5 +1,5 @@
-#ifndef CF_H
-#define CF_H
+#ifndef MEMORY_H
+#define MEMORY_H
 
 
 #include <iostream>
