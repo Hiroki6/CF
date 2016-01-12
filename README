@@ -1,1 +1,8 @@
-「集合知プログラミング」２章におけるPythonで書かれたプログラムをC++に変換したプログラム
+協調フィルタリングの実装をPythonとC++で実装したプログラム
+Model-based CF:
+user_base
+item_base
+
+Memory_based CF:
+Matrix Factorization
+Factorization Machine
