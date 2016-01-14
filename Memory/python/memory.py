@@ -86,14 +86,6 @@ def sim_cosine(prefs, person1, person2):
 
     return nSum/pSum
 
-# コサイン相関係数をもとにpersonに対するアイテムへの評価を予測する
-def calc_score(prefs, person, target_item):
-    # personの平均評価を計算する
-    ave_person = sum([prefs[person][item]] for item in prefs[person]) / len(perfs[person])
-
-    #for other in prefs:
-        
-    
 # ディクショナリからprefsからpersonにもっともマッチするものたちを返す
 # 結果の数と類似性関数はオプションのパラメータ
 def topMatches(prefs, person, n=5, similarity=sim_pearson):
@@ -207,16 +199,16 @@ if __name__ == "__main__":
     ratelist = []
 
     # 映画のデータ
-    for line in open("data/ml-1m/movies.dat"):
+    for line in open("../../data/ml-1m/movies.dat"):
         movielist.append(line.replace("\n","").split('::'))
 
     start = time.time()
     # ユーザーのデータ
-    for line in open("data/ml-1m/users.dat"):
+    for line in open("../../data/ml-1m/users.dat"):
         userlist.append(line.replace("\n","").split('::'))
 
     # レーティングのデータ
-    for line in open("data/ml-1m/ratings.dat"):
+    for line in open("../../data/ml-1m/ratings.dat"):
         ratelist.append(line.replace("\n","").split('::'))
 
     # prefsの作成

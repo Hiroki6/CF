@@ -1,8 +1,7 @@
 協調フィルタリングの実装をPythonとC++で実装したプログラム
-Model-based CF:
+Memory-based CF:
 user_base
 item_base
 
-Memory_based CF:
+Model_based CF:
 Matrix Factorization
-Factorization Machine
