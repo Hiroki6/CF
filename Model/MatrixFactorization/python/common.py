@@ -2,6 +2,7 @@
 
 import pandas as pd
 import math
+import random
 
 def create_ratings():
     
@@ -55,6 +56,27 @@ def create_ratelist(filename):
 
     return ret
 
+"""
+テストデータを300個作る
+@param(RateArray) キーにユーザーとアイテムを持つ二次元ディクショナリ
+@return(RateArray) テストデータを除いた教師データ
+@return(testData) キーにユーザーとアイテムを持つ300個のテスト用データディクショナリ
+"""
+def create_test_data(RateArray):
+  
+  testData = {}
+  count = 0
+  while(count < 300):
+      user = random.choice(RateArray.keys())
+      item = random.choice(RateArray[user].keys())
+      if RateArray[user][item] == 0:
+          continue
+      if testData.has_key(user):
+          continue
+      testData.setdefault(user, {})
+      count+=1
+      testData[user][item] = RateArray[user][item]
+      RateArray[user][item] = 0
 
-
+  return RateArray, testData
 

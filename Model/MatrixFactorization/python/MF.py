@@ -14,7 +14,7 @@ class basicMF:
     def get_rating_error(self, r, p, q):
         return r- np.dot(p, q)
 
-    def get_error(self, P, Q, beta):
+    def get_error(self, beta):
         """
         目的関数
         @param(beta) 正規化係数
@@ -23,13 +23,13 @@ class basicMF:
 
         for user_index in self.R:
             for item_index in self.R[user_index]:
-                if R[user_index][item_index] == 0:
+                if self.R[user_index][item_index] == 0:
                     continue
                 self.error += pow(self.get_rating_error(self.R[user_index][item_index], self.P[:,user_index], self.Q[:,item_index]), 2)
         # 正規化項
         self.error += beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
-    def learning(self, K, steps = 5000, gamma = 0.0002, beta = 0.02, threshold = 0.001):
+    def learning(self, K, steps = 5000, gamma = 0.005, beta = 0.02, threshold = 0.1):
         """
         ユーザー行列Pとアイテム行列Qを最適化によって求める
         @param(K) 疑似行列の次元
@@ -51,6 +51,7 @@ class basicMF:
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
             self.get_error(beta)
+            print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
                 break
@@ -104,7 +105,7 @@ class svd(basicMF):
         # 正規化項
         self.error += beta * (np.linalg.norm(self.B_u) + np.linalg.norm(self.B_i) + np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
-    def learning(self, K, steps = 5000, gamma = 0.0002, beta = 0.02, threshold = 0.001):
+    def learning(self, K, steps = 5000, gamma = 0.005, beta = 0.02, threshold = 0.01):
         """
         ユーザー行列Pとアイテム行列Qを最適化によって求める
         @param(K) 疑似行列の次元
@@ -130,6 +131,7 @@ class svd(basicMF):
                         self.B_u[user_index] += gamma * (err - beta*self.B_u[user_index])
                         self.B_i[item_index] += gamma * (err - beta+self.B_i[item_index])
             self.get_error(beta)
+            print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
                 break

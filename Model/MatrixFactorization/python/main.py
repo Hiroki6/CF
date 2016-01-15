@@ -2,6 +2,7 @@
 
 import MF
 import common
+import math
 
 """
 評価値行列を基にbasicMFクラスのオブジェクトを生成し、学習をして返す
@@ -11,10 +12,17 @@ import common
 def create_basicMF(RateArray):
     
     basicMF = MF.basicMF(RateArray) # basicMFクラスのオブジェクト作成
-    basicMF.learning(1000)
+    basicMF.learning(20)
     print(basicMF.nR)
 
     return basicMF
+
+def create_svd(RateArray):
+    
+    svd = MF.svd(RateArray)
+    svd.learning(20)
+
+    return svd
 
 """
 userに対するアイテムへの予測評価値をランキングで表示する
@@ -30,5 +38,14 @@ def predict_basicMF(basicMF, user):
 
 if __name__ == "__main__":
     RateArray = common.create_ratings() # 評価値行列作成
-    basicMF = create_basicMF(RateArray)
+    learningData, testData = common.create_test_data(RateArray) # 教師データとテストデータ作成
+    sum_error = 0.0
+    basicMF = create_basicMF(learningData)
+    for user in testData:
+        for item in testData[user]:
+            sum_error += math.fabs(basicMF.nR[user][item] - testData[user][item])
+
+    MAE = sum_error/300
+    print MAE
+
 
