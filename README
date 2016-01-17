@@ -1,7 +1,7 @@
 協調フィルタリングの実装をPythonとC++で実装したプログラム
-Memory-based CF:
-user_base
-item_base
+Memory-based CF: ユーザーやアイテム間の類似度を基に行うメモリーベース協調フィルタリング
+user_base ユーザー間の類似度を基に推薦を行う
+item_base アイテム間の類似度を基に推薦を行う
 
-Model_based CF:
-Matrix Factorization
+Model_based CF: モデルを構築してから推薦を行うモデルベース協調フィルタリング
+Matrix Factorization Netflix Prizeで有名なMatrix Factorizationアルゴリズム
