@@ -11,8 +11,8 @@ class basicMF:
     def __init__(self, R):
         self.R = R # 評価値行列
     
-    def get_rating_error(self, r, p, q):
-        return r- np.dot(p, q)
+    def get_rating_error(self, user, item):
+        return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
 
     def get_error(self, beta):
         """
@@ -25,11 +25,11 @@ class basicMF:
             for item_index in self.R[user_index]:
                 if self.R[user_index][item_index] == 0:
                     continue
-                self.error += pow(self.get_rating_error(self.R[user_index][item_index], self.P[:,user_index], self.Q[:,item_index]), 2)
+                self.error += pow(self.get_rating_error(user_index, item_index), 2)
         # 正規化項
         self.error += beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
-    def learning(self, K, steps = 5000, gamma = 0.005, beta = 0.02, threshold = 0.1):
+    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.2, threshold = 0.1):
         """
         ユーザー行列Pとアイテム行列Qを最適化によって求める
         @param(K) 疑似行列の次元
@@ -46,7 +46,7 @@ class basicMF:
                 for item_index in self.R[user_index]:
                     if self.R[user_index][item_index] == 0:
                         continue
-                    err = self.get_rating_error(self.R[user_index][item_index], self.P[:,user_index], self.Q[:,item_index])
+                    err = self.get_rating_error(user_index, item_index)
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
@@ -54,7 +54,9 @@ class basicMF:
             print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
-                break
+                return 
+
+        self.nR = np.dot(self.P.T, self.Q)
 
     def predict(self, user, item):
         return self.nR[int(user)-1][int(item)-1]
@@ -66,11 +68,11 @@ class basicMF:
         return rankings
 
 
-class svd(basicMF):
+class svd:
 
     def __init__(self, R):
         self.R = R # 評価値行列
-        self.myu = get_ave()
+        self.myu = self.get_ave()
 
     def get_ave(self):
 
@@ -87,8 +89,8 @@ class svd(basicMF):
         else:
             return sumRate/count
         
-    def get_rating_error(self, r, p, q, b_u, b_i):
-        return r- (self.myu + b_i + b_u + np.dot(p, q))
+    def get_rating_error(self, user, item):
+        return self.R[user][item] - (self.myu + self.B_u[user] + self.B_i[item] + np.dot(self.P[:, user], self.Q[:, item]))
 
     def get_error(self, beta):
         """
@@ -99,13 +101,13 @@ class svd(basicMF):
 
         for user_index in self.R:
             for item_index in self.R[user_index]:
-                if R[user_index][item_index] == 0:
+                if self.R[user_index][item_index] == 0:
                     continue
-                self.error += pow(self.get_rating_error(self.R[user_index][item_index], self.P[:,user_index], self.Q[:,item_index], self.B_u[user_index], self.B_i[item_index]), 2)
+                self.error += pow(self.get_rating_error(user_index, item_index), 2)
         # 正規化項
         self.error += beta * (np.linalg.norm(self.B_u) + np.linalg.norm(self.B_i) + np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
-    def learning(self, K, steps = 5000, gamma = 0.005, beta = 0.02, threshold = 0.01):
+    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.01):
         """
         ユーザー行列Pとアイテム行列Qを最適化によって求める
         @param(K) 疑似行列の次元
@@ -124,14 +126,24 @@ class svd(basicMF):
                 for item_index in self.R[user_index]:
                     if self.R[user_index][item_index] == 0:
                         continue
-                    err = self.get_rating_error(self.R[user_index][item_index], self.P[:,user_index], self.Q[:,item_index], self.B_u[user_index], self.B_i[item_index])
+                    err = self.get_rating_error(user_index, item_index)
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
                         self.B_u[user_index] += gamma * (err - beta*self.B_u[user_index])
-                        self.B_i[item_index] += gamma * (err - beta+self.B_i[item_index])
+                        self.B_i[item_index] += gamma * (err - beta*self.B_i[item_index])
             self.get_error(beta)
             print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
-                break
+                return
+
+        self.nR = np.dot(self.P.T, self.Q)
+
+    def predict(self, user, item):
+        return self.nR[int(user)-1][int(item)-1] + self.myu + self.B_u[int(user)-1] + self.B_i[int(item)-1]
+
+class svdPlus(svd):
+    
+    def get_rating_error(self, user, item):
+        return
