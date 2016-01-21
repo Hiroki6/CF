@@ -29,7 +29,7 @@ class basicMF:
         # 正規化項
         self.error += beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
-    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.2, threshold = 0.1):
+    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.1):
         """
         ユーザー行列Pとアイテム行列Qを最適化によって求める
         @param(K) 疑似行列の次元
@@ -59,7 +59,7 @@ class basicMF:
         self.nR = np.dot(self.P.T, self.Q)
 
     def predict(self, user, item):
-        return self.nR[int(user)-1][int(item)-1]
+        return self.nR[user][item]
 
     def recommends(self, user):
         user_index = int(user) - 1
@@ -141,7 +141,7 @@ class svd:
         self.nR = np.dot(self.P.T, self.Q)
 
     def predict(self, user, item):
-        return self.nR[int(user)-1][int(item)-1] + self.myu + self.B_u[int(user)-1] + self.B_i[int(item)-1]
+        return self.nR[user][item] + self.myu + self.B_u[user] + self.B_i[item]
 
 class svdPlus(svd):
     
