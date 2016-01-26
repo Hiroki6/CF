@@ -146,4 +146,19 @@ class svd:
 class svdPlus(svd):
     
     def get_rating_error(self, user, item):
-        return
+
+        num_rate, sum_rate = self.get_sum_rate_by_user(user)
+
+        return self.R[user][item] - (self.myu + self.B_u[user] + self.B_i[item] + np.dot((self.P[:, user] + (sum_rate)/sqrt(num_rate)), self.Q[:, item]))
+
+    def get_sum_rate_by_user(self, user):
+        """
+        ユーザーが評価したアイテムの評価値の合計を返す
+        """
+        sum_rate = np.array(len(self.P))
+        count = 0
+        for item in self.R[user]:
+            count += 1
+            sum_rate = sum_rate + self.Y[:, item]
+
+        return count, sum_rate

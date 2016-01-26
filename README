@@ -5,3 +5,5 @@ item_base アイテム間の類似度を基に推薦を行う
 
 Model_based CF: モデルを構築してから推薦を行うモデルベース協調フィルタリング
 Matrix Factorization Netflix Prizeで有名なMatrix Factorizationアルゴリズム
+
+basicMFはK=20,step=100でRMSE:0.88638422,step=200でRMSE:0.847721416764
