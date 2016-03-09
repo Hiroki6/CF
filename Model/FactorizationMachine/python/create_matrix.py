@@ -12,14 +12,13 @@ def create_matrix():
    
     watch_itemlist = add_column_name(itemlist, "I")
     time_list = ["time"]
-    rate_matrix = pd.DataFrame(np.zeros((len(ratelist), len(userlist)+len(watch_itemlist)+1)), columns = userlist+watch_itemlist+time_list)
-    for rate_index in range(len(rate_matrix)):
-        # 0行目の処理
-        if rate_index == 0:
-            rating = rate_matrix[:1]
-        # 0行目以外の処理
-        else:
-            rating = rate_matrix[rate_index:rate_index+1]
+    target_list = ["target"]
+    rate_matrix = pd.DataFrame(np.zeros((len(ratelist), len(userlist)+len(watch_itemlist)+2)), columns = userlist+watch_itemlist+time_list+target_list)
+    for rate_index in xrange(len(rate_matrix)):
+        input_rating = ratelist[rate_index]
+        rate_matrix[input_rating[0]][rate_index] = 1
+        rate_matrix["I" + input_rating[1]][rate_index] = 1
+        print rate_index
 
     return rate_matrix
 
