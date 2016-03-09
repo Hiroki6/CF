@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+from sklearn.feature_extraction import DictVectorizer
 
 def create_matrix():
 
@@ -19,6 +20,27 @@ def create_matrix():
         rate_matrix[input_rating[0]][rate_index] = 1
         rate_matrix["I" + input_rating[1]][rate_index] = 1
         print rate_index
+
+    return rate_matrix
+"""
+return(rate_matrix) FM用のデータ
+"""
+def create_matrix_dicVec():
+
+    ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
+    
+    rate_array= []
+    for rating in ratelist:
+        rate_dic = {}
+        rate_dic["user"] = rating[0]
+        rate_dic["item"] = rating[1]
+        rate_dic["time"] = (int(rating[3])%900000000)/1000000
+        rate_dic["rating"] = int(rating[2])
+        rate_array.append(rate_dic)
+    
+    v = DictVectorizer()
+    X = v.fit_transform(rateArray)
+    rate_matrix = X.toarray()
 
     return rate_matrix
 
@@ -53,5 +75,5 @@ def add_column_name(changed_list, add):
     return changed_list
 
 if __name__ == "__main__":
-    rate_matrix = create_matrix()
-    #print rate_matrix
+    rate_matrix = create_matrix_dicVec()
+

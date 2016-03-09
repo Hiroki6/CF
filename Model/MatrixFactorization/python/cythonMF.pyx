@@ -4,13 +4,13 @@ import numpy as np
 cimport numpy as np
 cimport cython
 
-ctypedef np.float64_t DOUBLE_t
-ctypedef np.int_t INT_t
+#ctypedef np.float64_t DOUBLE_t
+#ctypedef np.int_t INT_t
 
 cdef class basicMF:
 
-    cdef np.ndarray P
-    cdef np.ndarray Q
+    #cdef np.ndarray P
+    #cdef np.ndarray Q
     def __cinit__(self, R):
         self.R = R
 
@@ -18,7 +18,7 @@ cdef class basicMF:
         return self.R[user][item] - np.dot(self.R[:,user], self.Q[:,item])
 
     cpdef get_error(self, double beta):
-        double self.error = 0.0
+        self.error = 0.0
 
         for user_index in self.R:
             for item_index in self.R[user_index]:
@@ -32,7 +32,7 @@ cdef class basicMF:
         self.P = np.random.rand(K, len(self.R))
         self.Q = np.random.rand(K, len(self.R[0]))
         
-        double err = 0.0
+        cdef double err = 0.0
         for step in xrange(steps):
             for user_index in self.R:
                 for item_index in self.R[user_index]:
