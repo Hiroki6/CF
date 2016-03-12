@@ -39,8 +39,9 @@ def create_matrix_dicVec():
         rate_array.append(rate_dic)
     
     v = DictVectorizer()
-    X = v.fit_transform(rateArray)
+    X = v.fit_transform(rate_array)
     rate_matrix = X.toarray()
+    labels = v.get_feature_names()
 
     return rate_matrix
 
