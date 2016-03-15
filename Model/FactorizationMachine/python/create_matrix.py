@@ -44,7 +44,7 @@ def create_matrix_dicVec():
     rate_matrix = X.toarray()
     labels = v.get_feature_names()
 
-    return rate_matrix
+    return rate_matrix, labels, targets
 
 def create_element(filename):
 
@@ -75,6 +75,3 @@ def add_column_name(changed_list, add):
         changed_list[index] = add+changed_list[index]
 
     return changed_list
-
-if __name__ == "__main__":
-    rate_matrix = create_matrix_dicVec()

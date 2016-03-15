@@ -12,8 +12,9 @@ import math
 # 学習タイプ(ALSとSGD)
 LEARNING_TYPE = {"ALS": 0, "SGD": 1}
 class FM:
-    def __init__(self, R, targets):
+    def __init__(self, R, labels, targets):
         self.R = R #評価値行列
+        self.labels = labels
         self.targets = targets # 教師配列
         self.n = len(self.R[0])
         self.N = len(self.R)
@@ -21,14 +22,14 @@ class FM:
     def get_all_error(self):
 
         for data_index in xrange(self.N):
+            print data_index
             self.get_error(data_index, self.targets[data_index])
             self.get_q_error(data_index)
     
     def get_q_error(self, data_index):
 
         for f in xrange(len(self.V[0])):
-            for i in xrange(self.n):
-                self.Q[data_index] += self.V[i][f] * self.R[data_index][i]
+            self.Q[data_index][f] = np.dot(self.V.T[f], self.R[data_index])
 
     def get_error(self, data_index, target):
         
@@ -36,15 +37,10 @@ class FM:
         features = 0.0
         # 相互作用の重みの和
         iterations = 0.0
-        for i in xrange(self.n):
-            features += self.W[i] * self.R[data_index][i]
-            for j in xrange(i+1, self.n):
-                # 相互作用の特徴量の重みの和
-                interaction_parameters = 0.0
-                for f in xrange(len(self.V[0])):
-                    interaction_parameters += self.V[i][f] * self.V[j][f]
-                iterations += interaction_parameters * self.R[data_index][i] * self.R[data_index][j]
-
+        features = np.dot(self.W.T, self.R[data_index])
+        for f in xrange(len(self.V[0])):
+            iterations += pow(np.dot(self.V.T[f], self.R[data_index]),2) - np.dot(self.V.T[f]**2, self.R[data_index]**2)
+        
         self.E[data_index] = (self.w_0 + features + iterations) - target
 
     """
@@ -53,9 +49,7 @@ class FM:
     def update_global_bias(self):
         
         error_sum = 0.0
-        for data_index in xrange(self.N):
-            error_sum += self.E[data_index] - self.w_0
-    
+        error_sum = np.sum(self.E) - self.w_0*self.N
         new_w0 = -(error_sum) / (self.N + self.beta * error_sum)
         
         # 誤差の更新
@@ -72,9 +66,9 @@ class FM:
         for l in xrange(self.n):
             error_sum = 0.0
             feature_square_sum = 0.0
-            for data_index in xrange(self.N):
-                error_sum += (self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l]
-                feature_square_sum += pow(self.R[data_index][l],2)
+            #error_sum = (np.sum(self.E) - self.W[l] * np.sum(self.R.T[l]))
+            error_sum = sum((self.E[data_index] - self.W[l]*self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
+            feature_square_sum = np.sum(self.R.T[l]**2)
             new_wl = -(error_sum) / (feature_square_sum + self.beta*error_sum)
             for data_index in xrange(self.N):
                 self.E[data_index] += (new_wl-self.W[l]) * self.R[data_index][l]
@@ -120,11 +114,12 @@ class FM:
         # すべての誤差訓練データの誤差
         self.E = np.zeros(self.N)
         # すべてのVの重み誤差
-        self.Q = np.zeros(self.N)
+        self.Q = np.zeros((self.N, K))
 
         """
         誤差の計算
         """
         self.get_all_error()
         for i in xrange(step):
+            print i
             repeat_optimization()
