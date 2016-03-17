@@ -9,8 +9,6 @@ userID, itemID, 評価値, timestampを特徴量として学習する
 import numpy as np
 import math
 
-# 学習タイプ(ALSとSGD)
-LEARNING_TYPE = {"ALS": 0, "SGD": 1}
 class FM:
     def __init__(self, R, labels, targets):
         self.R = R #評価値行列
@@ -24,7 +22,7 @@ class FM:
         for data_index in xrange(self.N):
             print data_index
             self.get_error(data_index, self.targets[data_index])
-            self.get_q_error(data_index)
+            #self.get_q_error(data_index)
     
     def get_q_error(self, data_index):
 
@@ -53,26 +51,37 @@ class FM:
         new_w0 = -(error_sum) / (self.N + self.beta * error_sum)
         
         # 誤差の更新
-        for data_index in xrange(self.N):
-            self.E[data_index] += new_w0 - self.w_0
+        vf = np.vectorize(self.add_value)
+        self.E = vf(self.E, new_w0-self.w_0)
+        # for data_index in xrange(self.N):
+        #     self.E[data_index] += new_w0 - self.w_0
 
         self.w_0 = new_w0
+    
+    def add_value(x, value):
+        return x + value
 
     """
     Wの更新
     """
     def update_weight(self):
         
+        vf = np.vectorize(self.add_array)
         for l in xrange(self.n):
             error_sum = 0.0
             feature_square_sum = 0.0
             #error_sum = (np.sum(self.E) - self.W[l] * np.sum(self.R.T[l]))
+            # <<<
             error_sum = sum((self.E[data_index] - self.W[l]*self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
             feature_square_sum = np.sum(self.R.T[l]**2)
             new_wl = -(error_sum) / (feature_square_sum + self.beta*error_sum)
-            for data_index in xrange(self.N):
-                self.E[data_index] += (new_wl-self.W[l]) * self.R[data_index][l]
+            self.E = vf(self.E, self.W, self.R, new_wl, l)
+            # for data_index in xrange(self.N):
+            #     self.E[data_index] += (new_wl-self.W[l]) * self.R[data_index][l]
             self.W[l] = new_wl
+
+    def add_array(E, W, R, wl, l):
+        return E + ((wl-W.T[l])*(R.T[l]))
 
     """
     Vの更新
@@ -83,11 +92,13 @@ class FM:
             for l in xrange(self.n):
                 error_sum = 0.0
                 h_square_sum = 0.0
-                for data_index in xrange(len(self.N)):
+                # <<<
+                for data_index in xrange(self.N):
                     h_v = (self.R[data_index][l] * self.Q[data_index]) - (pow(self.R[data_index][l],2) * self.V[l][f])
                     error_sum += (self.E[data_index] - self.V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v,2)
                 new_v = -(error_sum) / (h_square_sum + self.beta * error_sum)
+                # <<<
                 for data_index in xrange(len(self.N)):
                     self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
                     self.Q[data_index] += (new_v - self.V[j][f]) * self.R[data_index][l]
