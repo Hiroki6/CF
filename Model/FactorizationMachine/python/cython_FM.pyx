@@ -24,8 +24,8 @@ cdef class cy_FM:
     cdef np.ndarray Q
 
     def __init__(self,
-                    np.ndarray[DOUBLE_t, ndim=2, mode="c"] R,
-                    np.ndarray[DOUBLE_t, ndim=1, mode="c"] targets):
+                    np.ndarray[DOUBLE, ndim=2, mode="c"] R,
+                    np.ndarray[DOUBLE, ndim=1, mode="c"] targets):
         self.R = R
         self.targets = targets
         self.n = len(self.R[0])
@@ -34,17 +34,17 @@ cdef class cy_FM:
     cdef get_all_error(self):
         
         cdef int N = self.N
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] targets = self.targets
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] targets = self.targets
         for data_index in xrange(N):
             self.get_error(data_index, targets[data_index])
 
     cdef get_q_error(self, int data_index):
 
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-        for f xrange(len(V[0]):
-            Q[data_index][f] = np.dot(V.T[f], R[data_index])
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+        for f in xrange(len(V[0])):
+            Q[data_index][f] = np.dot(V[:,f], R[data_index])
 
         self.Q = Q
 
@@ -55,13 +55,13 @@ cdef class cy_FM:
         # 相互作用の重み
         cdef double iterations = 0.0
         cdef double w_0 = self.w_0
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] E = self.E
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
 
         for f in xrange(len(V[0])):
-            iterations += pow(np.dot(V.T[f], R[data_index]), 2) - np.dot(V.T[f]**2, R[data_index]**2)
+            iterations += pow(np.dot(V[:,f], R[data_index]), 2) - np.dot(V[:,f]**2, R[data_index]**2)
         E[data_index] = (w_0 + features + iterations) - target
         self.E = E
 
@@ -71,7 +71,8 @@ cdef class cy_FM:
     cdef update_global_bias(self):
 
         cdef double error_sum = 0.0
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] E = self.E
+        cdef double w_0 = self.w_0
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
         cdef double new_w0 = 0.0
         cdef int N = self.N
         cdef double beta = self.beta
@@ -93,17 +94,21 @@ cdef class cy_FM:
         cdef double error_sum = 0.0
         cdef double feature_square_sum = 0.0
         cdef int n = self.n
+        cdef int N = self.N
         cdef double beta = self.beta
         cdef double new_wl = 0.0
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] E = self.E
+        #cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+        cdef np.ndarray R = self.R
+        #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
+        cdef np.ndarray W = self.W
+        #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+        cdef np.ndarray E = self.E
 
         for l in xrange(n):
             error_sum = 0.0
             fetaure_square_sum = 0.0
             error_sum = sum((E[data_index] - W[l] * R[data_index][l]) * R[data_index][l] for data_index in xrange(N))
-            feature_square_sum = np.sum(R.T[l] ** 2)
+            feature_square_sum = np.sum(R[:,l] ** 2)
             new_wl = -(error_sum) / (feature_square_sum + beta*error_sum)
             for data_index in xrange(N):
                 E[data_index] += (new_wl - W[l]) * R[data_index][l]
@@ -122,34 +127,34 @@ cdef class cy_FM:
         cdef int n = self.n
         cdef int N = self.N
         cdef double beta = self.beta
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray[DOUBLE_t, ndim=1, mode="c"] E = self.E
-        cdef np.ndarray[DOUBLE_T, ndim=2, mode="c"] Q = self.Q
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
+        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
 
         for f in xrange(len(V[0])):
             for l in xrange(n):
                 error_sum = 0.0
                 h_square_sum = 0.0
                 for data_index in xrange(N):
-                    h_v = (R[data_inde][l] * Q[data_index]) - (pow(R[data_index][l], 2)*V[l][f])
+                    h_v = (R[data_index][l] * Q[data_index]) - (pow(R[data_index][l], 2)*V[l][f])
                     error_sum += (E[data_index] - V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v, 2)
                 new_v = -(error_sum) / (h_square_sum + beta*error_sum)
                 for data_index in xrange(N):
                     E[data_index] += (new_v - V[l][f]) * R[data_index][l]
-                    Q[data_index] += (new_v - V[j][f]) * R[data_index][l]
+                    Q[data_index] += (new_v - V[l][f]) * R[data_index][l]
                 self.V[l][f] = new_v
 
         self.E = E
         self.Q = W
 
-    cdef repeat_optimization():
+    cdef repeat_optimization(self):
 
-        update_global_bias()
-        update_weight()
-        update_interaction()
+        self.update_global_bias()
+        self.update_weight()
+        self.update_interaction()
 
     """
     ALSの学習
@@ -169,4 +174,4 @@ cdef class cy_FM:
         self.get_all_error()
         for i in xrange(step):
             print i
-            repeat_optimization()
+            self.repeat_optimization()
