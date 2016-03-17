@@ -99,7 +99,7 @@ class FM:
                     h_square_sum += pow(h_v,2)
                 new_v = -(error_sum) / (h_square_sum + self.beta * error_sum)
                 # <<<
-                for data_index in xrange(len(self.N)):
+                for data_index in xrange(self.N):
                     self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
                     self.Q[data_index] += (new_v - self.V[j][f]) * self.R[data_index][l]
                 self.V[l][f] = new_v
@@ -107,9 +107,9 @@ class FM:
 
     def repeat_optimization():
 
-        update_global_bias()
-        update_weight()
-        update_interaction()
+        self.update_global_bias()
+        self.update_weight()
+        self.update_interaction()
 
     """
     ALSの学習
@@ -133,4 +133,4 @@ class FM:
         self.get_all_error()
         for i in xrange(step):
             print i
-            repeat_optimization()
+            self.repeat_optimization()
