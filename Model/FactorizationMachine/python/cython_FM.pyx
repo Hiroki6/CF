@@ -23,9 +23,9 @@ cdef class cy_FM:
     cdef np.ndarray E
     cdef np.ndarray Q
 
-    def __init__(self,
+    def __cinit__(self,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
-                    np.ndarray[DOUBLE, ndim=1, mode="c"] targets):
+                    np.ndarray[INTEGER, ndim=1, mode="c"] targets):
         self.R = R
         self.targets = targets
         self.n = len(self.R[0])
@@ -34,7 +34,7 @@ cdef class cy_FM:
     cdef get_all_error(self):
         
         cdef int N = self.N
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] targets = self.targets
+        cdef np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
         for data_index in xrange(N):
             self.get_error(data_index, targets[data_index])
 
