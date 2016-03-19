@@ -8,6 +8,7 @@ userID, itemID, 評価値, timestampを特徴量として学習する
 """
 import numpy as np
 import math
+from cython_FM import cy_FM
 
 class FM:
     def __init__(self, R, labels, targets):
@@ -16,7 +17,7 @@ class FM:
         self.targets = targets # 教師配列
         self.n = len(self.R[0])
         self.N = len(self.R)
-
+"""
     def get_all_error(self):
 
         for data_index in xrange(self.N):
@@ -40,9 +41,10 @@ class FM:
             iterations += pow(np.dot(self.V.T[f], self.R[data_index]),2) - np.dot(self.V.T[f]**2, self.R[data_index]**2)
         
         self.E[data_index] = (self.w_0 + features + iterations) - target
-
+    """
     """
     w_0の更新
+    """
     """
     def update_global_bias(self):
         
@@ -60,9 +62,10 @@ class FM:
     
     def add_value(x, value):
         return x + value
-
+    """
     """
     Wの更新
+    """
     """
     def update_weight(self):
         
@@ -82,9 +85,10 @@ class FM:
 
     def add_array(E, W, R, wl, l):
         return E + ((wl-W.T[l])*(R.T[l]))
-
+    """
     """
     Vの更新
+    """
     """
     def update_interaction(self):
 
@@ -110,12 +114,12 @@ class FM:
         self.update_global_bias()
         self.update_weight()
         self.update_interaction()
-
+    """
     """
     ALSの学習
     """
     def learning(self, K = 5, beta = 0.2, step = 30):
-        self.beta = beta
+        #self.beta = beta
         # バイアス
         self.w_0 = 0
         # 重み
@@ -123,14 +127,17 @@ class FM:
         # 相互作用の重み
         self.V = np.random.rand(self.n, K)
         # すべての誤差訓練データの誤差
-        self.E = np.zeros(self.N)
+        #self.E = np.zeros(self.N)
         # すべてのVの重み誤差
-        self.Q = np.zeros((self.N, K))
+        #self.Q = np.zeros((self.N, K))
+        
+        self.cython_FM = cy_FM(self.R, self.targets, self.W, self.V, self.w_0, beta, self.n, self.N, K, step)
 
+        self.cython_FM.learning()
         """
         誤差の計算
         """
-        self.get_all_error()
-        for i in xrange(step):
-            print i
-            self.repeat_optimization()
+        #self.get_all_error()
+        #for i in xrange(step):
+            #print i
+            #self.repeat_optimization()

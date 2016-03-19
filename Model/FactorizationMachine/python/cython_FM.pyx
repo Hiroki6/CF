@@ -16,6 +16,8 @@ cdef class cy_FM:
     cdef np.ndarray targets
     cdef int n
     cdef int N
+    cdef int K
+    cdef int step
     cdef double w_0
     cdef double beta
     cdef np.ndarray W
@@ -25,11 +27,26 @@ cdef class cy_FM:
 
     def __cinit__(self,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
-                    np.ndarray[INTEGER, ndim=1, mode="c"] targets):
+                    np.ndarray[INTEGER, ndim=1, mode="c"] targets,                    np.ndarray[DOUBLE, ndim=1, mode="c"] W,
+                    np.ndarray[DOUBLE, ndim=2, mode="c"] V,
+                    double w_0,
+                    double beta,
+                    int n,
+                    int N,
+                    int K,
+                    int step):
         self.R = R
         self.targets = targets
         self.n = len(self.R[0])
         self.N = len(self.R)
+        self.W = W
+        self.V = V
+        self.w_0 = w_0
+        self.beta = beta
+        self.n = n
+        self.N = N
+        self.K = K
+        self.step = step
 
     cdef get_all_error(self):
         
@@ -55,12 +72,13 @@ cdef class cy_FM:
         # 相互作用の重み
         cdef double iterations = 0.0
         cdef double w_0 = self.w_0
+        cdef int K = self.K
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
         cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
         cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
 
-        for f in xrange(len(V[0])):
+        for f in xrange(K):
             iterations += pow(np.dot(V[:,f], R[data_index]), 2) - np.dot(V[:,f]**2, R[data_index]**2)
         E[data_index] = (w_0 + features + iterations) - target
         self.E = E
@@ -126,6 +144,7 @@ cdef class cy_FM:
         cdef double h_v = 0.0
         cdef int n = self.n
         cdef int N = self.N
+        cdef int K = self.K
         cdef double beta = self.beta
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
@@ -133,7 +152,7 @@ cdef class cy_FM:
         cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
 
-        for f in xrange(len(V[0])):
+        for f in xrange(V):
             for l in xrange(n):
                 error_sum = 0.0
                 h_square_sum = 0.0
@@ -159,14 +178,10 @@ cdef class cy_FM:
     """
     ALSの学習
     """
-    cdef learning(self, int K = 5, double beta = 0.2, int step = 30):
+    cdef learning(self):
         
-        self.beta = beta
-        self.w_0 = 0
-        self.W = np.zeros(self.n)
-        self.V = np.random.rand(self.n, K)
         self.E = np.zeros(self.N)
-        self.Q = np.zeros((self.N, K))
+        self.Q = np.zeros((self.N, self.K))
 
         """
         誤差の計算
