@@ -152,7 +152,7 @@ cdef class cy_FM:
         cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
 
-        for f in xrange(V):
+        for f in xrange(K):
             for l in xrange(n):
                 error_sum = 0.0
                 h_square_sum = 0.0
@@ -187,6 +187,6 @@ cdef class cy_FM:
         誤差の計算
         """
         self.get_all_error()
-        for i in xrange(step):
+        for i in xrange(self.step):
             print i
             self.repeat_optimization()
