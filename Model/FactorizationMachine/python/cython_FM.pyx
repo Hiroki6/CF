@@ -11,14 +11,14 @@ cimport cython
 np.import_array()
 
 ctypedef np.float64_t DOUBLE
-ctypedef np.int32_t INTEGER
+ctypedef np.int64_t INTEGER
 
-cdef class cy_FM():
+cdef class cy_FM:
 
     cdef np.ndarray R
     cdef np.ndarray targets
-    cdef int n
-    cdef int N
+    cdef long n
+    cdef long N
     cdef int K
     cdef int step
     cdef double w_0
@@ -35,8 +35,8 @@ cdef class cy_FM():
                     np.ndarray[DOUBLE, ndim=2, mode="c"] V,
                     double w_0,
                     double beta,
-                    int n,
-                    int N,
+                    long n,
+                    long N,
                     int K,
                     int step):
         self.R = R
@@ -54,12 +54,13 @@ cdef class cy_FM():
 
     cdef get_all_error(self):
         
-        cdef int N = self.N
+        cdef long N = self.N
         cdef np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
         for data_index in xrange(N):
+            print data_index
             self.get_error(data_index, targets[data_index])
 
-    cdef get_q_error(self, int data_index):
+    cdef get_q_error(self, long data_index):
 
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
@@ -69,7 +70,7 @@ cdef class cy_FM():
 
         self.Q = Q
 
-    cdef get_error(self, int data_index, int target):
+    cdef get_error(self, long data_index, int target):
         
         # 各特徴量の重み
         cdef double features = 0.0
@@ -96,7 +97,7 @@ cdef class cy_FM():
         cdef double w_0 = self.w_0
         cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
         cdef double new_w0 = 0.0
-        cdef int N = self.N
+        cdef long N = self.N
         cdef double beta = self.beta
 
         error_sum = np.sum(E) - w_0*N
@@ -115,8 +116,8 @@ cdef class cy_FM():
    
         cdef double error_sum = 0.0
         cdef double feature_square_sum = 0.0
-        cdef int n = self.n
-        cdef int N = self.N
+        cdef long n = self.n
+        cdef long N = self.N
         cdef double beta = self.beta
         cdef double new_wl = 0.0
         #cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
@@ -146,8 +147,8 @@ cdef class cy_FM():
         cdef double new_v = 0.0
         cdef double h_square_sum = 0.0
         cdef double h_v = 0.0
-        cdef int n = self.n
-        cdef int N = self.N
+        cdef long n = self.n
+        cdef long N = self.N
         cdef int K = self.K
         cdef double beta = self.beta
         cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
@@ -182,7 +183,7 @@ cdef class cy_FM():
     """
     ALSの学習
     """
-    cdef learning(self):
+    def learning(self):
         
         self.E = np.zeros(self.N)
         self.Q = np.zeros((self.N, self.K))

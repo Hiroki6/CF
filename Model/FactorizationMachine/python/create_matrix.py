@@ -43,6 +43,7 @@ def create_matrix_dicVec():
     X = v.fit_transform(rate_array)
     rate_matrix = X.toarray()
     labels = v.get_feature_names()
+    targets = np.array(targets)
 
     return rate_matrix, labels, targets
 
