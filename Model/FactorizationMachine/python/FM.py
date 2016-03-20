@@ -8,7 +8,7 @@ userID, itemID, 評価値, timestampを特徴量として学習する
 """
 import numpy as np
 import math
-from cython_FM import cy_FM
+import cython_FM as cF
 
 class FM:
     def __init__(self, R, labels, targets):
@@ -17,7 +17,7 @@ class FM:
         self.targets = targets # 教師配列
         self.n = len(self.R[0])
         self.N = len(self.R)
-"""
+    """
     def get_all_error(self):
 
         for data_index in xrange(self.N):
@@ -131,7 +131,7 @@ class FM:
         # すべてのVの重み誤差
         #self.Q = np.zeros((self.N, K))
         
-        self.cython_FM = cy_FM(self.R, self.targets, self.W, self.V, self.w_0, beta, self.n, self.N, K, step)
+        self.cython_FM = cF.cy_FM(self.R, self.targets, self.W, self.V, self.w_0, beta, self.n, self.N, K, step)
 
         self.cython_FM.learning()
         """

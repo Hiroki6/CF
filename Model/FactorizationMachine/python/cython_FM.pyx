@@ -27,7 +27,8 @@ cdef class cy_FM:
 
     def __cinit__(self,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
-                    np.ndarray[INTEGER, ndim=1, mode="c"] targets,                    np.ndarray[DOUBLE, ndim=1, mode="c"] W,
+                    np.ndarray[INTEGER, ndim=1, mode="c"] targets,
+                    np.ndarray[DOUBLE, ndim=1, mode="c"] W,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] V,
                     double w_0,
                     double beta,
