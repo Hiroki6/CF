@@ -3,14 +3,17 @@
 Factorization Machineをcythonを使って高速化
 """
 
+from libc.math cimport pow
 import numpy as np
 cimport numpy as np
 cimport cython
 
+np.import_array()
+
 ctypedef np.float64_t DOUBLE
 ctypedef np.int32_t INTEGER
 
-cdef class cy_FM:
+cdef class cy_FM():
 
     cdef np.ndarray R
     cdef np.ndarray targets
