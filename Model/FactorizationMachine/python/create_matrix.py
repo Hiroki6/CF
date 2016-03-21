@@ -30,12 +30,13 @@ def create_matrix_dicVec():
     ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
     
     rate_array= []
+    targets = [] # 教師データ
     for rating in ratelist:
         rate_dic = {}
         rate_dic["user"] = rating[0]
         rate_dic["item"] = rating[1]
         rate_dic["time"] = (int(rating[3])%900000000)/1000000
-        rate_dic["rating"] = int(rating[2])
+        targets.append(int(rating[2]))
         rate_array.append(rate_dic)
     
     v = DictVectorizer()
@@ -43,7 +44,7 @@ def create_matrix_dicVec():
     rate_matrix = X.toarray()
     labels = v.get_feature_names()
 
-    return rate_matrix
+    return rate_matrix, labels, targets
 
 def create_element(filename):
 
@@ -74,7 +75,3 @@ def add_column_name(changed_list, add):
         changed_list[index] = add+changed_list[index]
 
     return changed_list
-
-if __name__ == "__main__":
-    rate_matrix = create_matrix_dicVec()
-
