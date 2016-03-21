@@ -59,6 +59,7 @@ cdef class cy_FM:
         for data_index in xrange(N):
             print data_index
             self.get_error(data_index, targets[data_index])
+            self.get_q_error(data_index)
 
     cdef get_q_error(self, long data_index):
 
