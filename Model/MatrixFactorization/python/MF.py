@@ -6,23 +6,25 @@ SVD++の実装
 R: ユーザーとアイテムをインデックスにもつ二次元ディクショナリ
 """
 import numpy as np
+import cythonMF as cMF
+import time
 
 class basicMF:
     def __init__(self, R):
         self.R = R # 評価値行列
+        self.u_num = len(R)
+        self.i_num = len(R[0])
     
     def get_rating_error(self, user, item):
         return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
-
+    
     def get_error(self, beta):
-        """
-        目的関数
-        @param(beta) 正規化係数
-        """
+        #目的関数
+        #@param(beta) 正規化係数
         self.error = 0.0
 
-        for user_index in self.R:
-            for item_index in self.R[user_index]:
+        for user_index in xrange(self.u_num):
+            for item_index in xrange(self.i_num):
                 if self.R[user_index][item_index] == 0:
                     continue
                 self.error += pow(self.get_rating_error(user_index, item_index), 2)
@@ -38,18 +40,21 @@ class basicMF:
         @param(beta) 正規化係数
         @param(threshold) 誤差の閾値
         """
-        self.P = np.random.rand(K, len(self.R))
-        self.Q = np.random.rand(K, len(self.R[0]))
+        self.P = np.random.rand(K, self.u_num)
+        self.Q = np.random.rand(K, self.i_num)
 
         for step in xrange(steps):
-            for user_index in self.R:
-                for item_index in self.R[user_index]:
+            start = time.time()
+            for user_index in xrange(self.u_num):
+                for item_index in xrange(self.i_num):
                     if self.R[user_index][item_index] == 0:
                         continue
                     err = self.get_rating_error(user_index, item_index)
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
+            elapsed_time = time.time() - start
+            print(elapsed_time)
             self.get_error(beta)
             print self.error
             if self.error < threshold:
@@ -62,24 +67,44 @@ class basicMF:
         return self.nR[user][item]
 
     def recommends(self, user):
-        user_index = int(user) - 1
-        rankings = [(self.nR[user_index][item_index], str(item_index+1)) for item_index in self.R[user_index] if self.R[user_index][item_index] == 0]
+        rankings = [(self.nR[user][item], str(item)) for item in self.R[user] if self.R[user][item] == 0]
         rankings.sort()
         return rankings
 
+"""
+cython化したMF
+"""
+class Cy_basicMF:
+    
+    def __init__(self, R):
+        self.R = R # 評価値行列
+        self.u_num = len(R)
+        self.i_num = len(R[0])
+
+    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.1):
+
+        self.P = np.random.rand(K, self.u_num)
+        self.Q = np.random.rand(K, self.i_num)
+        self.cython_obj = cMF.fastMF(self.R, self.P, self.Q, self.u_num, self.i_num, K, steps, gamma, beta, threshold)
+        self.cython_obj.learning()
+
+    def predict(self, user, item):
+        return self.cython_obj.predict(user, item)
 
 class svd:
 
     def __init__(self, R):
         self.R = R # 評価値行列
+        self.u_num = len(R)
+        self.i_num = len(R[0])
         self.myu = self.get_ave()
 
     def get_ave(self):
 
         count = 0
         sumRate = 0
-        for user_index in self.R:
-            for item_index in self.R[user_index]:
+        for user_index in xrange(self.u_num):
+            for item_index in xrange(self.i_num):
                 if not self.R[user_index][item_index] == 0:
                     count += 1
                     sumRate += self.R[user_index][item_index]
@@ -99,8 +124,8 @@ class svd:
         """
         self.error = 0.0
 
-        for user_index in self.R:
-            for item_index in self.R[user_index]:
+        for user_index in xrange(self.u_num):
+            for item_index in xrange(self.i_num):
                 if self.R[user_index][item_index] == 0:
                     continue
                 self.error += pow(self.get_rating_error(user_index, item_index), 2)
@@ -116,14 +141,14 @@ class svd:
         @param(beta) 正規化係数
         @param(threshold) 誤差の閾値
         """
-        self.P = np.random.rand(K, len(self.R)) # ユーザー嗜好ベクトル
-        self.Q = np.random.rand(K, len(self.R[0])) # アイテム嗜好ベクトル
-        self.B_u = np.random.rand(len(self.R)) # ユーザーバイアス
-        self.B_i = np.random.rand(len(self.R[0])) # アイテムバイアス
+        self.P = np.random.rand(K, self.u_num) # ユーザー嗜好ベクトル
+        self.Q = np.random.rand(K, self.i_num) # アイテム嗜好ベクトル
+        self.B_u = np.random.rand(self.u_num) # ユーザーバイアス
+        self.B_i = np.random.rand(self.i_num) # アイテムバイアス
 
         for step in xrange(steps):
-            for user_index in self.R:
-                for item_index in self.R[user_index]:
+            for user_index in xrange(self.u_num):
+                for item_index in xrange(self.i_num):
                     if self.R[user_index][item_index] == 0:
                         continue
                     err = self.get_rating_error(user_index, item_index)

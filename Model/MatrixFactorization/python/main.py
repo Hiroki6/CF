@@ -6,19 +6,26 @@ import math
 
 """
 評価値行列を基にbasicMFクラスのオブジェクトを生成し、学習をして返す
-@params(RateArray) 評価値行列
+@params(rate_matrix) 評価値行列
 @return(basicMF) 学習されたbasicMF
 """
-def create_basicMF(RateArray):
+def create_basicMF(rate_matrix):
     
-    basicMF = MF.basicMF(RateArray) # basicMFクラスのオブジェクト作成
+    basicMF = MF.basicMF(rate_matrix) # basicMFクラスのオブジェクト作成
     basicMF.learning(20, 500)
 
     return basicMF
 
-def create_svd(RateArray):
+def create_cyMF(rate_matrix):
+
+    cyMF = MF.Cy_basicMF(rate_matrix)
+    cyMF.learning(20, 500)
+
+    return cyMF
+
+def create_svd(rate_matrix):
     
-    svd = MF.svd(RateArray)
+    svd = MF.svd(rate_matrix)
     svd.learning(20)
 
     return svd
@@ -36,20 +43,22 @@ def predict_basicMF(basicMF, user):
     return rankings
 
 if __name__ == "__main__":
-    RateArray = common.create_ratings() # 評価値行列作成
-    learningData, testData = common.create_test_data(RateArray) # 教師データとテストデータ作成
+    print "データ作成"
+    rate_matrix, usermap, itemmap = common.create_matrix() # 評価値行列作成
+    learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
     sum_MF_error = 0.0
-    #sum_svd_error = 0.0
+    sum_cyMF_error = 0.0
+    print "学習開始"
     basicMF = create_basicMF(learningData)
-    #svd = create_svd(learningData)
-    for user in testData:
-        for item in testData[user]:
-            sum_MF_error += pow((basicMF.predict(user, item) - testData[user][item]), 2)
-            #sum_svd_error += pow((svd.predict(user, item) - testData[user][item]), 2)
+    cyMF = create_cyMF(learningData)
+    print "精度計測開始"
+    for test in testData:
+        sum_MF_error += pow((basicMF.predict(test[0], test[2]) - test[3]), 2)
+        sum_cyMF_error += pow((cyMF.predict(test[0], test[2]) - test[3]), 2)
 
     RMSE_MF = math.sqrt(sum_MF_error/300)
-    #RMSE_svd = math.sqrt(sum_svd_error/300)
+    RMSE_cyMF = math.sqrt(sum_cyMF_error/300)
     print RMSE_MF
-    #print RMSE_svd
+    print RMSE_cyMF
 
 
