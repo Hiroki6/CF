@@ -6,6 +6,8 @@ SVD++の実装
 R: ユーザーとアイテムをインデックスにもつ二次元ディクショナリ
 """
 import numpy as np
+import cythonMF as cMF
+import time
 
 class basicMF:
     def __init__(self, R):
@@ -42,6 +44,7 @@ class basicMF:
         self.Q = np.random.rand(K, self.i_num)
 
         for step in xrange(steps):
+            start = time.time()
             for user_index in xrange(self.u_num):
                 for item_index in xrange(self.i_num):
                     if self.R[user_index][item_index] == 0:
@@ -50,6 +53,8 @@ class basicMF:
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
+            elapsed_time = time.time() - start
+            print(elapsed_time)
             self.get_error(beta)
             print self.error
             if self.error < threshold:
@@ -77,7 +82,14 @@ class Cy_basicMF:
         self.i_num = len(R[0])
 
     def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.1):
-        return
+
+        self.P = np.random.rand(K, self.u_num)
+        self.Q = np.random.rand(K, self.i_num)
+        self.cython_obj = cMF.fastMF(self.R, self.P, self.Q, self.u_num, self.i_num, K, steps, gamma, beta, threshold)
+        self.cython_obj.learning()
+
+    def predict(self, user, item):
+        return self.cython_obj.predict(user, item)
 
 class svd:
 
