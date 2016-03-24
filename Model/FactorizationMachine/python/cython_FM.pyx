@@ -34,6 +34,8 @@ cdef class cy_FM:
                     np.ndarray[INTEGER, ndim=1, mode="c"] targets,
                     np.ndarray[DOUBLE, ndim=1, mode="c"] W,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] V,
+                    np.ndarray[DOUBLE, ndim=1, mode="c"] E,
+                    np.ndarray[DOUBLE, ndim=2, mode="c"] Q,
                     double w_0,
                     double beta,
                     long n,
@@ -46,6 +48,8 @@ cdef class cy_FM:
         self.N = len(self.R)
         self.W = W
         self.V = V
+        self.E = E
+        self.Q = Q
         self.w_0 = w_0
         self.beta = beta
         self.n = n
@@ -56,29 +60,19 @@ cdef class cy_FM:
     cdef get_all_error(self):
         
         cdef:
-            long N = self.N
-            np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
             long data_index
-            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
             
-        for data_index in xrange(N):
+        for data_index in xrange(self.N):
             print data_index
-            E[data_index] = self.get_error(data_index, targets[data_index])
-            Q[data_index] = self.get_q_error(Q[data_index], data_index)
-
-        self.E = E
-        self.Q = Q
+            self.E[data_index] = self.get_error(data_index, self.targets[data_index])
+            self.Q[data_index] = self.get_q_error(self.Q[data_index], data_index)
 
     cdef np.ndarray get_q_error(self, np.ndarray[DOUBLE, ndim=1, mode="c"] q, long data_index):
         
         cdef:
-            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-            int K = self.K
             int f
-        for f in xrange(K):
-            q[f] = np.dot(V[:,f], R[data_index])
+        for f in xrange(self.K):
+            q[f] = np.dot(self.V[:,f], self.R[data_index])
 
         return q
 
@@ -89,17 +83,12 @@ cdef class cy_FM:
             double features = 0.0
         # 相互作用の重み
             double iterations = 0.0
-            double w_0 = self.w_0
-            int K = self.K
-            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-            np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
             int f
 
-        for f in xrange(K):
-            iterations += pow(np.dot(V[:,f], R[data_index]), 2) - np.dot(V[:,f]**2, R[data_index]**2)
+        for f in xrange(self.K):
+            iterations += pow(np.dot(self.V[:,f], self.R[data_index]), 2) - np.dot(self.V[:,f]**2, self.R[data_index]**2)
         # 型付け
-        return (w_0 + features + iterations) - target
+        return (self.w_0 + features + iterations) - target
 
     """
     w_0の更新
@@ -108,21 +97,14 @@ cdef class cy_FM:
         
         cdef:
             double error_sum = 0.0
-            double w_0 = self.w_0
-            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
             double new_w0 = 0.0
-            long N = self.N
-            double beta = self.beta
             long data_index
 
-        error_sum = np.sum(E) - w_0*N
+        error_sum = np.sum(self.E) - self.w_0*self.N
 
-        new_w0 = -(error_sum) / (N + beta*error_sum)
-        for data_index in xrange(N):
-            E[data_index] += new_w0 - w_0
-
-        self.w_0 = new_w0
-        self.E = E
+        new_w0 = -(error_sum) / (self.N + self.beta*error_sum)
+        for data_index in xrange(self.N):
+            self.E[data_index] += new_w0 - self.w_0
     
     """
     Wの更新
@@ -132,27 +114,19 @@ cdef class cy_FM:
         cdef:
             double error_sum = 0.0
             double feature_square_sum = 0.0
-            long n = self.n
-            long N = self.N
-            double beta = self.beta
             double new_wl = 0.0
-        #cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-            np.ndarray R = self.R
-        #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-            np.ndarray W = self.W
-        #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-            np.ndarray E = self.E
+            long l
+            long data_index
 
-        for l in xrange(n):
+        for l in xrange(self.n):
             error_sum = 0.0
             fetaure_square_sum = 0.0
-            error_sum = sum((E[data_index] - W[l] * R[data_index][l]) * R[data_index][l] for data_index in xrange(N))
-            feature_square_sum = np.sum(R[:,l] ** 2)
-            new_wl = -(error_sum) / (feature_square_sum + beta*error_sum)
-            for data_index in xrange(N):
-                E[data_index] += (new_wl - W[l]) * R[data_index][l]
+            error_sum = sum((self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
+            feature_square_sum = np.sum(self.R[:,l] ** 2)
+            new_wl = -(error_sum) / (feature_square_sum + self.beta*error_sum)
+            for data_index in xrange(self.N):
+                self.E[data_index] += (new_wl - self.W[l]) * self.R[data_index][l]
             self.W[l] = new_wl
-        self.E = E
 
     """
     Vの更新
@@ -164,32 +138,23 @@ cdef class cy_FM:
             double new_v = 0.0
             double h_square_sum = 0.0
             double h_v = 0.0
-            long n = self.n
-            long N = self.N
-            int K = self.K
-            double beta = self.beta
-            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-            np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
-
-        for f in xrange(K):
-            for l in xrange(n):
+            long f
+            long l
+            long data_index
+    
+        for f in xrange(self.K):
+            for l in xrange(self.n):
                 error_sum = 0.0
                 h_square_sum = 0.0
-                for data_index in xrange(N):
-                    h_v = (R[data_index][l] * Q[data_index]) - (pow(R[data_index][l], 2)*V[l][f])
-                    error_sum += (E[data_index] - V[l][f] * h_v) * h_v
+                for data_index in xrange(self.N):
+                    h_v = (self.R[data_index][l] * self.Q[data_index]) - (pow(self.R[data_index][l], 2)*self.V[l][f])
+                    error_sum += (self.E[data_index] - self.V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v, 2)
-                new_v = -(error_sum) / (h_square_sum + beta*error_sum)
-                for data_index in xrange(N):
-                    E[data_index] += (new_v - V[l][f]) * R[data_index][l]
-                    Q[data_index] += (new_v - V[l][f]) * R[data_index][l]
+                new_v = -(error_sum) / (h_square_sum + self.beta*error_sum)
+                for data_index in xrange(self.N):
+                    self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
+                    self.Q[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
                 self.V[l][f] = new_v
-
-        self.E = E
-        self.Q = W
 
     cdef repeat_optimization(self):
 
@@ -201,9 +166,6 @@ cdef class cy_FM:
     ALSの学習
     """
     def learning(self):
-        
-        self.E = np.zeros(self.N)
-        self.Q = np.zeros((self.N, self.K))
 
         """
         誤差の計算

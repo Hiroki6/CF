@@ -127,11 +127,11 @@ class FM:
         # 相互作用の重み
         self.V = np.random.rand(self.n, K)
         # すべての誤差訓練データの誤差
-        #self.E = np.zeros(self.N)
+        self.E = np.zeros(self.N)
         # すべてのVの重み誤差
-        #self.Q = np.zeros((self.N, K))
+        self.Q = np.zeros((self.N, K))
         
-        self.cython_FM = cF.cy_FM(self.R, self.targets, self.W, self.V, self.w_0, beta, self.n, self.N, K, step)
+        self.cython_FM = cF.cy_FM(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
 
         self.cython_FM.learning()
         """
