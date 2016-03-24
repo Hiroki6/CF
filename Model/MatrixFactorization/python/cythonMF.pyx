@@ -7,22 +7,25 @@ cimport numpy as np
 cimport cython
 
 ctypedef np.float64_t DOUBLE_t
-#ctypedef np.int_t INT_t
+ctypedef np.int_t INT_t
 """
 Matrix Factorizationをcythonを用いて高速化する
 """
 cdef class fastMF(object):
+    
+    cdef:
+        np.ndarray P
+        np.ndarray Q
+        np.ndarray nR
+        dict R
+        double error
+        int steps
+        double gamma
+        double beta
+        double threshold
 
-    cdef np.ndarray P
-    cdef np.ndarray Q
-    cdef np.ndarray nR
-    cdef double error
-    cdef int steps
-    cdef double gamma
-    cdef double beta
-    cdef double threshold
     def __cinit__(self,
-            R,
+            dict R,
             np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] P,
             np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] Q,
             double error,
@@ -39,30 +42,36 @@ cdef class fastMF(object):
         self.beta = beta
         self.threshold = threshold
 
-    cdef get_rating_error(self, int user, int item):
+    cdef double get_rating_error(self, int user, int item):
         
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
+        cdef:
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
         return self.R[user][item] - np.dot(P[:,user], Q[:,item])
 
-    cdef get_error(self, double beta):
+    cdef double get_error(self, double beta):
 
-        self.error = 0.0
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
+        cdef:
+            double error = 0.0
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
 
         for user_index in self.R:
             for item_index in self.R[user_index]:
                 if self.R[user_index][item_index] == 0:
                     continue
-                self.error += pow(self.get_rating_error(user_index, item_index), 2)
+                error += pow(self.get_rating_error(user_index, item_index), 2)
 
-        self.error += beta * (np.linalg.norm(P) + np.linalg.norm(Q))
+        error += beta * (np.linalg.norm(P) + np.linalg.norm(Q))
+        return error
 
     def learning(self, int K, int steps = 30, double gamma = 0.005, double beta = 0.02, threshold = 0.1):
-        cdef double err = 0.0
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
+
+        cdef:
+            double err = 0.0
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
+            double error = 0.0
 
         for step in xrange(steps):
             for user_index in self.R:
@@ -76,16 +85,16 @@ cdef class fastMF(object):
                     self.P = P
                     self.Q = Q
 
-            self.get_error(beta)
-            print self.error
-            if self.error > threshold:
+            error = self.get_error(beta)
+            print error
+            if error > threshold:
                 self.nR = np.dot(np.transpose(P), Q) # 得られた評価値行列
                 return
         
-        
         self.nR = np.dot(np.transpose(P), Q)
 
-    cdef predict(self, int user, int item):
-        
-        cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] nR = self.nR
+    def predict(self, int user, int item):
+
+        cdef:
+            np.ndarray[DOUBLE_t, ndim=2, mode="c"] nR = self.nR
         return nR[user][item]
