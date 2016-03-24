@@ -13,12 +13,10 @@ class basicMF:
     
     def get_rating_error(self, user, item):
         return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
-
+    
     def get_error(self, beta):
-        """
-        目的関数
-        @param(beta) 正規化係数
-        """
+        #目的関数
+        #@param(beta) 正規化係数
         self.error = 0.0
 
         for user_index in self.R:
@@ -67,6 +65,16 @@ class basicMF:
         rankings.sort()
         return rankings
 
+"""
+cython化したMF
+"""
+class Cy_basicMF:
+    
+    def __init__(self, R):
+        self.R = R # 評価値行列
+
+    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.1):
+        return
 
 class svd:
 

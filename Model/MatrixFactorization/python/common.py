@@ -3,11 +3,13 @@
 import pandas as pd
 import math
 import random
+import numpy as np
+from sklearn.feature_extraction import DictVectorizer
 
 def create_ratings():
     
-    userlist = create_element("../../../data/ml-1m/users.dat")
-    itemlist = create_element("../../../data/ml-1m/movies.dat")
+    userlist = int_create_element("../../../data/ml-1m/users.dat")
+    itemlist = int_create_element("../../../data/ml-1m/movies.dat")
     # userID::movieID::rating::timestamp
     ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
     prefs = create_prefs(userlist, ratelist)
@@ -34,7 +36,10 @@ def create_prefs(userlist, ratings):
 
     return prefs
 
-def create_element(filename):
+"""
+int型
+"""
+def int_create_element(filename):
 
     ret = []
     maxElement = 0
@@ -46,6 +51,18 @@ def create_element(filename):
         ret.append(i)
     
     return ret
+
+"""
+そのままの型1
+"""
+def str_create_element(filename):
+
+    ret = []
+    for line in open(filename):
+        ret.append(line.replace("\n","").split('::')[0])
+
+    return ret
+
 
 def create_ratelist(filename):
 
@@ -79,4 +96,25 @@ def create_test_data(RateArray):
       RateArray[user][item] = 0
 
   return RateArray, testData
+
+"""
+numpy.array化する
+"""
+def create_matrix():
+
+    userlist = str_create_element("../../../data/ml-1m/users.dat")
+    itemlist = str_create_element("../../../data/ml-1m/movies.dat")
+    # userID::movieID::rating::timestamp
+    ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
+   
+    rate_matrix = pd.DataFrame(np.zeros((len(userlist), len(itemlist))), index= userlist, columns = itemlist)
+    for rate in ratelist:
+        if rate[0] in rate_matrix and rate[1] in rate_matrix.columns:
+            rate_matrix[rate[0]][rate[1]] = int(rate[2])
+
+    return rate_matrix
+
+if __name__ == "__main__":
+    rate_matrix = create_matrix()
+    print rate_matrix
 

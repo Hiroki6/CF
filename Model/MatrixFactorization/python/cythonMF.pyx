@@ -17,10 +17,27 @@ cdef class fastMF(object):
     cdef np.ndarray Q
     cdef np.ndarray nR
     cdef double error
-    def __cinit__(self, R, np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] P, np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] Q):
+    cdef int steps
+    cdef double gamma
+    cdef double beta
+    cdef double threshold
+    def __cinit__(self,
+            R,
+            np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] P,
+            np.ndarray[DOUBLE_t, ndim=2, mode = 'c'] Q,
+            double error,
+            int steps,
+            double gamma,
+            double beta,
+            double threshold):
         self.R = R
         self.P = P
         self.Q = Q
+        self.error = error
+        self.steps = steps
+        self.gamma = gamma
+        self.beta = beta
+        self.threshold = threshold
 
     cdef get_rating_error(self, int user, int item):
         
@@ -42,7 +59,7 @@ cdef class fastMF(object):
 
         self.error += beta * (np.linalg.norm(P) + np.linalg.norm(Q))
 
-    cdef learning(self, int K, int steps = 30, double gamma = 0.005, double beta = 0.02, threshold = 0.1):
+    def learning(self, int K, int steps = 30, double gamma = 0.005, double beta = 0.02, threshold = 0.1):
         cdef double err = 0.0
         cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
         cdef np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
