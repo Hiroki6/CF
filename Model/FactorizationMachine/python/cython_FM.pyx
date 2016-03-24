@@ -58,23 +58,31 @@ cdef class cy_FM:
         cdef:
             long N = self.N
             np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
+            long data_index
+            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
+            
         for data_index in xrange(N):
             print data_index
-            self.get_error(data_index, targets[data_index])
-            self.get_q_error(data_index)
+            E[data_index] = self.get_error(data_index, targets[data_index])
+            Q[data_index] = self.get_q_error(Q[data_index], data_index)
 
-    cdef get_q_error(self, long data_index):
-        
-        cdef:
-            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
-            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-        for f in xrange(len(V[0])):
-            Q[data_index][f] = np.dot(V[:,f], R[data_index])
-
+        self.E = E
         self.Q = Q
 
-    cdef get_error(self, long data_index, int target):
+    cdef np.ndarray get_q_error(self, np.ndarray[DOUBLE, ndim=1, mode="c"] q, long data_index):
+        
+        cdef:
+            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+            int K = self.K
+            int f
+        for f in xrange(K):
+            q[f] = np.dot(V[:,f], R[data_index])
+
+        return q
+
+    cdef double get_error(self, long data_index, int target):
         
         cdef:
         # 各特徴量の重み
@@ -86,12 +94,12 @@ cdef class cy_FM:
             np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
             np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
             np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+            int f
 
         for f in xrange(K):
             iterations += pow(np.dot(V[:,f], R[data_index]), 2) - np.dot(V[:,f]**2, R[data_index]**2)
-        E[data_index] = (w_0 + features + iterations) - target
-        self.E = E
+        # 型付け
+        return (w_0 + features + iterations) - target
 
     """
     w_0の更新
@@ -105,6 +113,7 @@ cdef class cy_FM:
             double new_w0 = 0.0
             long N = self.N
             double beta = self.beta
+            long data_index
 
         error_sum = np.sum(E) - w_0*N
 
