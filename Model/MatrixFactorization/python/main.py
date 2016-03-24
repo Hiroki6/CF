@@ -49,8 +49,8 @@ if __name__ == "__main__":
     sum_MF_error = 0.0
     sum_cyMF_error = 0.0
     print "学習開始"
-    basicMF = create_basicMF(learningData)
     cyMF = create_cyMF(learningData)
+    basicMF = create_basicMF(learningData)
     print "精度計測開始"
     for test in testData:
         sum_MF_error += pow((basicMF.predict(test[0], test[2]) - test[3]), 2)

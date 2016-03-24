@@ -50,77 +50,58 @@ cdef class fastMF(object):
         self.threshold = threshold
 
     cdef double get_rating_error(self, int user, int item):
-        
-        cdef:
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
-        return R[user][item] - np.dot(P[:,user], Q[:,item])
+        return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
 
-    cdef double get_error(self, double beta):
+    cdef double get_error(self):
 
         cdef:
             double error = 0.0
-            long u_num = self.u_num
-            long i_num = self.i_num
             long user_index
             long item_index
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
-
-        for user_index in xrange(u_num):
-            for item_index in xrange(i_num):
-                if R[user_index][item_index] == 0:
+            
+        for user_index in xrange(self.u_num):
+            for item_index in xrange(self.i_num):
+                if self.R[user_index][item_index] == 0:
                     continue
                 error += pow(self.get_rating_error(user_index, item_index), 2)
 
-        error += beta * (np.linalg.norm(P) + np.linalg.norm(Q))
+        error += self.beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
         return error
 
     def learning(self):
 
         cdef:
             double err = 0.0
-            int K = self.K
-            int steps = self.steps
-            double gamma = self.gamma
-            double beta = self.beta
-            double threshold = self.threshold
             int step
-            long u_num = self.u_num
-            long i_num = self.i_num
             long user_index
             long item_index
             int k
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] R = self.R
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] P = self.P
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] Q = self.Q
             double all_error = 0.0
+            double start
+            double elapsed_time
+            double now_time
 
-        for step in xrange(steps):
+        for step in xrange(self.steps):
             start = time.time()
-            for user_index in xrange(u_num):
-                for item_index in xrange(i_num):
-                    if R[user_index][item_index] == 0:
+            for user_index in xrange(self.u_num):
+                for item_index in xrange(self.i_num):
+                    if self.R[user_index][item_index] == 0:
                         continue
                     err = self.get_rating_error(user_index, item_index)
-                    for k in xrange(K):
-                        P[k][user_index] += gamma * (err*Q[k][item_index] - beta*P[k][user_index])
-                        Q[k][item_index] += gamma * (err*P[k][user_index] - beta*Q[k][item_index])
+                    for k in xrange(self.K):
+                        self.P[k][user_index] += self.gamma * (err*self.Q[k][item_index] - self.beta*self.P[k][user_index])
+                        self.Q[k][item_index] += self.gamma * (err*self.P[k][user_index] - self.beta*self.Q[k][item_index])
             
-            elapsed_time = time.time() - start
+            now_time = time.time()
+            elapsed_time = now_time - start
             print elapsed_time
-            error = self.get_error(beta)
-            print error
-            if error < threshold:
-                self.nR = np.dot(np.transpose(P), Q) # 得られた評価値行列
+            all_error = self.get_error()
+            print all_error
+            if all_error < self.threshold:
+                self.nR = np.dot(np.transpose(self.P), self.Q) # 得られた評価値行列
                 return
         
-        self.nR = np.dot(np.transpose(P), Q)
+        self.nR = np.dot(np.transpose(self.P), self.Q)
 
     def predict(self, int user, int item):
-
-        cdef:
-            np.ndarray[DOUBLE_t, ndim=2, mode="c"] nR = self.nR
-        return nR[user][item]
+        return self.nR[user][item]
