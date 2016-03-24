@@ -15,18 +15,19 @@ ctypedef np.int64_t INTEGER
 
 cdef class cy_FM:
 
-    cdef np.ndarray R
-    cdef np.ndarray targets
-    cdef long n
-    cdef long N
-    cdef int K
-    cdef int step
-    cdef double w_0
-    cdef double beta
-    cdef np.ndarray W
-    cdef np.ndarray V
-    cdef np.ndarray E
-    cdef np.ndarray Q
+    cdef:
+        np.ndarray R
+        np.ndarray targets
+        long n
+        long N
+        int K
+        int step
+        double w_0
+        double beta
+        np.ndarray W
+        np.ndarray V
+        np.ndarray E
+        np.ndarray Q
 
     def __cinit__(self,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
@@ -54,18 +55,20 @@ cdef class cy_FM:
 
     cdef get_all_error(self):
         
-        cdef long N = self.N
-        cdef np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
+        cdef:
+            long N = self.N
+            np.ndarray[INTEGER, ndim=1, mode="c"] targets = self.targets
         for data_index in xrange(N):
             print data_index
             self.get_error(data_index, targets[data_index])
             self.get_q_error(data_index)
 
     cdef get_q_error(self, long data_index):
-
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+        
+        cdef:
+            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
+            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
         for f in xrange(len(V[0])):
             Q[data_index][f] = np.dot(V[:,f], R[data_index])
 
@@ -73,16 +76,17 @@ cdef class cy_FM:
 
     cdef get_error(self, long data_index, int target):
         
+        cdef:
         # 各特徴量の重み
-        cdef double features = 0.0
+            double features = 0.0
         # 相互作用の重み
-        cdef double iterations = 0.0
-        cdef double w_0 = self.w_0
-        cdef int K = self.K
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+            double iterations = 0.0
+            double w_0 = self.w_0
+            int K = self.K
+            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+            np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
+            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
 
         for f in xrange(K):
             iterations += pow(np.dot(V[:,f], R[data_index]), 2) - np.dot(V[:,f]**2, R[data_index]**2)
@@ -93,13 +97,14 @@ cdef class cy_FM:
     w_0の更新
     """
     cdef update_global_bias(self):
-
-        cdef double error_sum = 0.0
-        cdef double w_0 = self.w_0
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-        cdef double new_w0 = 0.0
-        cdef long N = self.N
-        cdef double beta = self.beta
+        
+        cdef:
+            double error_sum = 0.0
+            double w_0 = self.w_0
+            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+            double new_w0 = 0.0
+            long N = self.N
+            double beta = self.beta
 
         error_sum = np.sum(E) - w_0*N
 
@@ -114,19 +119,20 @@ cdef class cy_FM:
     Wの更新
     """
     cdef update_weight(self):
-   
-        cdef double error_sum = 0.0
-        cdef double feature_square_sum = 0.0
-        cdef long n = self.n
-        cdef long N = self.N
-        cdef double beta = self.beta
-        cdef double new_wl = 0.0
+        
+        cdef:
+            double error_sum = 0.0
+            double feature_square_sum = 0.0
+            long n = self.n
+            long N = self.N
+            double beta = self.beta
+            double new_wl = 0.0
         #cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray R = self.R
+            np.ndarray R = self.R
         #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray W = self.W
+            np.ndarray W = self.W
         #cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-        cdef np.ndarray E = self.E
+            np.ndarray E = self.E
 
         for l in xrange(n):
             error_sum = 0.0
@@ -143,20 +149,21 @@ cdef class cy_FM:
     Vの更新
     """
     cdef update_interaction(self):
-        
-        cdef double error_sum = 0.0
-        cdef double new_v = 0.0
-        cdef double h_square_sum = 0.0
-        cdef double h_v = 0.0
-        cdef long n = self.n
-        cdef long N = self.N
-        cdef int K = self.K
-        cdef double beta = self.beta
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
-        cdef np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
-        cdef np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
+       
+        cdef:
+            double error_sum = 0.0
+            double new_v = 0.0
+            double h_square_sum = 0.0
+            double h_v = 0.0
+            long n = self.n
+            long N = self.N
+            int K = self.K
+            double beta = self.beta
+            np.ndarray[DOUBLE, ndim=2, mode="c"] V = self.V
+            np.ndarray[DOUBLE, ndim=2, mode="c"] R = self.R
+            np.ndarray[DOUBLE, ndim=1, mode="c"] W = self.W
+            np.ndarray[DOUBLE, ndim=1, mode="c"] E = self.E
+            np.ndarray[DOUBLE, ndim=2, mode="c"] Q = self.Q
 
         for f in xrange(K):
             for l in xrange(n):
