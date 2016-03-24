@@ -68,9 +68,3 @@ def create_matrix():
         rate_matrix[user_id][item_id] = rate[2]
 
     return rate_matrix, usermap, itemmap
-
-if __name__ == "__main__":
-    rate_matrix, usermap, itemmap = create_matrix()
-    rate_matrix, testData = create_test_data(rate_matrix)
-    print testData
-

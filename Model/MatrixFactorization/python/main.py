@@ -36,16 +36,18 @@ def predict_basicMF(basicMF, user):
     return rankings
 
 if __name__ == "__main__":
-    RateArray = common.create_ratings() # 評価値行列作成
-    learningData, testData = common.create_test_data(RateArray) # 教師データとテストデータ作成
+    print "データ作成"
+    rate_matrix, usermap, itemmap = common.create_matrix() # 評価値行列作成
+    learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
     sum_MF_error = 0.0
     #sum_svd_error = 0.0
+    print "学習開始"
     basicMF = create_basicMF(learningData)
     #svd = create_svd(learningData)
-    for user in testData:
-        for item in testData[user]:
-            sum_MF_error += pow((basicMF.predict(user, item) - testData[user][item]), 2)
-            #sum_svd_error += pow((svd.predict(user, item) - testData[user][item]), 2)
+    print "精度計測開始"
+    for test in testData:
+        sum_MF_error += pow((basicMF.predict(test[0], test[2]) - test[3]), 2)
+        #sum_svd_error += pow((svd.predict(user, item) - testData[user][item]), 2)
 
     RMSE_MF = math.sqrt(sum_MF_error/300)
     #RMSE_svd = math.sqrt(sum_svd_error/300)
