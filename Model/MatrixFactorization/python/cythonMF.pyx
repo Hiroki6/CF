@@ -77,12 +77,8 @@ cdef class fastMF(object):
             long item_index
             int k
             double all_error = 0.0
-            double start
-            double elapsed_time
-            double now_time
 
         for step in xrange(self.steps):
-            start = time.time()
             for user_index in xrange(self.u_num):
                 for item_index in xrange(self.i_num):
                     if self.R[user_index][item_index] == 0:
@@ -92,9 +88,6 @@ cdef class fastMF(object):
                         self.P[k][user_index] += self.gamma * (err*self.Q[k][item_index] - self.beta*self.P[k][user_index])
                         self.Q[k][item_index] += self.gamma * (err*self.P[k][user_index] - self.beta*self.Q[k][item_index])
             
-            now_time = time.time()
-            elapsed_time = now_time - start
-            print elapsed_time
             all_error = self.get_error()
             print all_error
             if all_error < self.threshold:
@@ -103,5 +96,5 @@ cdef class fastMF(object):
         
         self.nR = np.dot(np.transpose(self.P), self.Q)
 
-    def predict(self, int user, int item):
+    cpdef double predict(self, int user, int item):
         return self.nR[user][item]
