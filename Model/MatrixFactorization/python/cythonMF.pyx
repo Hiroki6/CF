@@ -5,7 +5,9 @@
 import numpy as np
 cimport numpy as np
 cimport cython
+from cython.parallel cimport prange
 import time
+from libc.math cimport pow
 
 ctypedef np.float64_t DOUBLE_t
 ctypedef np.int_t INT_t
@@ -49,7 +51,7 @@ cdef class fastMF(object):
         self.beta = beta
         self.threshold = threshold
 
-    cdef double get_rating_error(self, int user, int item):
+    cdef inline double get_rating_error(self, int user, int item):
         return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
 
     cdef double get_error(self):
@@ -58,7 +60,6 @@ cdef class fastMF(object):
             double error = 0.0
             long user_index
             long item_index
-            
         for user_index in xrange(self.u_num):
             for item_index in xrange(self.i_num):
                 if self.R[user_index][item_index] == 0:
@@ -77,7 +78,7 @@ cdef class fastMF(object):
             long item_index
             int k
             double all_error = 0.0
-
+            
         for step in xrange(self.steps):
             for user_index in xrange(self.u_num):
                 for item_index in xrange(self.i_num):

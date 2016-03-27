@@ -58,9 +58,9 @@ if __name__ == "__main__":
     print "データ作成"
     rate_matrix, usermap, itemmap = common.create_matrix() # 評価値行列作成
     learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
-    cyMF = create_cyMF(learningData)
-    calc_RMSE(cyMF, testData)
     basicMF = create_basicMF(learningData)
     calc_RMSE(basicMF, testData)
+    cyMF = create_cyMF(learningData)
+    calc_RMSE(cyMF, testData)
 
 
