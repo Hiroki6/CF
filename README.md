@@ -10,6 +10,7 @@ Collaborative Filtering
 
 ユーザーやアイテム間の類似度を基に行うメモリーベース協調フィルタリング
 user_base ユーザー間の類似度を基に推薦を行う
+[[ file:///Users/fujinohiroki/Pictures/userbase.png ]]
 item_base アイテム間の類似度を基に推薦を行う
 
 ## /Model
