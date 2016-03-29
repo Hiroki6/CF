@@ -15,6 +15,7 @@ def create_test_data(target_data):
 if __name__ == "__main__":
     print "データ作成"
     target_data, labels, targets = create_matrix.create_matrix_dicVec()
+    print labels
     print "FMクラス初期化"
     FM_obj = FM.FM(target_data, labels, targets)
     print "学習開始"
