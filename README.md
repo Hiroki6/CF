@@ -25,7 +25,7 @@ Model_based CF: モデルを構築してから推薦を行うモデルベース�
 
 Matrix Factorization Netflix Prizeで有名なMatrix Factorizationアルゴリズム
 
-<img src="https://github.com/Hiroki6/Collaborative-Filtering/blob/master/images/MF_kai.png" width="600">
+<img src="https://github.com/Hiroki6/Collaborative-Filtering/blob/master/images/MF_kai1.png" width="600">
 
 ### Model/FactorizationMachine
 
