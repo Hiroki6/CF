@@ -8,6 +8,8 @@ R: ユーザーとアイテムをインデックスにもつ二次元ディク�
 import numpy as np
 import cythonMF as cMF
 import time
+import sys
+sys.dont_write_bytecode = True 
 
 class basicMF:
     def __init__(self, R):
@@ -54,7 +56,7 @@ class basicMF:
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
             elapsed_time = time.time() - start
-            print(elapsed_time)
+            print elapsed_time
             self.get_error(beta)
             print self.error
             if self.error < threshold:
