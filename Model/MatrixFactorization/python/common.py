@@ -3,6 +3,8 @@
 import math
 import random
 import numpy as np
+import sys
+sys.dont_write_bytecode = True 
 
 """
 @return(element_dic) {"値":id}の辞書

@@ -8,6 +8,8 @@ R: ユーザーとアイテムをインデックスにもつ二次元ディク�
 import numpy as np
 import cythonMF as cMF
 import time
+import sys
+sys.dont_write_bytecode = True 
 
 class basicMF:
     def __init__(self, R):
