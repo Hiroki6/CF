@@ -9,6 +9,7 @@ Collaborative Filtering
 ## Memory
 
 ユーザーやアイテム間の類似度を基に行うメモリーベース協調フィルタリング
+
 user_base ユーザー間の類似度を基に推薦を行う
 
 <img src="https://github.com/Hiroki6/Collaborative-Filtering/blob/master/images/userbase.png" width="300">
