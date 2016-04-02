@@ -119,6 +119,7 @@ cdef class cy_FM:
             long data_index
 
         for l in xrange(self.n):
+            print l
             error_sum = 0.0
             fetaure_square_sum = 0.0
             error_sum = sum((self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
@@ -143,7 +144,9 @@ cdef class cy_FM:
             long data_index
     
         for f in xrange(self.K):
+            print "f %d" % (f)
             for l in xrange(self.n):
+                print "l %d" % (l)
                 error_sum = 0.0
                 h_square_sum = 0.0
                 for data_index in xrange(self.N):
@@ -158,8 +161,11 @@ cdef class cy_FM:
 
     cdef repeat_optimization(self):
 
+        print "w_0更新"
         self.update_global_bias()
+        print "W更新"
         self.update_weight()
+        print "V更新"
         self.update_interaction()
 
     """
