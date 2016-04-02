@@ -1,17 +1,16 @@
 # -*- coding:utf-8 -*-
 """
-SVD++の実装
+Matrix Factorizationのpythonによる実装
 参考文献:
     「Advances in Collaborative Filtering」,Y.Koran and R.Bell ,2007 IEEE
 R: ユーザーとアイテムをインデックスにもつ二次元ディクショナリ
 """
 import numpy as np
-import cythonMF as cMF
 import time
 import sys
 sys.dont_write_bytecode = True 
 
-class basicMF:
+class BasicMF:
     def __init__(self, R):
         self.R = R # 評価値行列
         self.u_num = len(R)
@@ -73,27 +72,7 @@ class basicMF:
         rankings.sort()
         return rankings
 
-"""
-cython化したMF
-"""
-class Cy_basicMF:
-    
-    def __init__(self, R):
-        self.R = R # 評価値行列
-        self.u_num = len(R)
-        self.i_num = len(R[0])
-
-    def learning(self, K, steps = 30, gamma = 0.005, beta = 0.02, threshold = 0.1):
-
-        self.P = np.random.rand(K, self.u_num)
-        self.Q = np.random.rand(K, self.i_num)
-        self.cython_obj = cMF.fastMF(self.R, self.P, self.Q, self.u_num, self.i_num, K, steps, gamma, beta, threshold)
-        self.cython_obj.learning()
-
-    def predict(self, user, item):
-        return self.cython_obj.predict(user, item)
-
-class svd:
+class Svd:
 
     def __init__(self, R):
         self.R = R # 評価値行列
@@ -170,7 +149,7 @@ class svd:
     def predict(self, user, item):
         return self.nR[user][item] + self.myu + self.B_u[user] + self.B_i[item]
 
-class svdPlus(svd):
+class SvdPlus(Svd):
     
     def get_rating_error(self, user, item):
 
