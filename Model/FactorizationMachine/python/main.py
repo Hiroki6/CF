@@ -17,6 +17,6 @@ if __name__ == "__main__":
     target_data, labels, targets = create_matrix.create_matrix_dicVec()
     print labels
     print "FMクラス初期化"
-    FM_obj = FM.FM(target_data, labels, targets)
+    FM_obj = FM.cyFM(target_data, labels, targets)
     print "学習開始"
     FM_obj.learning()
