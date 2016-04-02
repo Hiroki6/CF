@@ -19,6 +19,7 @@ def create_test_data(target_data):
 if __name__ == "__main__":
     print "データ作成"
     target_data, labels, targets = create_matrix.create_matrix_dicVec()
+    print target_data
     print labels
     print "FMクラス初期化"
     FM_obj = cylibfm.FM(target_data, labels, targets)
