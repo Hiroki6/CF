@@ -24,9 +24,9 @@ class BasicMF:
         #@param(beta) 正規化係数
         self.error = 0.0
 
-        for user_index in xrange(self.u_num):
-            for item_index in xrange(self.i_num):
-                if self.R[user_index][item_index] == 0:
+        for user_index, user_matrix in enumerate(self.R):
+            for item_index, rating in enumerate(user_matrix):
+                if not rating:
                     continue
                 self.error += pow(self.get_rating_error(user_index, item_index), 2)
         # 正規化項
@@ -46,9 +46,9 @@ class BasicMF:
 
         for step in xrange(steps):
             start = time.time()
-            for user_index in xrange(self.u_num):
-                for item_index in xrange(self.i_num):
-                    if self.R[user_index][item_index] == 0:
+            for user_index, user_matrix in enumerate(self.R):
+                for item_index, rating in enumerate(user_matrix):
+                    if not rating:
                         continue
                     err = self.get_rating_error(user_index, item_index)
                     for k in xrange(K):
@@ -84,11 +84,11 @@ class Svd:
 
         count = 0
         sumRate = 0
-        for user_index in xrange(self.u_num):
-            for item_index in xrange(self.i_num):
-                if not self.R[user_index][item_index] == 0:
+        for user_matrix in self.R:
+            for rating in user_matrix:
+                if rating:
                     count += 1
-                    sumRate += self.R[user_index][item_index]
+                    sumRate += rating
 
         if count == 0:
             return 0
@@ -105,9 +105,9 @@ class Svd:
         """
         self.error = 0.0
 
-        for user_index in xrange(self.u_num):
-            for item_index in xrange(self.i_num):
-                if self.R[user_index][item_index] == 0:
+        for user_index, user_matrix in enumerate(self.R):
+            for item_index, rating in enumerate(user_matrix):
+                if not rating:
                     continue
                 self.error += pow(self.get_rating_error(user_index, item_index), 2)
         # 正規化項
@@ -128,9 +128,9 @@ class Svd:
         self.B_i = np.random.rand(self.i_num) # アイテムバイアス
 
         for step in xrange(steps):
-            for user_index in xrange(self.u_num):
-                for item_index in xrange(self.i_num):
-                    if self.R[user_index][item_index] == 0:
+            for user_index, user_matrix in enumerate(self.R):
+                for item_index, rating in enumerate(user_matrix):
+                    if not rating:
                         continue
                     err = self.get_rating_error(user_index, item_index)
                     for k in xrange(K):

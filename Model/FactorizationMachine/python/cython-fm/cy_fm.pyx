@@ -150,13 +150,13 @@ cdef class cy_FM:
                 error_sum = 0.0
                 h_square_sum = 0.0
                 for data_index in xrange(self.N):
-                    h_v = (self.R[data_index][l] * self.Q[data_index]) - (pow(self.R[data_index][l], 2)*self.V[l][f])
+                    h_v = (self.R[data_index][l] * self.Q[data_index][f]) - (pow(self.R[data_index][l], 2)*self.V[l][f])
                     error_sum += (self.E[data_index] - self.V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v, 2)
                 new_v = -(error_sum) / (h_square_sum + self.beta*error_sum)
                 for data_index in xrange(self.N):
                     self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
-                    self.Q[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
+                    self.Q[data_index][f] += (new_v - self.V[l][f]) * self.R[data_index][l]
                 self.V[l][f] = new_v
 
     cdef repeat_optimization(self):
