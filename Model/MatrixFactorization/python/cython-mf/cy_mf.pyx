@@ -60,9 +60,12 @@ cdef class fastMF(object):
             double error = 0.0
             long user_index
             long item_index
-        for user_index in xrange(self.u_num):
-            for item_index in xrange(self.i_num):
-                if self.R[user_index][item_index] == 0:
+            np.ndarray[DOUBLE_t, ndim=1, mode = 'c'] user_matrix
+            double rating
+
+        for user_index, user_matrix in enumerate(self.R):
+            for item_index, rating in enumerate(user_matrix):
+                if not rating:
                     continue
                 error += pow(self.get_rating_error(user_index, item_index), 2)
 
@@ -78,17 +81,19 @@ cdef class fastMF(object):
             long item_index
             int k
             double all_error = 0.0
-            
+            np.ndarray[DOUBLE_t, ndim=1, mode = 'c'] user_matrix
+            double rating
+
         for step in xrange(self.steps):
-            for user_index in xrange(self.u_num):
-                for item_index in xrange(self.i_num):
-                    if self.R[user_index][item_index] == 0:
+            for user_index, user_matrix in enumerate(self.R):
+                for item_index, rating in enumerate(user_matrix):
+                    if not rating:
                         continue
                     err = self.get_rating_error(user_index, item_index)
                     for k in xrange(self.K):
                         self.P[k][user_index] += self.gamma * (err*self.Q[k][item_index] - self.beta*self.P[k][user_index])
                         self.Q[k][item_index] += self.gamma * (err*self.P[k][user_index] - self.beta*self.Q[k][item_index])
-            
+           
             all_error = self.get_error()
             print all_error
             if all_error < self.threshold:
