@@ -119,6 +119,7 @@ cdef class cy_FM:
             long data_index
 
         for l in xrange(self.n):
+            print l
             error_sum = 0.0
             fetaure_square_sum = 0.0
             error_sum = sum((self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
@@ -143,23 +144,28 @@ cdef class cy_FM:
             long data_index
     
         for f in xrange(self.K):
+            print "f %d" % (f)
             for l in xrange(self.n):
+                print "l %d" % (l)
                 error_sum = 0.0
                 h_square_sum = 0.0
                 for data_index in xrange(self.N):
-                    h_v = (self.R[data_index][l] * self.Q[data_index]) - (pow(self.R[data_index][l], 2)*self.V[l][f])
+                    h_v = (self.R[data_index][l] * self.Q[data_index][f]) - (pow(self.R[data_index][l], 2)*self.V[l][f])
                     error_sum += (self.E[data_index] - self.V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v, 2)
                 new_v = -(error_sum) / (h_square_sum + self.beta*error_sum)
                 for data_index in xrange(self.N):
                     self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
-                    self.Q[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
+                    self.Q[data_index][f] += (new_v - self.V[l][f]) * self.R[data_index][l]
                 self.V[l][f] = new_v
 
     cdef repeat_optimization(self):
 
+        print "w_0更新"
         self.update_global_bias()
+        print "W更新"
         self.update_weight()
+        print "V更新"
         self.update_interaction()
 
     """
