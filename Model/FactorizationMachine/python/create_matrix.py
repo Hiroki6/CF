@@ -35,8 +35,10 @@ def create_matrix_dicVec():
     targets = [] # 教師データ
     for rating in ratelist:
         rate_dic = {}
-        rate_dic["user"] = rating[0]
-        rate_dic["item"] = rating[1]
+        user = rating[0]
+        movie = rating[1]
+        rate_dic["user"] = user
+        rate_dic["movie"] = movie
         rate_dic["time"] = (int(rating[3])%900000000)/1000000
         targets.append(int(rating[2]))
         rate_array.append(rate_dic)
@@ -49,21 +51,23 @@ def create_matrix_dicVec():
 
     return rate_matrix, labels, targets
 
-def create_element(filename):
+def create_element(filepass):
 
     ret = []
-    for line in open(filename):
-        ret.append(line.replace("\n","").split('::')[0])
+    with open(filepass) as f:
+        for line in f:
+            ret.append(line.replace("\n","").split('::')[0])
     
     return ret
 
 
-def create_ratelist(filename):
+def create_ratelist(filepass):
 
     ret = []
 
-    for line in open(filename):
-        ret.append(line.replace("\n","").split('::'))
+    with open(filepass) as f:
+        for line in f:
+            ret.append(line.replace("\n","").split('::'))
 
     return ret
 

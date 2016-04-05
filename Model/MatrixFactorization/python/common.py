@@ -9,24 +9,26 @@ sys.dont_write_bytecode = True
 """
 @return(element_dic) {"値":id}の辞書
 """
-def create_element_map(filename):
+def create_element_map(filepass):
 
     element_dic = {}
     id = 0
-    for line in open(filename):
-        element = line.replace("\n","").split('::')[0]
-        element_dic[element] = id
-        id += 1
+    with open(filepass) as f:
+        for line in f:
+            element = line.replace("\n","").split('::')[0]
+            element_dic[element] = id
+            id += 1
 
     return element_dic
 
 
-def create_ratelist(filename):
+def create_ratelist(filepass):
 
     ret = []
-
-    for line in open(filename):
-        ret.append(line.replace("\n","").split('::'))
+    
+    with open(filepass) as f:
+        for line in f:
+            ret.append(line.replace("\n","").split('::'))
 
     return ret
 
