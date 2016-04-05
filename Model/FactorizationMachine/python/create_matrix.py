@@ -51,21 +51,23 @@ def create_matrix_dicVec():
 
     return rate_matrix, labels, targets
 
-def create_element(filename):
+def create_element(filepass):
 
     ret = []
-    for line in open(filename):
-        ret.append(line.replace("\n","").split('::')[0])
+    with open(filepass) as f:
+        for line in f:
+            ret.append(line.replace("\n","").split('::')[0])
     
     return ret
 
 
-def create_ratelist(filename):
+def create_ratelist(filepass):
 
     ret = []
 
-    for line in open(filename):
-        ret.append(line.replace("\n","").split('::'))
+    with open(filepass) as f:
+        for line in f:
+            ret.append(line.replace("\n","").split('::'))
 
     return ret
 
