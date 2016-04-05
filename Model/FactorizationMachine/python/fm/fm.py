@@ -18,19 +18,19 @@ class FM:
         self.targets = targets # 教師配列
         self.n = len(self.R[0])
         self.N = len(self.R)
-    def get_all_error(self):
+    def _get_all_error(self):
 
         for data_index in xrange(self.N):
             print data_index
-            self.get_error(data_index, self.targets[data_index])
-            #self.get_q_error(data_index)
+            self._get_error(data_index, self.targets[data_index])
+            #self._get_q_error(data_index)
     
-    def get_q_error(self, data_index):
+    def _get_q_error(self, data_index):
 
         for f in xrange(len(self.V[0])):
             self.Q[data_index][f] = np.dot(self.V.T[f], self.R[data_index])
 
-    def get_error(self, data_index, target):
+    def _get_error(self, data_index, target):
         
         # 各特徴量の重みの和
         features = 0.0
@@ -44,7 +44,7 @@ class FM:
     """
     w_0の更新
     """
-    def update_global_bias(self):
+    def _update_global_bias(self):
         
         error_sum = 0.0
         error_sum = np.sum(self.E) - self.w_0*self.N
@@ -63,7 +63,7 @@ class FM:
     """
     Wの更新
     """
-    def update_weight(self):
+    def _update_weight(self):
         
         vf = np.vectorize(self.add_array)
         for l in xrange(self.n):
@@ -84,7 +84,7 @@ class FM:
     """
     Vの更新
     """
-    def update_interaction(self):
+    def _update_interaction(self):
 
         for f in xrange(len(self.V[0])):
             for l in xrange(self.n):
@@ -103,11 +103,11 @@ class FM:
                 self.V[l][f] = new_v
    
 
-    def repeat_optimization():
+    def _repeat_optimization():
 
-        self.update_global_bias()
-        self.update_weight()
-        self.update_interaction()
+        self._update_global_bias()
+        self._update_weight()
+        self._update_interaction()
     """
     ALSの学習
     """
@@ -127,7 +127,7 @@ class FM:
         """
         誤差の計算
         """
-        self.get_all_error()
+        self._get_all_error()
         for i in xrange(step):
             print i
-            self.repeat_optimization()
+            self._repeat_optimization()

@@ -51,10 +51,10 @@ cdef class fastMF(object):
         self.beta = beta
         self.threshold = threshold
 
-    cdef inline double get_rating_error(self, int user, int item):
+    cdef inline double _get_rating_error(self, int user, int item):
         return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
 
-    cdef double get_error(self):
+    cdef double _get_error(self):
 
         cdef:
             double error = 0.0
@@ -67,7 +67,7 @@ cdef class fastMF(object):
             for item_index, rating in enumerate(user_matrix):
                 if not rating:
                     continue
-                error += pow(self.get_rating_error(user_index, item_index), 2)
+                error += pow(self._get_rating_error(user_index, item_index), 2)
 
         error += self.beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
         return error
@@ -89,12 +89,12 @@ cdef class fastMF(object):
                 for item_index, rating in enumerate(user_matrix):
                     if not rating:
                         continue
-                    err = self.get_rating_error(user_index, item_index)
+                    err = self._get_rating_error(user_index, item_index)
                     for k in xrange(self.K):
                         self.P[k][user_index] += self.gamma * (err*self.Q[k][item_index] - self.beta*self.P[k][user_index])
                         self.Q[k][item_index] += self.gamma * (err*self.P[k][user_index] - self.beta*self.Q[k][item_index])
            
-            all_error = self.get_error()
+            all_error = self._get_error()
             print all_error
             if all_error < self.threshold:
                 self.nR = np.dot(np.transpose(self.P), self.Q) # 得られた評価値行列
