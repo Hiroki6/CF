@@ -16,10 +16,10 @@ class BasicMF:
         self.u_num = len(R)
         self.i_num = len(R[0])
     
-    def get_rating_error(self, user, item):
+    def _get_rating_error(self, user, item):
         return self.R[user][item] - np.dot(self.P[:,user], self.Q[:,item])
     
-    def get_error(self, beta):
+    def _get_error(self, beta):
         #目的関数
         #@param(beta) 正規化係数
         self.error = 0.0
@@ -28,7 +28,7 @@ class BasicMF:
             for item_index, rating in enumerate(user_matrix):
                 if not rating:
                     continue
-                self.error += pow(self.get_rating_error(user_index, item_index), 2)
+                self.error += pow(self._get_rating_error(user_index, item_index), 2)
         # 正規化項
         self.error += beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
@@ -50,13 +50,13 @@ class BasicMF:
                 for item_index, rating in enumerate(user_matrix):
                     if not rating:
                         continue
-                    err = self.get_rating_error(user_index, item_index)
+                    err = self._get_rating_error(user_index, item_index)
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
             elapsed_time = time.time() - start
             print elapsed_time
-            self.get_error(beta)
+            self._get_error(beta)
             print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
@@ -95,10 +95,10 @@ class Svd:
         else:
             return sumRate/count
         
-    def get_rating_error(self, user, item):
+    def _get_rating_error(self, user, item):
         return self.R[user][item] - (self.myu + self.B_u[user] + self.B_i[item] + np.dot(self.P[:, user], self.Q[:, item]))
 
-    def get_error(self, beta):
+    def _get_error(self, beta):
         """
         目的関数
         @param(beta) 正規化係数
@@ -109,7 +109,7 @@ class Svd:
             for item_index, rating in enumerate(user_matrix):
                 if not rating:
                     continue
-                self.error += pow(self.get_rating_error(user_index, item_index), 2)
+                self.error += pow(self._get_rating_error(user_index, item_index), 2)
         # 正規化項
         self.error += beta * (np.linalg.norm(self.B_u) + np.linalg.norm(self.B_i) + np.linalg.norm(self.P) + np.linalg.norm(self.Q))
     
@@ -132,13 +132,13 @@ class Svd:
                 for item_index, rating in enumerate(user_matrix):
                     if not rating:
                         continue
-                    err = self.get_rating_error(user_index, item_index)
+                    err = self._get_rating_error(user_index, item_index)
                     for k in xrange(K):
                         self.P[k][user_index] += gamma * (err*self.Q[k][item_index] - beta*self.P[k][user_index])
                         self.Q[k][item_index] += gamma * (err*self.P[k][user_index] - beta*self.Q[k][item_index])
                         self.B_u[user_index] += gamma * (err - beta*self.B_u[user_index])
                         self.B_i[item_index] += gamma * (err - beta*self.B_i[item_index])
-            self.get_error(beta)
+            self._get_error(beta)
             print self.error
             if self.error < threshold:
                 self.nR = np.dot(self.P.T, self.Q) # 得られた評価値行列
@@ -151,7 +151,7 @@ class Svd:
 
 class SvdPlus(Svd):
     
-    def get_rating_error(self, user, item):
+    def _get_rating_error(self, user, item):
 
         num_rate, sum_rate = self.get_sum_rate_by_user(user)
 

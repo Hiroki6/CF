@@ -57,17 +57,17 @@ cdef class cy_FM:
         self.K = K
         self.step = step
 
-    cdef get_all_error(self):
+    cdef _get_all_error(self):
         
         cdef:
             long data_index
             
         for data_index in xrange(self.N):
             print data_index
-            self.E[data_index] = self.get_error(data_index, self.targets[data_index])
-            self.Q[data_index] = self.get_q_error(self.Q[data_index], data_index)
+            self.E[data_index] = self._get_error(data_index, self.targets[data_index])
+            self.Q[data_index] = self._get_q_error(self.Q[data_index], data_index)
 
-    cdef np.ndarray get_q_error(self, np.ndarray[DOUBLE, ndim=1, mode="c"] q, long data_index):
+    cdef np.ndarray _get_q_error(self, np.ndarray[DOUBLE, ndim=1, mode="c"] q, long data_index):
         
         cdef:
             int f
@@ -76,7 +76,7 @@ cdef class cy_FM:
 
         return q
 
-    cdef double get_error(self, long data_index, int target):
+    cdef double _get_error(self, long data_index, int target):
         
         cdef:
         # 各特徴量の重み
@@ -93,7 +93,7 @@ cdef class cy_FM:
     """
     w_0の更新
     """
-    cdef update_global_bias(self):
+    cdef _update_global_bias(self):
         
         cdef:
             double error_sum = 0.0
@@ -109,7 +109,7 @@ cdef class cy_FM:
     """
     Wの更新
     """
-    cdef update_weight(self):
+    cdef _update_weight(self):
         
         cdef:
             double error_sum = 0.0
@@ -132,7 +132,7 @@ cdef class cy_FM:
     """
     Vの更新
     """
-    cdef update_interaction(self):
+    cdef _update_interaction(self):
        
         cdef:
             double error_sum = 0.0
@@ -159,14 +159,14 @@ cdef class cy_FM:
                     self.Q[data_index][f] += (new_v - self.V[l][f]) * self.R[data_index][l]
                 self.V[l][f] = new_v
 
-    cdef repeat_optimization(self):
+    cdef _repeat_optimization(self):
 
         print "w_0更新"
-        self.update_global_bias()
+        self._update_global_bias()
         print "W更新"
-        self.update_weight()
+        self._update_weight()
         print "V更新"
-        self.update_interaction()
+        self._update_interaction()
 
     """
     ALSの学習
@@ -176,7 +176,7 @@ cdef class cy_FM:
         """
         誤差の計算
         """
-        self.get_all_error()
+        self._get_all_error()
         for i in xrange(self.step):
             print i
-            self.repeat_optimization()
+            self._repeat_optimization()
