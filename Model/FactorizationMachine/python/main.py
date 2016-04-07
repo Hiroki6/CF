@@ -3,10 +3,12 @@
 import sys
 sys.path.append("cython-fm")
 sys.path.append("fm")
+sys.dont_write_bytecode = True 
 import numpy as np
 import create_matrix
 import fm
 import cylibfm
+
 
 """
 学習データとテストデータに分ける
