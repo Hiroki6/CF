@@ -2,6 +2,7 @@
 import sys
 sys.path.append("cython-mf")
 sys.path.append("mf")
+sys.dont_write_bytecode = True 
 import mf
 import cylibmf
 import common

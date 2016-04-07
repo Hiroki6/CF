@@ -8,8 +8,6 @@ userID, itemID, 評価値, timestampを特徴量として学習する
 """
 import numpy as np
 import math
-import sys
-sys.dont_write_bytecode = True 
 
 class FM:
     def __init__(self, R, labels, targets):
