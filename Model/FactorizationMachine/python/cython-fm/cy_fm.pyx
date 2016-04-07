@@ -90,6 +90,9 @@ cdef class cy_FM:
         # 型付け
         return (self.w_0 + features + iterations) - target
 
+    cdef double _print_sum_error(self):
+        print np.sum(self.E)
+
     """
     w_0の更新
     """
@@ -177,6 +180,7 @@ cdef class cy_FM:
         誤差の計算
         """
         self._get_all_error()
+        self._print_sum_error()
         for i in xrange(self.step):
             print i
             self._repeat_optimization()
