@@ -18,7 +18,7 @@ def create_prefs(userlist,ratings):
         prefs[rate[0]][rate[1]]=int(rate[2])
 
     return prefs
-    
+
 # 二人の人物の距離を基にした類似性スコアを返す
 def sim_distance(prefs, person1, person2):
     sum_of_squares = 0
@@ -26,7 +26,7 @@ def sim_distance(prefs, person1, person2):
     # すべての差の平方を足し合わせる
     sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item],2)
                        for item in prefs[person1] if item in prefs[person2]])
-    
+
     # 両者ともに評価しているものが一つもなければ０を返す
     if sum_of_squares == 0:
         return 0
@@ -184,8 +184,8 @@ def getRecommendadItems(prefs, itemMatch, user):
     rankings.sort()
     rankings.reverse()
     return rankings
-    
-        
+
+
 
 if __name__ == "__main__":
 
