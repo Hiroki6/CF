@@ -5,7 +5,11 @@ from sklearn.feature_extraction import DictVectorizer
 import random
 
 """
-return(rate_matrix) FM用のデータ
+シミュレーション用のデータ作成
+@returns(learn_matrix) 学習用データ
+@returns(test_data) テスト用データ{user: [items]}
+@returns(labels) 学習データの列ラベル
+@returns(targets) 学習ラベル
 """
 def create_matrix_dicVec():
 
@@ -13,23 +17,34 @@ def create_matrix_dicVec():
     
     rate_array= []
     targets = [] # 教師データ
-    for rating in ratelist:
-        rate_dic = {}
-        user = rating[0]
-        movie = rating[1]
-        rate_dic["user"] = user
-        rate_dic["movie"] = movie
-        rate_dic["time"] = (int(rating[3])%900000000)/1000000
-        targets.append(int(rating[2]))
-        rate_array.append(rate_dic)
-   
+    test_users = create_test_user()
+    test_data = {}
+    # テスト用データ作成
+    print "テストデータ作成"
+    for user in test_users:
+        test_data.setdefault(user, {})
+        for i in xrange(10):
+            item, rate = ratelist[user].popitem()
+            test_data[user][item] = rate
+
+    # 学習用データ作成
+    print "学習用データ作成"
+    for user, values in ratelist.items():
+        for item, rate in values.items():
+            rate_dic = {}
+            rate_dic["user"] = user
+            rate_dic["item"] = item
+            targets.append(rate)
+            rate_array.append(rate_dic)
+    
+    # FM用に変形
     v = DictVectorizer()
     X = v.fit_transform(rate_array)
-    rate_matrix = X.toarray()
+    learn_matrix = X.toarray()
     labels = v.get_feature_names()
     targets = np.array(targets)
 
-    return rate_matrix, labels, targets
+    return learn_matrix, test_data, labels, targets
 
 def create_element(filepass):
 
@@ -43,13 +58,19 @@ def create_element(filepass):
 
 def create_ratelist(filepass):
 
-    ret = []
+    rate_dic = {}
 
     with open(filepass) as f:
         for line in f:
-            ret.append(line.replace("\n","").split('::'))
+            rating = line.replace("\n","").split('::')
+            user = rating[0]
+            item = rating[1]
+            rate = int(rating[2])
+            if not rate_dic.has_key(user):
+                rate_dic.setdefault(user, {})
+            rate_dic[user][item] = rate
 
-    return ret
+    return rate_dic
 
 """
 userを8:2に分割する
@@ -72,6 +93,7 @@ def create_test_user():
 rate_matrixを学習データとテストデータに分ける
 ユーザー配列からユーザーをランダムに20%取り出す
 その中からそのユーザーの半分のratingをテストデータとして使う
+回帰用
 @returns(test_matrix) テスト用のデータ{user_index: {rate_index: []}}
 @returns(targets) テスト用のラベルを0.0にした学習用ラベル
 @returns(test_labels) 実際のラベルとtargetのインデックスを保存したラベル{rate_index: label}

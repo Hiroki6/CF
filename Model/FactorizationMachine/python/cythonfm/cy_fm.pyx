@@ -85,10 +85,11 @@ cdef class cy_FM:
             double iterations = 0.0
             int f
 
+        features = np.dot(self.W, self.R[data_index])
         for f in xrange(self.K):
             iterations += pow(np.dot(self.V[:,f], self.R[data_index]), 2) - np.dot(self.V[:,f]**2, self.R[data_index]**2)
         # 型付け
-        return (self.w_0 + features + iterations) - target
+        return (self.w_0 + features + iterations/2) - target
 
     cdef double _print_sum_error(self):
         print np.sum(self.E)
@@ -184,3 +185,24 @@ cdef class cy_FM:
         for i in xrange(self.step):
             print i
             self._repeat_optimization()
+
+    """
+    test_matrixに対する予測値の算出
+    """
+    cdef double _calc_rating(self,
+                    np.ndarray[DOUBLE, ndim=1, mode="c"] test_matrix):
+
+        cdef:
+        # 各特徴量の重み
+            double features = 0.0
+        # 相互作用の重み
+            double iterations = 0.0
+            int f
+
+        features = np.dot(self.W, test_matrix)
+        for f in xrange(self.K):
+            iterations += pow(np.dot(self.V[:,f], test_matrix), 2) - np.dot(self.V[:,f]**2, test_matrix**2)
+        return self.w_0 + features + iterations/2
+
+    def predict(self, test_matrix):
+        return self._calc_rating(test_matrix)
