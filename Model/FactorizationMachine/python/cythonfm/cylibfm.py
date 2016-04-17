@@ -32,3 +32,9 @@ class FM:
         self.cython_FM = cFM.cy_FM(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
         self.cython_FM.learning()
 
+    def recommendations(self, test_matrix, items, rank = 10):
+        
+        rankings = [(self.cython_FM.predict(test), item) for test, item in zip(test_matrix, items)]
+        rankings.sort()
+        rankings.reverse()
+        return rankings[::rank]
