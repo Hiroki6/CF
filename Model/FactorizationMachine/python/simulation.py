@@ -27,12 +27,12 @@ def create_test_matrix(user, test_items, data_labels):
 """
 そのユーザーについて学習されていないアイテム集合
 """
-def create_items_except_learning_by_user(user, testitems):
+def create_items_except_learning_by_user(user, test_items):
 
     ratelist = create_matrix.create_ratelist("../../../data/ml-1m/ratings.dat")
     itemlist = create_matrix.create_element("../../../data/ml-1m/movies.dat")
     for index, item in enumerate(itemlist):
-        if ratelist[user].has_key(item) or testitems.has_key(item):
+        if ratelist[user].has_key(item) or test_items.has_key(item):
             itemlist.pop(index)
 
     return itemlist

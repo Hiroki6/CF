@@ -124,8 +124,6 @@ cdef class cy_FM:
 
         for l in xrange(self.n):
             print l
-            error_sum = 0.0
-            fetaure_square_sum = 0.0
             error_sum = sum((self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
             feature_square_sum = np.sum(self.R[:,l] ** 2)
             new_wl = -(error_sum) / (feature_square_sum + self.beta*error_sum)
@@ -183,7 +181,7 @@ cdef class cy_FM:
         self._get_all_error()
         self._print_sum_error()
         for i in xrange(self.step):
-            print i
+            print "Learning Iteration %d" % i
             self._repeat_optimization()
 
     """
