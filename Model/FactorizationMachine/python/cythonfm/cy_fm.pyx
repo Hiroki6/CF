@@ -124,11 +124,10 @@ cdef class cy_FM:
 
         for l in xrange(self.n):
             print l
-            error_sum = sum((self.E[data_index] - self.W[l] * self.R[data_index][l]) * self.R[data_index][l] for data_index in xrange(self.N))
+            error_sum = np.sum((self.E - self.W[l] * np.transpose(self.R)[l]) * np.transpose(self.R)[l])
             feature_square_sum = np.sum(self.R[:,l] ** 2)
             new_wl = -(error_sum) / (feature_square_sum + self.beta*error_sum)
-            for data_index in xrange(self.N):
-                self.E[data_index] += (new_wl - self.W[l]) * self.R[data_index][l]
+            self.E += (new_wl - self.W[l]) * np.transpose(self.R)[l]
             self.W[l] = new_wl
 
     """
@@ -156,9 +155,8 @@ cdef class cy_FM:
                     error_sum += (self.E[data_index] - self.V[l][f] * h_v) * h_v
                     h_square_sum += pow(h_v, 2)
                 new_v = -(error_sum) / (h_square_sum + self.beta*error_sum)
-                for data_index in xrange(self.N):
-                    self.E[data_index] += (new_v - self.V[l][f]) * self.R[data_index][l]
-                    self.Q[data_index][f] += (new_v - self.V[l][f]) * self.R[data_index][l]
+                self.E += (new_v - self.V[l][f]) * np.transpose(self.R)[l]
+                np.transpose(self.Q)[f] += (new_v - self.V[l][f]) * np.transpose(self.R)[l]
                 self.V[l][f] = new_v
 
     cdef _repeat_optimization(self):

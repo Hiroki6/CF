@@ -79,6 +79,7 @@ cdef class fastMF(object):
             int step
             long user_index
             long item_index
+            double start
             int k
             double all_error = 0.0
             np.ndarray[DOUBLE_t, ndim=1, mode = 'c'] user_matrix
@@ -90,9 +91,8 @@ cdef class fastMF(object):
                     if not rating:
                         continue
                     err = self._get_rating_error(user_index, item_index)
-                    for k in xrange(self.K):
-                        self.P[k][user_index] += self.gamma * (err*self.Q[k][item_index] - self.beta*self.P[k][user_index])
-                        self.Q[k][item_index] += self.gamma * (err*self.P[k][user_index] - self.beta*self.Q[k][item_index])
+                    np.transpose(self.P)[user_index] += self.gamma * (err * np.transpose(self.Q)[item_index] - self.beta * np.transpose(self.P)[user_index])
+                    np.transpose(self.Q)[item_index] += self.gamma * (err * np.transpose(self.P)[user_index] - self.beta * np.transpose(self.Q)[item_index])
            
             all_error = self._get_error()
             print all_error
