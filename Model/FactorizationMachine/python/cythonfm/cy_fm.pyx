@@ -13,7 +13,7 @@ np.import_array()
 ctypedef np.float64_t DOUBLE
 ctypedef np.int64_t INTEGER
 
-cdef class cy_FM:
+cdef class CyFM:
 
     cdef:
         np.ndarray R

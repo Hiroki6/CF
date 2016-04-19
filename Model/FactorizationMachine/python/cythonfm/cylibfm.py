@@ -29,7 +29,7 @@ class FM:
         self.E = np.zeros(self.N)
         # すべてのVの重み誤差
         self.Q = np.zeros((self.N, K))
-        self.cython_FM = cFM.cy_FM(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
+        self.cython_FM = cFM.CyFM(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
         self.cython_FM.learning()
 
     def recommendations(self, test_matrix, items, rank = 10):

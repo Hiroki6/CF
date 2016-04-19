@@ -14,7 +14,7 @@ ctypedef np.int_t INT_t
 """
 Matrix Factorizationをcythonを用いて高速化する
 """
-cdef class fastMF(object):
+cdef class FastMF(object):
     
     cdef:
         np.ndarray P

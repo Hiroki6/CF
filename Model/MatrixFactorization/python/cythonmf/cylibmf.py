@@ -25,7 +25,7 @@ class BasicMF:
 
         self.P = np.random.rand(K, self.u_num)
         self.Q = np.random.rand(K, self.i_num)
-        self.cython_obj = cMF.fastMF(self.R, self.P, self.Q, self.u_num, self.i_num, K, steps, gamma, beta, threshold)
+        self.cython_obj = cMF.FastMF(self.R, self.P, self.Q, self.u_num, self.i_num, K, steps, gamma, beta, threshold)
         self.cython_obj.learning()
 
     def predict(self, user, item):

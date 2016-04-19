@@ -739,7 +739,7 @@ typedef __pyx_t_5numpy_int_t __pyx_t_5cy_mf_INT_t;
 
 
 /*--- Type declarations ---*/
-struct __pyx_obj_5cy_mf_fastMF;
+struct __pyx_obj_5cy_mf_FastMF;
 
 /* "../../../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":764
  * ctypedef npy_longdouble longdouble_t
@@ -780,13 +780,13 @@ typedef npy_cdouble __pyx_t_5numpy_complex_t;
 /* "cy_mf.pyx":17
  * Matrix Factorizationcython
  * """
- * cdef class fastMF(object):             # <<<<<<<<<<<<<<
+ * cdef class FastMF(object):             # <<<<<<<<<<<<<<
  * 
  *     cdef:
  */
-struct __pyx_obj_5cy_mf_fastMF {
+struct __pyx_obj_5cy_mf_FastMF {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5cy_mf_fastMF *__pyx_vtab;
+  struct __pyx_vtabstruct_5cy_mf_FastMF *__pyx_vtab;
   PyArrayObject *P;
   PyArrayObject *Q;
   PyArrayObject *nR;
@@ -802,13 +802,13 @@ struct __pyx_obj_5cy_mf_fastMF {
 
 
 
-struct __pyx_vtabstruct_5cy_mf_fastMF {
-  double (*_get_rating_error)(struct __pyx_obj_5cy_mf_fastMF *, int, int);
-  double (*_get_error)(struct __pyx_obj_5cy_mf_fastMF *);
-  double (*predict)(struct __pyx_obj_5cy_mf_fastMF *, int, int, int __pyx_skip_dispatch);
+struct __pyx_vtabstruct_5cy_mf_FastMF {
+  double (*_get_rating_error)(struct __pyx_obj_5cy_mf_FastMF *, int, int);
+  double (*_get_error)(struct __pyx_obj_5cy_mf_FastMF *);
+  double (*predict)(struct __pyx_obj_5cy_mf_FastMF *, int, int, int __pyx_skip_dispatch);
 };
-static struct __pyx_vtabstruct_5cy_mf_fastMF *__pyx_vtabptr_5cy_mf_fastMF;
-static CYTHON_INLINE double __pyx_f_5cy_mf_6fastMF__get_rating_error(struct __pyx_obj_5cy_mf_fastMF *, int, int);
+static struct __pyx_vtabstruct_5cy_mf_FastMF *__pyx_vtabptr_5cy_mf_FastMF;
+static CYTHON_INLINE double __pyx_f_5cy_mf_6FastMF__get_rating_error(struct __pyx_obj_5cy_mf_FastMF *, int, int);
 
 /* --- Runtime support code (head) --- */
 #ifndef CYTHON_REFNANNY
@@ -1167,9 +1167,9 @@ static PyTypeObject *__Pyx_ImportType(const char *module_name, const char *class
 
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static CYTHON_INLINE double __pyx_f_5cy_mf_6fastMF__get_rating_error(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item); /* proto*/
-static double __pyx_f_5cy_mf_6fastMF__get_error(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self); /* proto*/
-static double __pyx_f_5cy_mf_6fastMF_predict(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item, int __pyx_skip_dispatch); /* proto*/
+static CYTHON_INLINE double __pyx_f_5cy_mf_6FastMF__get_rating_error(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item); /* proto*/
+static double __pyx_f_5cy_mf_6FastMF__get_error(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self); /* proto*/
+static double __pyx_f_5cy_mf_6FastMF_predict(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from 'cpython.buffer' */
 
@@ -1205,7 +1205,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 /* Module declarations from 'libc.math' */
 
 /* Module declarations from 'cy_mf' */
-static PyTypeObject *__pyx_ptype_5cy_mf_fastMF = 0;
+static PyTypeObject *__pyx_ptype_5cy_mf_FastMF = 0;
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5cy_mf_DOUBLE_t = { "DOUBLE_t", NULL, sizeof(__pyx_t_5cy_mf_DOUBLE_t), { 0 }, 0, 'R', 0, 0 };
 #define __Pyx_MODULE_NAME "cy_mf"
 int __pyx_module_is_main_cy_mf = 0;
@@ -1308,12 +1308,12 @@ static PyObject *__pyx_n_s_u_num;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_user;
 static PyObject *__pyx_n_s_xrange;
-static int __pyx_pf_5cy_mf_6fastMF___cinit__(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_P, PyArrayObject *__pyx_v_Q, long __pyx_v_u_num, long __pyx_v_i_num, int __pyx_v_K, int __pyx_v_steps, double __pyx_v_gamma, double __pyx_v_beta, double __pyx_v_threshold); /* proto */
-static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5cy_mf_6fastMF_4predict(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item); /* proto */
+static int __pyx_pf_5cy_mf_6FastMF___cinit__(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_P, PyArrayObject *__pyx_v_Q, long __pyx_v_u_num, long __pyx_v_i_num, int __pyx_v_K, int __pyx_v_steps, double __pyx_v_gamma, double __pyx_v_beta, double __pyx_v_threshold); /* proto */
+static PyObject *__pyx_pf_5cy_mf_6FastMF_2learning(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5cy_mf_6FastMF_4predict(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
-static PyObject *__pyx_tp_new_5cy_mf_fastMF(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_5cy_mf_FastMF(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_slice_;
 static PyObject *__pyx_slice__2;
 static PyObject *__pyx_tuple__3;
@@ -1332,8 +1332,8 @@ static PyObject *__pyx_tuple__8;
  */
 
 /* Python wrapper */
-static int __pyx_pw_5cy_mf_6fastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5cy_mf_6fastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_5cy_mf_6FastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_5cy_mf_6FastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_R = 0;
   PyArrayObject *__pyx_v_P = 0;
   PyArrayObject *__pyx_v_Q = 0;
@@ -1453,14 +1453,14 @@ static int __pyx_pw_5cy_mf_6fastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cy_mf.fastMF.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_mf.FastMF.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_R), __pyx_ptype_5numpy_ndarray, 1, "R", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_P), __pyx_ptype_5numpy_ndarray, 1, "P", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 34; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_Q), __pyx_ptype_5numpy_ndarray, 1, "Q", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5cy_mf_6fastMF___cinit__(((struct __pyx_obj_5cy_mf_fastMF *)__pyx_v_self), __pyx_v_R, __pyx_v_P, __pyx_v_Q, __pyx_v_u_num, __pyx_v_i_num, __pyx_v_K, __pyx_v_steps, __pyx_v_gamma, __pyx_v_beta, __pyx_v_threshold);
+  __pyx_r = __pyx_pf_5cy_mf_6FastMF___cinit__(((struct __pyx_obj_5cy_mf_FastMF *)__pyx_v_self), __pyx_v_R, __pyx_v_P, __pyx_v_Q, __pyx_v_u_num, __pyx_v_i_num, __pyx_v_K, __pyx_v_steps, __pyx_v_gamma, __pyx_v_beta, __pyx_v_threshold);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1471,7 +1471,7 @@ static int __pyx_pw_5cy_mf_6fastMF_1__cinit__(PyObject *__pyx_v_self, PyObject *
   return __pyx_r;
 }
 
-static int __pyx_pf_5cy_mf_6fastMF___cinit__(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_P, PyArrayObject *__pyx_v_Q, long __pyx_v_u_num, long __pyx_v_i_num, int __pyx_v_K, int __pyx_v_steps, double __pyx_v_gamma, double __pyx_v_beta, double __pyx_v_threshold) {
+static int __pyx_pf_5cy_mf_6FastMF___cinit__(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_P, PyArrayObject *__pyx_v_Q, long __pyx_v_u_num, long __pyx_v_i_num, int __pyx_v_K, int __pyx_v_steps, double __pyx_v_gamma, double __pyx_v_beta, double __pyx_v_threshold) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_P;
   __Pyx_Buffer __pyx_pybuffer_P;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_Q;
@@ -1632,7 +1632,7 @@ static int __pyx_pf_5cy_mf_6fastMF___cinit__(struct __pyx_obj_5cy_mf_fastMF *__p
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_Q.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_R.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("cy_mf.fastMF.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_mf.FastMF.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   goto __pyx_L2;
   __pyx_L0:;
@@ -1652,7 +1652,7 @@ static int __pyx_pf_5cy_mf_6fastMF___cinit__(struct __pyx_obj_5cy_mf_fastMF *__p
  * 
  */
 
-static CYTHON_INLINE double __pyx_f_5cy_mf_6fastMF__get_rating_error(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item) {
+static CYTHON_INLINE double __pyx_f_5cy_mf_6FastMF__get_rating_error(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item) {
   double __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1765,7 +1765,7 @@ static CYTHON_INLINE double __pyx_f_5cy_mf_6fastMF__get_rating_error(struct __py
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_WriteUnraisable("cy_mf.fastMF._get_rating_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_WriteUnraisable("cy_mf.FastMF._get_rating_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -1780,7 +1780,7 @@ static CYTHON_INLINE double __pyx_f_5cy_mf_6fastMF__get_rating_error(struct __py
  *         cdef:
  */
 
-static double __pyx_f_5cy_mf_6fastMF__get_error(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self) {
+static double __pyx_f_5cy_mf_6FastMF__get_error(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self) {
   double __pyx_v_error;
   long __pyx_v_user_index;
   long __pyx_v_item_index;
@@ -1987,7 +1987,7 @@ static double __pyx_f_5cy_mf_6fastMF__get_error(struct __pyx_obj_5cy_mf_fastMF *
  * 
  *         error += self.beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
  */
-      __pyx_v_error = (__pyx_v_error + pow(__pyx_f_5cy_mf_6fastMF__get_rating_error(__pyx_v_self, __pyx_v_user_index, __pyx_v_item_index), 2.0));
+      __pyx_v_error = (__pyx_v_error + pow(__pyx_f_5cy_mf_6FastMF__get_rating_error(__pyx_v_self, __pyx_v_user_index, __pyx_v_item_index), 2.0));
 
       /* "cy_mf.pyx":67
  * 
@@ -2134,7 +2134,7 @@ static double __pyx_f_5cy_mf_6fastMF__get_error(struct __pyx_obj_5cy_mf_fastMF *
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_user_matrix.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_WriteUnraisable("cy_mf.fastMF._get_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_WriteUnraisable("cy_mf.FastMF._get_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2154,19 +2154,19 @@ static double __pyx_f_5cy_mf_6fastMF__get_error(struct __pyx_obj_5cy_mf_fastMF *
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5cy_mf_6fastMF_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_5cy_mf_6fastMF_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5cy_mf_6FastMF_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_5cy_mf_6FastMF_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("learning (wrapper)", 0);
-  __pyx_r = __pyx_pf_5cy_mf_6fastMF_2learning(((struct __pyx_obj_5cy_mf_fastMF *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5cy_mf_6FastMF_2learning(((struct __pyx_obj_5cy_mf_FastMF *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self) {
+static PyObject *__pyx_pf_5cy_mf_6FastMF_2learning(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self) {
   double __pyx_v_err;
   CYTHON_UNUSED int __pyx_v_step;
   long __pyx_v_user_index;
@@ -2402,7 +2402,7 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastM
  *                     np.transpose(self.P)[user_index] += self.gamma * (err * np.transpose(self.Q)[item_index] - self.beta * np.transpose(self.P)[user_index])
  *                     np.transpose(self.Q)[item_index] += self.gamma * (err * np.transpose(self.P)[user_index] - self.beta * np.transpose(self.Q)[item_index])
  */
-        __pyx_v_err = __pyx_f_5cy_mf_6fastMF__get_rating_error(__pyx_v_self, __pyx_v_user_index, __pyx_v_item_index);
+        __pyx_v_err = __pyx_f_5cy_mf_6FastMF__get_rating_error(__pyx_v_self, __pyx_v_user_index, __pyx_v_item_index);
 
         /* "cy_mf.pyx":94
  *                         continue
@@ -2704,7 +2704,7 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastM
  *             print all_error
  *             if all_error < self.threshold:
  */
-    __pyx_v_all_error = ((struct __pyx_vtabstruct_5cy_mf_fastMF *)__pyx_v_self->__pyx_vtab)->_get_error(__pyx_v_self);
+    __pyx_v_all_error = ((struct __pyx_vtabstruct_5cy_mf_FastMF *)__pyx_v_self->__pyx_vtab)->_get_error(__pyx_v_self);
 
     /* "cy_mf.pyx":98
  * 
@@ -2928,7 +2928,7 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastM
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_user_matrix.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("cy_mf.fastMF.learning", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_mf.FastMF.learning", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2947,8 +2947,8 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_2learning(struct __pyx_obj_5cy_mf_fastM
  *         return self.nR[user][item]
  */
 
-static PyObject *__pyx_pw_5cy_mf_6fastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static double __pyx_f_5cy_mf_6fastMF_predict(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item, int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_5cy_mf_6FastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static double __pyx_f_5cy_mf_6FastMF_predict(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item, int __pyx_skip_dispatch) {
   double __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2970,7 +2970,7 @@ static double __pyx_f_5cy_mf_6fastMF_predict(struct __pyx_obj_5cy_mf_fastMF *__p
   else if (unlikely(Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0)) {
     __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_predict); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_5cy_mf_6fastMF_5predict)) {
+    if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)__pyx_pw_5cy_mf_6FastMF_5predict)) {
       __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_user); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_item); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -3043,7 +3043,7 @@ static double __pyx_f_5cy_mf_6fastMF_predict(struct __pyx_obj_5cy_mf_fastMF *__p
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_WriteUnraisable("cy_mf.fastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_WriteUnraisable("cy_mf.FastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3051,8 +3051,8 @@ static double __pyx_f_5cy_mf_6fastMF_predict(struct __pyx_obj_5cy_mf_fastMF *__p
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5cy_mf_6fastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_5cy_mf_6fastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5cy_mf_6FastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_5cy_mf_6FastMF_5predict(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_user;
   int __pyx_v_item;
   int __pyx_lineno = 0;
@@ -3100,18 +3100,18 @@ static PyObject *__pyx_pw_5cy_mf_6fastMF_5predict(PyObject *__pyx_v_self, PyObje
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("predict", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cy_mf.fastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_mf.FastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5cy_mf_6fastMF_4predict(((struct __pyx_obj_5cy_mf_fastMF *)__pyx_v_self), __pyx_v_user, __pyx_v_item);
+  __pyx_r = __pyx_pf_5cy_mf_6FastMF_4predict(((struct __pyx_obj_5cy_mf_FastMF *)__pyx_v_self), __pyx_v_user, __pyx_v_item);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5cy_mf_6fastMF_4predict(struct __pyx_obj_5cy_mf_fastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item) {
+static PyObject *__pyx_pf_5cy_mf_6FastMF_4predict(struct __pyx_obj_5cy_mf_FastMF *__pyx_v_self, int __pyx_v_user, int __pyx_v_item) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3120,7 +3120,7 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_4predict(struct __pyx_obj_5cy_mf_fastMF
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("predict", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_5cy_mf_6fastMF_predict(__pyx_v_self, __pyx_v_user, __pyx_v_item, 1)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_5cy_mf_6FastMF_predict(__pyx_v_self, __pyx_v_user, __pyx_v_item, 1)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3129,7 +3129,7 @@ static PyObject *__pyx_pf_5cy_mf_6fastMF_4predict(struct __pyx_obj_5cy_mf_fastMF
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cy_mf.fastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_mf.FastMF.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -5279,10 +5279,10 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_5cy_mf_fastMF __pyx_vtable_5cy_mf_fastMF;
+static struct __pyx_vtabstruct_5cy_mf_FastMF __pyx_vtable_5cy_mf_FastMF;
 
-static PyObject *__pyx_tp_new_5cy_mf_fastMF(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5cy_mf_fastMF *p;
+static PyObject *__pyx_tp_new_5cy_mf_FastMF(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_5cy_mf_FastMF *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -5290,20 +5290,20 @@ static PyObject *__pyx_tp_new_5cy_mf_fastMF(PyTypeObject *t, PyObject *a, PyObje
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5cy_mf_fastMF *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5cy_mf_fastMF;
+  p = ((struct __pyx_obj_5cy_mf_FastMF *)o);
+  p->__pyx_vtab = __pyx_vtabptr_5cy_mf_FastMF;
   p->P = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->Q = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->nR = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->R = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
-  if (unlikely(__pyx_pw_5cy_mf_6fastMF_1__cinit__(o, a, k) < 0)) {
+  if (unlikely(__pyx_pw_5cy_mf_6FastMF_1__cinit__(o, a, k) < 0)) {
     Py_DECREF(o); o = 0;
   }
   return o;
 }
 
-static void __pyx_tp_dealloc_5cy_mf_fastMF(PyObject *o) {
-  struct __pyx_obj_5cy_mf_fastMF *p = (struct __pyx_obj_5cy_mf_fastMF *)o;
+static void __pyx_tp_dealloc_5cy_mf_FastMF(PyObject *o) {
+  struct __pyx_obj_5cy_mf_FastMF *p = (struct __pyx_obj_5cy_mf_FastMF *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -5317,9 +5317,9 @@ static void __pyx_tp_dealloc_5cy_mf_fastMF(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5cy_mf_fastMF(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_5cy_mf_FastMF(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5cy_mf_fastMF *p = (struct __pyx_obj_5cy_mf_fastMF *)o;
+  struct __pyx_obj_5cy_mf_FastMF *p = (struct __pyx_obj_5cy_mf_FastMF *)o;
   if (p->P) {
     e = (*v)(((PyObject*)p->P), a); if (e) return e;
   }
@@ -5335,9 +5335,9 @@ static int __pyx_tp_traverse_5cy_mf_fastMF(PyObject *o, visitproc v, void *a) {
   return 0;
 }
 
-static int __pyx_tp_clear_5cy_mf_fastMF(PyObject *o) {
+static int __pyx_tp_clear_5cy_mf_FastMF(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5cy_mf_fastMF *p = (struct __pyx_obj_5cy_mf_fastMF *)o;
+  struct __pyx_obj_5cy_mf_FastMF *p = (struct __pyx_obj_5cy_mf_FastMF *)o;
   tmp = ((PyObject*)p->P);
   p->P = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -5353,18 +5353,18 @@ static int __pyx_tp_clear_5cy_mf_fastMF(PyObject *o) {
   return 0;
 }
 
-static PyMethodDef __pyx_methods_5cy_mf_fastMF[] = {
-  {"learning", (PyCFunction)__pyx_pw_5cy_mf_6fastMF_3learning, METH_NOARGS, 0},
-  {"predict", (PyCFunction)__pyx_pw_5cy_mf_6fastMF_5predict, METH_VARARGS|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_5cy_mf_FastMF[] = {
+  {"learning", (PyCFunction)__pyx_pw_5cy_mf_6FastMF_3learning, METH_NOARGS, 0},
+  {"predict", (PyCFunction)__pyx_pw_5cy_mf_6FastMF_5predict, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_5cy_mf_fastMF = {
+static PyTypeObject __pyx_type_5cy_mf_FastMF = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cy_mf.fastMF", /*tp_name*/
-  sizeof(struct __pyx_obj_5cy_mf_fastMF), /*tp_basicsize*/
+  "cy_mf.FastMF", /*tp_name*/
+  sizeof(struct __pyx_obj_5cy_mf_FastMF), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5cy_mf_fastMF, /*tp_dealloc*/
+  __pyx_tp_dealloc_5cy_mf_FastMF, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -5386,13 +5386,13 @@ static PyTypeObject __pyx_type_5cy_mf_fastMF = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_5cy_mf_fastMF, /*tp_traverse*/
-  __pyx_tp_clear_5cy_mf_fastMF, /*tp_clear*/
+  __pyx_tp_traverse_5cy_mf_FastMF, /*tp_traverse*/
+  __pyx_tp_clear_5cy_mf_FastMF, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5cy_mf_fastMF, /*tp_methods*/
+  __pyx_methods_5cy_mf_FastMF, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -5402,7 +5402,7 @@ static PyTypeObject __pyx_type_5cy_mf_fastMF = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5cy_mf_fastMF, /*tp_new*/
+  __pyx_tp_new_5cy_mf_FastMF, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -5685,15 +5685,15 @@ PyMODINIT_FUNC PyInit_cy_mf(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  __pyx_vtabptr_5cy_mf_fastMF = &__pyx_vtable_5cy_mf_fastMF;
-  __pyx_vtable_5cy_mf_fastMF._get_rating_error = (double (*)(struct __pyx_obj_5cy_mf_fastMF *, int, int))__pyx_f_5cy_mf_6fastMF__get_rating_error;
-  __pyx_vtable_5cy_mf_fastMF._get_error = (double (*)(struct __pyx_obj_5cy_mf_fastMF *))__pyx_f_5cy_mf_6fastMF__get_error;
-  __pyx_vtable_5cy_mf_fastMF.predict = (double (*)(struct __pyx_obj_5cy_mf_fastMF *, int, int, int __pyx_skip_dispatch))__pyx_f_5cy_mf_6fastMF_predict;
-  if (PyType_Ready(&__pyx_type_5cy_mf_fastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_5cy_mf_fastMF.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_5cy_mf_fastMF.tp_dict, __pyx_vtabptr_5cy_mf_fastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "fastMF", (PyObject *)&__pyx_type_5cy_mf_fastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_5cy_mf_fastMF = &__pyx_type_5cy_mf_fastMF;
+  __pyx_vtabptr_5cy_mf_FastMF = &__pyx_vtable_5cy_mf_FastMF;
+  __pyx_vtable_5cy_mf_FastMF._get_rating_error = (double (*)(struct __pyx_obj_5cy_mf_FastMF *, int, int))__pyx_f_5cy_mf_6FastMF__get_rating_error;
+  __pyx_vtable_5cy_mf_FastMF._get_error = (double (*)(struct __pyx_obj_5cy_mf_FastMF *))__pyx_f_5cy_mf_6FastMF__get_error;
+  __pyx_vtable_5cy_mf_FastMF.predict = (double (*)(struct __pyx_obj_5cy_mf_FastMF *, int, int, int __pyx_skip_dispatch))__pyx_f_5cy_mf_6FastMF_predict;
+  if (PyType_Ready(&__pyx_type_5cy_mf_FastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_5cy_mf_FastMF.tp_print = 0;
+  if (__Pyx_SetVtable(__pyx_type_5cy_mf_FastMF.tp_dict, __pyx_vtabptr_5cy_mf_FastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "FastMF", (PyObject *)&__pyx_type_5cy_mf_FastMF) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 17; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_5cy_mf_FastMF = &__pyx_type_5cy_mf_FastMF;
   /*--- Type import code ---*/
   __pyx_ptype_7cpython_4type_type = __Pyx_ImportType(__Pyx_BUILTIN_MODULE_NAME, "type", 
   #if CYTHON_COMPILING_IN_PYPY

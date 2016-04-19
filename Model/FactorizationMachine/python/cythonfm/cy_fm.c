@@ -714,7 +714,7 @@ typedef __pyx_t_5numpy_float64_t __pyx_t_5cy_fm_DOUBLE;
  * ctypedef np.float64_t DOUBLE
  * ctypedef np.int64_t INTEGER             # <<<<<<<<<<<<<<
  * 
- * cdef class cy_FM:
+ * cdef class CyFM:
  */
 typedef __pyx_t_5numpy_int64_t __pyx_t_5cy_fm_INTEGER;
 #if CYTHON_CCOMPLEX
@@ -739,7 +739,7 @@ typedef __pyx_t_5numpy_int64_t __pyx_t_5cy_fm_INTEGER;
 
 
 /*--- Type declarations ---*/
-struct __pyx_obj_5cy_fm_cy_FM;
+struct __pyx_obj_5cy_fm_CyFM;
 
 /* "../../../../../../../../../usr/local/lib/python2.7/site-packages/Cython/Includes/numpy/__init__.pxd":764
  * ctypedef npy_longdouble longdouble_t
@@ -780,13 +780,13 @@ typedef npy_cdouble __pyx_t_5numpy_complex_t;
 /* "cy_fm.pyx":16
  * ctypedef np.int64_t INTEGER
  * 
- * cdef class cy_FM:             # <<<<<<<<<<<<<<
+ * cdef class CyFM:             # <<<<<<<<<<<<<<
  * 
  *     cdef:
  */
-struct __pyx_obj_5cy_fm_cy_FM {
+struct __pyx_obj_5cy_fm_CyFM {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5cy_fm_cy_FM *__pyx_vtab;
+  struct __pyx_vtabstruct_5cy_fm_CyFM *__pyx_vtab;
   PyArrayObject *R;
   PyArrayObject *targets;
   long n;
@@ -803,18 +803,18 @@ struct __pyx_obj_5cy_fm_cy_FM {
 
 
 
-struct __pyx_vtabstruct_5cy_fm_cy_FM {
-  PyObject *(*_get_all_error)(struct __pyx_obj_5cy_fm_cy_FM *);
-  PyObject *(*_get_q_error)(struct __pyx_obj_5cy_fm_cy_FM *, long);
-  PyObject *(*_get_error)(struct __pyx_obj_5cy_fm_cy_FM *, long);
-  double (*_print_sum_error)(struct __pyx_obj_5cy_fm_cy_FM *);
-  PyObject *(*_update_global_bias)(struct __pyx_obj_5cy_fm_cy_FM *);
-  PyObject *(*_update_weight)(struct __pyx_obj_5cy_fm_cy_FM *);
-  PyObject *(*_update_interaction)(struct __pyx_obj_5cy_fm_cy_FM *);
-  PyObject *(*_repeat_optimization)(struct __pyx_obj_5cy_fm_cy_FM *);
-  double (*_calc_rating)(struct __pyx_obj_5cy_fm_cy_FM *, PyArrayObject *);
+struct __pyx_vtabstruct_5cy_fm_CyFM {
+  PyObject *(*_get_all_error)(struct __pyx_obj_5cy_fm_CyFM *);
+  PyObject *(*_get_q_error)(struct __pyx_obj_5cy_fm_CyFM *, long);
+  PyObject *(*_get_error)(struct __pyx_obj_5cy_fm_CyFM *, long);
+  double (*_print_sum_error)(struct __pyx_obj_5cy_fm_CyFM *);
+  PyObject *(*_update_global_bias)(struct __pyx_obj_5cy_fm_CyFM *);
+  PyObject *(*_update_weight)(struct __pyx_obj_5cy_fm_CyFM *);
+  PyObject *(*_update_interaction)(struct __pyx_obj_5cy_fm_CyFM *);
+  PyObject *(*_repeat_optimization)(struct __pyx_obj_5cy_fm_CyFM *);
+  double (*_calc_rating)(struct __pyx_obj_5cy_fm_CyFM *, PyArrayObject *);
 };
-static struct __pyx_vtabstruct_5cy_fm_cy_FM *__pyx_vtabptr_5cy_fm_cy_FM;
+static struct __pyx_vtabstruct_5cy_fm_CyFM *__pyx_vtabptr_5cy_fm_CyFM;
 
 /* --- Runtime support code (head) --- */
 #ifndef CYTHON_REFNANNY
@@ -1171,15 +1171,15 @@ static PyTypeObject *__Pyx_ImportType(const char *module_name, const char *class
 
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_q_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, long __pyx_v_data_index); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, long __pyx_v_data_index); /* proto*/
-static double __pyx_f_5cy_fm_5cy_FM__print_sum_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_global_bias(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_weight(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_interaction(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto*/
-static double __pyx_f_5cy_fm_5cy_FM__calc_rating(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyArrayObject *__pyx_v_test_matrix); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_all_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_q_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, long __pyx_v_data_index); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, long __pyx_v_data_index); /* proto*/
+static double __pyx_f_5cy_fm_4CyFM__print_sum_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_global_bias(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_weight(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_interaction(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static PyObject *__pyx_f_5cy_fm_4CyFM__repeat_optimization(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto*/
+static double __pyx_f_5cy_fm_4CyFM__calc_rating(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyArrayObject *__pyx_v_test_matrix); /* proto*/
 
 /* Module declarations from 'libc.math' */
 
@@ -1215,7 +1215,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, cha
 /* Module declarations from 'cython' */
 
 /* Module declarations from 'cy_fm' */
-static PyTypeObject *__pyx_ptype_5cy_fm_cy_FM = 0;
+static PyTypeObject *__pyx_ptype_5cy_fm_CyFM = 0;
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5cy_fm_DOUBLE = { "DOUBLE", NULL, sizeof(__pyx_t_5cy_fm_DOUBLE), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5cy_fm_INTEGER = { "INTEGER", NULL, sizeof(__pyx_t_5cy_fm_INTEGER), { 0 }, 0, IS_UNSIGNED(__pyx_t_5cy_fm_INTEGER) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_5cy_fm_INTEGER), 0 };
 #define __Pyx_MODULE_NAME "cy_fm"
@@ -1323,12 +1323,12 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_w_0;
 static PyObject *__pyx_kp_s_w_0_2;
 static PyObject *__pyx_n_s_xrange;
-static int __pyx_pf_5cy_fm_5cy_FM___cinit__(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_targets, PyArrayObject *__pyx_v_W, PyArrayObject *__pyx_v_V, PyArrayObject *__pyx_v_E, PyArrayObject *__pyx_v_Q, double __pyx_v_w_0, double __pyx_v_beta, long __pyx_v_n, long __pyx_v_N, int __pyx_v_K, int __pyx_v_step); /* proto */
-static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5cy_fm_5cy_FM_4predict(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyObject *__pyx_v_test_matrix); /* proto */
+static int __pyx_pf_5cy_fm_4CyFM___cinit__(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_targets, PyArrayObject *__pyx_v_W, PyArrayObject *__pyx_v_V, PyArrayObject *__pyx_v_E, PyArrayObject *__pyx_v_Q, double __pyx_v_w_0, double __pyx_v_beta, long __pyx_v_n, long __pyx_v_N, int __pyx_v_K, int __pyx_v_step); /* proto */
+static PyObject *__pyx_pf_5cy_fm_4CyFM_2learning(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_5cy_fm_4CyFM_4predict(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyObject *__pyx_v_test_matrix); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
-static PyObject *__pyx_tp_new_5cy_fm_cy_FM(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_5cy_fm_CyFM(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_2;
 static PyObject *__pyx_slice_;
 static PyObject *__pyx_slice__2;
@@ -1352,8 +1352,8 @@ static PyObject *__pyx_tuple__12;
  */
 
 /* Python wrapper */
-static int __pyx_pw_5cy_fm_5cy_FM_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5cy_fm_5cy_FM_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_5cy_fm_4CyFM_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_5cy_fm_4CyFM_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_R = 0;
   PyArrayObject *__pyx_v_targets = 0;
   PyArrayObject *__pyx_v_W = 0;
@@ -1491,7 +1491,7 @@ static int __pyx_pw_5cy_fm_5cy_FM_1__cinit__(PyObject *__pyx_v_self, PyObject *_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 32; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cy_fm.cy_FM.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
@@ -1501,7 +1501,7 @@ static int __pyx_pw_5cy_fm_5cy_FM_1__cinit__(PyObject *__pyx_v_self, PyObject *_
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_V), __pyx_ptype_5numpy_ndarray, 1, "V", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_E), __pyx_ptype_5numpy_ndarray, 1, "E", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_Q), __pyx_ptype_5numpy_ndarray, 1, "Q", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 38; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_5cy_fm_5cy_FM___cinit__(((struct __pyx_obj_5cy_fm_cy_FM *)__pyx_v_self), __pyx_v_R, __pyx_v_targets, __pyx_v_W, __pyx_v_V, __pyx_v_E, __pyx_v_Q, __pyx_v_w_0, __pyx_v_beta, __pyx_v_n, __pyx_v_N, __pyx_v_K, __pyx_v_step);
+  __pyx_r = __pyx_pf_5cy_fm_4CyFM___cinit__(((struct __pyx_obj_5cy_fm_CyFM *)__pyx_v_self), __pyx_v_R, __pyx_v_targets, __pyx_v_W, __pyx_v_V, __pyx_v_E, __pyx_v_Q, __pyx_v_w_0, __pyx_v_beta, __pyx_v_n, __pyx_v_N, __pyx_v_K, __pyx_v_step);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1512,7 +1512,7 @@ static int __pyx_pw_5cy_fm_5cy_FM_1__cinit__(PyObject *__pyx_v_self, PyObject *_
   return __pyx_r;
 }
 
-static int __pyx_pf_5cy_fm_5cy_FM___cinit__(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_targets, PyArrayObject *__pyx_v_W, PyArrayObject *__pyx_v_V, PyArrayObject *__pyx_v_E, PyArrayObject *__pyx_v_Q, double __pyx_v_w_0, double __pyx_v_beta, long __pyx_v_n, long __pyx_v_N, int __pyx_v_K, int __pyx_v_step) {
+static int __pyx_pf_5cy_fm_4CyFM___cinit__(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyArrayObject *__pyx_v_R, PyArrayObject *__pyx_v_targets, PyArrayObject *__pyx_v_W, PyArrayObject *__pyx_v_V, PyArrayObject *__pyx_v_E, PyArrayObject *__pyx_v_Q, double __pyx_v_w_0, double __pyx_v_beta, long __pyx_v_n, long __pyx_v_N, int __pyx_v_K, int __pyx_v_step) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_E;
   __Pyx_Buffer __pyx_pybuffer_E;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_Q;
@@ -1768,7 +1768,7 @@ static int __pyx_pf_5cy_fm_5cy_FM___cinit__(struct __pyx_obj_5cy_fm_cy_FM *__pyx
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_W.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_targets.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("cy_fm.cy_FM.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   goto __pyx_L2;
   __pyx_L0:;
@@ -1791,7 +1791,7 @@ static int __pyx_pf_5cy_fm_5cy_FM___cinit__(struct __pyx_obj_5cy_fm_cy_FM *__pyx
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_all_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   long __pyx_v_data_index;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1833,7 +1833,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy
  *             self._get_q_error(data_index)
  * 
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_get_error(__pyx_v_self, __pyx_v_data_index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_get_error(__pyx_v_self, __pyx_v_data_index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
@@ -1844,7 +1844,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy
  * 
  *     cdef _get_q_error(self, long data_index):
  */
-    __pyx_t_3 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_get_q_error(__pyx_v_self, __pyx_v_data_index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_get_q_error(__pyx_v_self, __pyx_v_data_index); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -1862,7 +1862,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("cy_fm.cy_FM._get_all_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._get_all_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1878,7 +1878,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_all_error(struct __pyx_obj_5cy_fm_cy
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_q_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, long __pyx_v_data_index) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_q_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, long __pyx_v_data_index) {
   int __pyx_v_f;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1986,7 +1986,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_q_error(struct __pyx_obj_5cy_fm_cy_F
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("cy_fm.cy_FM._get_q_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._get_q_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2002,7 +2002,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_q_error(struct __pyx_obj_5cy_fm_cy_F
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__get_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, long __pyx_v_data_index) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__get_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, long __pyx_v_data_index) {
   double __pyx_v_features;
   double __pyx_v_iterations;
   int __pyx_v_f;
@@ -2263,7 +2263,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_error(struct __pyx_obj_5cy_fm_cy_FM 
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_AddTraceback("cy_fm.cy_FM._get_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._get_error", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2279,7 +2279,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__get_error(struct __pyx_obj_5cy_fm_cy_FM 
  * 
  */
 
-static double __pyx_f_5cy_fm_5cy_FM__print_sum_error(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static double __pyx_f_5cy_fm_4CyFM__print_sum_error(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   double __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2347,7 +2347,7 @@ static double __pyx_f_5cy_fm_5cy_FM__print_sum_error(struct __pyx_obj_5cy_fm_cy_
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_WriteUnraisable("cy_fm.cy_FM._print_sum_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_WriteUnraisable("cy_fm.CyFM._print_sum_error", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -2362,7 +2362,7 @@ static double __pyx_f_5cy_fm_5cy_FM__print_sum_error(struct __pyx_obj_5cy_fm_cy_
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_global_bias(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_global_bias(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   double __pyx_v_error_sum;
   double __pyx_v_new_w0;
   long __pyx_v_data_index;
@@ -2523,7 +2523,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_global_bias(struct __pyx_obj_5cy_
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(((PyObject *)__pyx_t_9));
-  __Pyx_AddTraceback("cy_fm.cy_FM._update_global_bias", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._update_global_bias", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2539,7 +2539,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_global_bias(struct __pyx_obj_5cy_
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_weight(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_weight(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   double __pyx_v_error_sum;
   double __pyx_v_feature_square_sum;
   double __pyx_v_new_wl;
@@ -2900,7 +2900,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_weight(struct __pyx_obj_5cy_fm_cy
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("cy_fm.cy_FM._update_weight", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._update_weight", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2916,7 +2916,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_weight(struct __pyx_obj_5cy_fm_cy
  *         cdef:
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__update_interaction(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__update_interaction(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   double __pyx_v_error_sum;
   double __pyx_v_new_v;
   double __pyx_v_h_square_sum;
@@ -3372,7 +3372,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_interaction(struct __pyx_obj_5cy_
   __Pyx_XDECREF(__pyx_t_12);
   __Pyx_XDECREF(__pyx_t_14);
   __Pyx_XDECREF(__pyx_t_15);
-  __Pyx_AddTraceback("cy_fm.cy_FM._update_interaction", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._update_interaction", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3388,7 +3388,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__update_interaction(struct __pyx_obj_5cy_
  *         print "w_0"
  */
 
-static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_f_5cy_fm_4CyFM__repeat_optimization(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3413,7 +3413,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy
  *         print "W"
  *         self._update_weight()
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_update_global_bias(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_update_global_bias(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3433,7 +3433,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy
  *         print "V"
  *         self._update_interaction()
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_update_weight(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 167; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_update_weight(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 167; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3453,7 +3453,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy
  * 
  *     """
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_update_interaction(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_update_interaction(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 169; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3470,7 +3470,7 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cy_fm.cy_FM._repeat_optimization", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM._repeat_optimization", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -3487,20 +3487,20 @@ static PyObject *__pyx_f_5cy_fm_5cy_FM__repeat_optimization(struct __pyx_obj_5cy
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5cy_fm_5cy_FM_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static char __pyx_doc_5cy_fm_5cy_FM_2learning[] = "\n        \350\252\244\345\267\256\343\201\256\350\250\210\347\256\227\n        ";
-static PyObject *__pyx_pw_5cy_fm_5cy_FM_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_5cy_fm_4CyFM_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static char __pyx_doc_5cy_fm_4CyFM_2learning[] = "\n        \350\252\244\345\267\256\343\201\256\350\250\210\347\256\227\n        ";
+static PyObject *__pyx_pw_5cy_fm_4CyFM_3learning(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("learning (wrapper)", 0);
-  __pyx_r = __pyx_pf_5cy_fm_5cy_FM_2learning(((struct __pyx_obj_5cy_fm_cy_FM *)__pyx_v_self));
+  __pyx_r = __pyx_pf_5cy_fm_4CyFM_2learning(((struct __pyx_obj_5cy_fm_CyFM *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self) {
+static PyObject *__pyx_pf_5cy_fm_4CyFM_2learning(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self) {
   PyObject *__pyx_v_i = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3520,7 +3520,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM 
  *         self._print_sum_error()
  *         for i in xrange(self.step):
  */
-  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_get_all_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_get_all_error(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3531,7 +3531,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM 
  *         for i in xrange(self.step):
  *             print "Learning Iteration %d" % i
  */
-  ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_print_sum_error(__pyx_v_self);
+  ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_print_sum_error(__pyx_v_self);
 
   /* "cy_fm.pyx":181
  *         self._get_all_error()
@@ -3612,7 +3612,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM 
  * 
  *     """
  */
-    __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_repeat_optimization(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = ((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_repeat_optimization(__pyx_v_self); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -3640,7 +3640,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM 
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("cy_fm.cy_FM.learning", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM.learning", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_i);
@@ -3657,7 +3657,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_2learning(struct __pyx_obj_5cy_fm_cy_FM 
  * 
  */
 
-static double __pyx_f_5cy_fm_5cy_FM__calc_rating(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyArrayObject *__pyx_v_test_matrix) {
+static double __pyx_f_5cy_fm_4CyFM__calc_rating(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyArrayObject *__pyx_v_test_matrix) {
   double __pyx_v_features;
   double __pyx_v_iterations;
   int __pyx_v_f;
@@ -3916,7 +3916,7 @@ static double __pyx_f_5cy_fm_5cy_FM__calc_rating(struct __pyx_obj_5cy_fm_cy_FM *
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_test_matrix.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_WriteUnraisable("cy_fm.cy_FM._calc_rating", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __Pyx_WriteUnraisable("cy_fm.CyFM._calc_rating", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3934,19 +3934,19 @@ static double __pyx_f_5cy_fm_5cy_FM__calc_rating(struct __pyx_obj_5cy_fm_cy_FM *
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5cy_fm_5cy_FM_5predict(PyObject *__pyx_v_self, PyObject *__pyx_v_test_matrix); /*proto*/
-static PyObject *__pyx_pw_5cy_fm_5cy_FM_5predict(PyObject *__pyx_v_self, PyObject *__pyx_v_test_matrix) {
+static PyObject *__pyx_pw_5cy_fm_4CyFM_5predict(PyObject *__pyx_v_self, PyObject *__pyx_v_test_matrix); /*proto*/
+static PyObject *__pyx_pw_5cy_fm_4CyFM_5predict(PyObject *__pyx_v_self, PyObject *__pyx_v_test_matrix) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("predict (wrapper)", 0);
-  __pyx_r = __pyx_pf_5cy_fm_5cy_FM_4predict(((struct __pyx_obj_5cy_fm_cy_FM *)__pyx_v_self), ((PyObject *)__pyx_v_test_matrix));
+  __pyx_r = __pyx_pf_5cy_fm_4CyFM_4predict(((struct __pyx_obj_5cy_fm_CyFM *)__pyx_v_self), ((PyObject *)__pyx_v_test_matrix));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5cy_fm_5cy_FM_4predict(struct __pyx_obj_5cy_fm_cy_FM *__pyx_v_self, PyObject *__pyx_v_test_matrix) {
+static PyObject *__pyx_pf_5cy_fm_4CyFM_4predict(struct __pyx_obj_5cy_fm_CyFM *__pyx_v_self, PyObject *__pyx_v_test_matrix) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3962,7 +3962,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_4predict(struct __pyx_obj_5cy_fm_cy_FM *
  */
   __Pyx_XDECREF(__pyx_r);
   if (!(likely(((__pyx_v_test_matrix) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_test_matrix, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_1 = PyFloat_FromDouble(((struct __pyx_vtabstruct_5cy_fm_cy_FM *)__pyx_v_self->__pyx_vtab)->_calc_rating(__pyx_v_self, ((PyArrayObject *)__pyx_v_test_matrix))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyFloat_FromDouble(((struct __pyx_vtabstruct_5cy_fm_CyFM *)__pyx_v_self->__pyx_vtab)->_calc_rating(__pyx_v_self, ((PyArrayObject *)__pyx_v_test_matrix))); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3978,7 +3978,7 @@ static PyObject *__pyx_pf_5cy_fm_5cy_FM_4predict(struct __pyx_obj_5cy_fm_cy_FM *
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cy_fm.cy_FM.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("cy_fm.CyFM.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6128,10 +6128,10 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_5cy_fm_cy_FM __pyx_vtable_5cy_fm_cy_FM;
+static struct __pyx_vtabstruct_5cy_fm_CyFM __pyx_vtable_5cy_fm_CyFM;
 
-static PyObject *__pyx_tp_new_5cy_fm_cy_FM(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5cy_fm_cy_FM *p;
+static PyObject *__pyx_tp_new_5cy_fm_CyFM(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_5cy_fm_CyFM *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -6139,22 +6139,22 @@ static PyObject *__pyx_tp_new_5cy_fm_cy_FM(PyTypeObject *t, PyObject *a, PyObjec
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5cy_fm_cy_FM *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5cy_fm_cy_FM;
+  p = ((struct __pyx_obj_5cy_fm_CyFM *)o);
+  p->__pyx_vtab = __pyx_vtabptr_5cy_fm_CyFM;
   p->R = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->targets = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->W = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->V = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->E = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   p->Q = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
-  if (unlikely(__pyx_pw_5cy_fm_5cy_FM_1__cinit__(o, a, k) < 0)) {
+  if (unlikely(__pyx_pw_5cy_fm_4CyFM_1__cinit__(o, a, k) < 0)) {
     Py_DECREF(o); o = 0;
   }
   return o;
 }
 
-static void __pyx_tp_dealloc_5cy_fm_cy_FM(PyObject *o) {
-  struct __pyx_obj_5cy_fm_cy_FM *p = (struct __pyx_obj_5cy_fm_cy_FM *)o;
+static void __pyx_tp_dealloc_5cy_fm_CyFM(PyObject *o) {
+  struct __pyx_obj_5cy_fm_CyFM *p = (struct __pyx_obj_5cy_fm_CyFM *)o;
   #if PY_VERSION_HEX >= 0x030400a1
   if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -6170,9 +6170,9 @@ static void __pyx_tp_dealloc_5cy_fm_cy_FM(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static int __pyx_tp_traverse_5cy_fm_cy_FM(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_5cy_fm_CyFM(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_5cy_fm_cy_FM *p = (struct __pyx_obj_5cy_fm_cy_FM *)o;
+  struct __pyx_obj_5cy_fm_CyFM *p = (struct __pyx_obj_5cy_fm_CyFM *)o;
   if (p->R) {
     e = (*v)(((PyObject*)p->R), a); if (e) return e;
   }
@@ -6194,9 +6194,9 @@ static int __pyx_tp_traverse_5cy_fm_cy_FM(PyObject *o, visitproc v, void *a) {
   return 0;
 }
 
-static int __pyx_tp_clear_5cy_fm_cy_FM(PyObject *o) {
+static int __pyx_tp_clear_5cy_fm_CyFM(PyObject *o) {
   PyObject* tmp;
-  struct __pyx_obj_5cy_fm_cy_FM *p = (struct __pyx_obj_5cy_fm_cy_FM *)o;
+  struct __pyx_obj_5cy_fm_CyFM *p = (struct __pyx_obj_5cy_fm_CyFM *)o;
   tmp = ((PyObject*)p->R);
   p->R = ((PyArrayObject *)Py_None); Py_INCREF(Py_None);
   Py_XDECREF(tmp);
@@ -6218,18 +6218,18 @@ static int __pyx_tp_clear_5cy_fm_cy_FM(PyObject *o) {
   return 0;
 }
 
-static PyMethodDef __pyx_methods_5cy_fm_cy_FM[] = {
-  {"learning", (PyCFunction)__pyx_pw_5cy_fm_5cy_FM_3learning, METH_NOARGS, __pyx_doc_5cy_fm_5cy_FM_2learning},
-  {"predict", (PyCFunction)__pyx_pw_5cy_fm_5cy_FM_5predict, METH_O, 0},
+static PyMethodDef __pyx_methods_5cy_fm_CyFM[] = {
+  {"learning", (PyCFunction)__pyx_pw_5cy_fm_4CyFM_3learning, METH_NOARGS, __pyx_doc_5cy_fm_4CyFM_2learning},
+  {"predict", (PyCFunction)__pyx_pw_5cy_fm_4CyFM_5predict, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_5cy_fm_cy_FM = {
+static PyTypeObject __pyx_type_5cy_fm_CyFM = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cy_fm.cy_FM", /*tp_name*/
-  sizeof(struct __pyx_obj_5cy_fm_cy_FM), /*tp_basicsize*/
+  "cy_fm.CyFM", /*tp_name*/
+  sizeof(struct __pyx_obj_5cy_fm_CyFM), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5cy_fm_cy_FM, /*tp_dealloc*/
+  __pyx_tp_dealloc_5cy_fm_CyFM, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -6251,13 +6251,13 @@ static PyTypeObject __pyx_type_5cy_fm_cy_FM = {
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_5cy_fm_cy_FM, /*tp_traverse*/
-  __pyx_tp_clear_5cy_fm_cy_FM, /*tp_clear*/
+  __pyx_tp_traverse_5cy_fm_CyFM, /*tp_traverse*/
+  __pyx_tp_clear_5cy_fm_CyFM, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5cy_fm_cy_FM, /*tp_methods*/
+  __pyx_methods_5cy_fm_CyFM, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -6267,7 +6267,7 @@ static PyTypeObject __pyx_type_5cy_fm_cy_FM = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5cy_fm_cy_FM, /*tp_new*/
+  __pyx_tp_new_5cy_fm_CyFM, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -6581,21 +6581,21 @@ PyMODINIT_FUNC PyInit_cy_fm(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  __pyx_vtabptr_5cy_fm_cy_FM = &__pyx_vtable_5cy_fm_cy_FM;
-  __pyx_vtable_5cy_fm_cy_FM._get_all_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__get_all_error;
-  __pyx_vtable_5cy_fm_cy_FM._get_q_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *, long))__pyx_f_5cy_fm_5cy_FM__get_q_error;
-  __pyx_vtable_5cy_fm_cy_FM._get_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *, long))__pyx_f_5cy_fm_5cy_FM__get_error;
-  __pyx_vtable_5cy_fm_cy_FM._print_sum_error = (double (*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__print_sum_error;
-  __pyx_vtable_5cy_fm_cy_FM._update_global_bias = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__update_global_bias;
-  __pyx_vtable_5cy_fm_cy_FM._update_weight = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__update_weight;
-  __pyx_vtable_5cy_fm_cy_FM._update_interaction = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__update_interaction;
-  __pyx_vtable_5cy_fm_cy_FM._repeat_optimization = (PyObject *(*)(struct __pyx_obj_5cy_fm_cy_FM *))__pyx_f_5cy_fm_5cy_FM__repeat_optimization;
-  __pyx_vtable_5cy_fm_cy_FM._calc_rating = (double (*)(struct __pyx_obj_5cy_fm_cy_FM *, PyArrayObject *))__pyx_f_5cy_fm_5cy_FM__calc_rating;
-  if (PyType_Ready(&__pyx_type_5cy_fm_cy_FM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_type_5cy_fm_cy_FM.tp_print = 0;
-  if (__Pyx_SetVtable(__pyx_type_5cy_fm_cy_FM.tp_dict, __pyx_vtabptr_5cy_fm_cy_FM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  if (PyObject_SetAttrString(__pyx_m, "cy_FM", (PyObject *)&__pyx_type_5cy_fm_cy_FM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_ptype_5cy_fm_cy_FM = &__pyx_type_5cy_fm_cy_FM;
+  __pyx_vtabptr_5cy_fm_CyFM = &__pyx_vtable_5cy_fm_CyFM;
+  __pyx_vtable_5cy_fm_CyFM._get_all_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__get_all_error;
+  __pyx_vtable_5cy_fm_CyFM._get_q_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *, long))__pyx_f_5cy_fm_4CyFM__get_q_error;
+  __pyx_vtable_5cy_fm_CyFM._get_error = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *, long))__pyx_f_5cy_fm_4CyFM__get_error;
+  __pyx_vtable_5cy_fm_CyFM._print_sum_error = (double (*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__print_sum_error;
+  __pyx_vtable_5cy_fm_CyFM._update_global_bias = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__update_global_bias;
+  __pyx_vtable_5cy_fm_CyFM._update_weight = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__update_weight;
+  __pyx_vtable_5cy_fm_CyFM._update_interaction = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__update_interaction;
+  __pyx_vtable_5cy_fm_CyFM._repeat_optimization = (PyObject *(*)(struct __pyx_obj_5cy_fm_CyFM *))__pyx_f_5cy_fm_4CyFM__repeat_optimization;
+  __pyx_vtable_5cy_fm_CyFM._calc_rating = (double (*)(struct __pyx_obj_5cy_fm_CyFM *, PyArrayObject *))__pyx_f_5cy_fm_4CyFM__calc_rating;
+  if (PyType_Ready(&__pyx_type_5cy_fm_CyFM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_type_5cy_fm_CyFM.tp_print = 0;
+  if (__Pyx_SetVtable(__pyx_type_5cy_fm_CyFM.tp_dict, __pyx_vtabptr_5cy_fm_CyFM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "CyFM", (PyObject *)&__pyx_type_5cy_fm_CyFM) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 16; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_ptype_5cy_fm_CyFM = &__pyx_type_5cy_fm_CyFM;
   /*--- Type import code ---*/
   __pyx_ptype_7cpython_4type_type = __Pyx_ImportType(__Pyx_BUILTIN_MODULE_NAME, "type", 
   #if CYTHON_COMPILING_IN_PYPY
