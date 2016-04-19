@@ -72,7 +72,7 @@ cdef class cy_FM:
         cdef:
             int f
         for f in xrange(self.K):
-            self.Q[data_ubdex][f] = np.dot(self.V[:,f], self.R[data_index])
+            self.Q[data_index][f] = np.dot(self.V[:,f], self.R[data_index])
 
     cdef _get_error(self, long data_index):
         
