@@ -64,24 +64,22 @@ cdef class cy_FM:
             
         for data_index in xrange(self.N):
             print data_index
-            self.E[data_index] = self._get_error(data_index, self.targets[data_index])
-            self.Q[data_index] = self._get_q_error(self.Q[data_index], data_index)
+            self._get_error(data_index)
+            self._get_q_error(data_index)
 
-    cdef np.ndarray _get_q_error(self, np.ndarray[DOUBLE, ndim=1, mode="c"] q, long data_index):
+    cdef _get_q_error(self, long data_index):
         
         cdef:
             int f
         for f in xrange(self.K):
-            q[f] = np.dot(self.V[:,f], self.R[data_index])
+            self.Q[data_ubdex][f] = np.dot(self.V[:,f], self.R[data_index])
 
-        return q
-
-    cdef double _get_error(self, long data_index, int target):
+    cdef _get_error(self, long data_index):
         
         cdef:
-        # 各特徴量の重み
+            # 各特徴量の重み
             double features = 0.0
-        # 相互作用の重み
+            # 相互作用の重み
             double iterations = 0.0
             int f
 
@@ -89,7 +87,7 @@ cdef class cy_FM:
         for f in xrange(self.K):
             iterations += pow(np.dot(self.V[:,f], self.R[data_index]), 2) - np.dot(self.V[:,f]**2, self.R[data_index]**2)
         # 型付け
-        return (self.w_0 + features + iterations/2) - target
+        self.E[data_index] = (self.w_0 + features + iterations/2) - self.targets[data_index]
 
     cdef double _print_sum_error(self):
         print np.sum(self.E)
@@ -109,6 +107,8 @@ cdef class cy_FM:
         new_w0 = -(error_sum) / (self.N + self.beta*error_sum)
         for data_index in xrange(self.N):
             self.E[data_index] += new_w0 - self.w_0
+
+        self.w_0 = new_w0
     
     """
     Wの更新
