@@ -53,7 +53,7 @@ def evaluation_rankings(rankings, test_items):
     ap_num = 0.0
     for rank, content in enumerate(rankings):
         item = content[1]
-        if test_items.has_key(item):
+        if item in test_items:
             print content
             ap_num += pow(2, (-rank+1)/5)
     ap = ap_num / 5

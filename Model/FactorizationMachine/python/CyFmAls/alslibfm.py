@@ -8,9 +8,9 @@ userID, itemID, 評価値, timestampを特徴量として学習する
 """
 import numpy as np
 import math
-import cy_fm as cFM
+import cy_fm_als
 
-class FM:
+class CyFmAls:
     def __init__(self, R, labels, targets):
         self.R = R #評価値行列
         self.labels = labels
@@ -29,7 +29,7 @@ class FM:
         self.E = np.zeros(self.N)
         # すべてのVの重み誤差
         self.Q = np.zeros((self.N, K))
-        self.cython_FM = cFM.CyFM(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
+        self.cython_FM = cy_fm_als.CyFmAls(self.R, self.targets, self.W, self.V, self.E, self.Q, self.w_0, beta, self.n, self.N, K, step)
         self.cython_FM.learning()
 
     def recommendations(self, test_matrix, items, rank = 10):

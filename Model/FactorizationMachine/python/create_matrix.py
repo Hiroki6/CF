@@ -44,7 +44,9 @@ def create_matrix_dicVec():
     labels = v.get_feature_names()
     targets = np.array(targets)
 
-    return learn_matrix, test_data, labels, targets
+    test_matrix = create_test_matrix(test_data, labels, test_nums)
+
+    return learn_matrix, test_matrix, test_data, labels, targets
 
 def create_element(filepass):
 
@@ -88,32 +90,28 @@ def create_test_user():
 
     return test_users
 
-
 """
-rate_matrixを学習データとテストデータに分ける
-ユーザー配列からユーザーをランダムに20%取り出す
-その中からそのユーザーの半分のratingをテストデータとして使う
-回帰用
-@returns(test_matrix) テスト用のデータ{user_index: {rate_index: []}}
-@returns(targets) テスト用のラベルを0.0にした学習用ラベル
-@returns(test_labels) 実際のラベルとtargetのインデックスを保存したラベル{rate_index: label}
+テストデータのFM配列作成
 """
-def divide_matrix(rate_matrix, labels, targets):
+def create_test_matrix(test_data, data_labels, test_nums):
 
-    test_users = create_test_user()
-    test_matrix = {}
-    test_labels = {}
-    for test_user in test_users:
-        count = 0
-        user_index = labels.index("user="+test_user)
-        test_matrix.setdefault(user_index, {})
-        for rate_index in xrange(len(rate_matrix)):
-            if count >= 5:
-                break
-            if rate_matrix[rate_index][user_index] == 1.0:
-                test_matrix[user_index][rate_index] = rate_matrix[rate_index]
-                test_labels[rate_index] = targets[rate_index]
-                targets[rate_index] = 0.0
-                count += 1
+    test_matrix = np.zeros((test_nums, len(data_labels)))
+    col = 0
+    for user, items in test_data.items():
+        user_index = data_labels.index("user="+user)
+        not_learn_items = []
+        for index, item in enumerate(items):
+            item_label_name = "item=" + item
+            if item_label_name not in data_labels:
+                not_learn_items.append(item)
+            else:
+                item_index = data_labels.index(item_label_name)
+                test_matrix[col][user_index] = 1.0
+                test_matrix[col][item_index] = 1.0
+                col += 1
+        for not_learn_item in not_learn_items:
+            test_data[user].remove(not_learn_item)
+    test_matrix = test_matrix[:col]
 
-    return test_matrix, targets, test_labels
+    return test_matrix
+
