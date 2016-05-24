@@ -24,6 +24,7 @@ cdef class CyFmSgd:
     R : 学習データ配列(FMフォーマット形式) N * n
     R_v : テスト用データ配列(FMフォーマット形式) regsとgradsの最適化用
     targets : 学習データの教師ラベル N
+    test_targets : テストデータの教師ラベル len(R_v)
     w_0 : バイアス 1
     W : 各特徴量の重み n
     V : 各特徴量の相互作用の重み n * K
@@ -44,6 +45,7 @@ cdef class CyFmSgd:
         np.ndarray R
         np.ndarray R_v
         np.ndarray targets
+        np.ndarray test_targets
         np.ndarray W
         np.ndarray V
         np.ndarray E
@@ -63,6 +65,7 @@ cdef class CyFmSgd:
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R_v,
                     np.ndarray[INTEGER, ndim=1, mode="c"] targets,
+                    np.ndarray[INTEGER, ndim=1, mode="c"] test_targets,
                     np.ndarray[DOUBLE, ndim=1, mode="c"] W,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] V,
                     double w_0,
@@ -77,6 +80,7 @@ cdef class CyFmSgd:
         self.R = R
         self.R_v = R_v
         self.targets = targets
+        self.test_targets = test_targets
         self.W = W
         self.V = V
         self.w_0 = w_0
@@ -225,7 +229,7 @@ cdef class CyFmSgd:
         for f in xrange(self.K):
             iterations += pow(np.dot(self.V[:,f], self.R_v[data_index]), 2) - np.dot(self.V[:,f]**2, self.R_v[data_index]**2)
 
-        return (self.w_0 + features + iterations/2) - 1.0
+        return (self.w_0 + features + iterations/2) - self.test_targets[data_index]
 
     def learning(self):
 

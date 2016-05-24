@@ -21,10 +21,21 @@ def create_matrix_dicVec():
     test_data = {}
     # テスト用データ作成
     print "テストデータ作成"
+    test_nums = 0
     for user in test_users:
         test_data.setdefault(user, {})
+        test_nums += 10
         for i in xrange(10):
             item, rate = ratelist[user].popitem()
+            test_data[user][item] = rate
+    for user, values in ratelist.items():
+        test_num = int(len(values) * 0.2)
+        test_data.setdefault(user, {})
+        test_nums += test_num
+        for i in xrange(test_num):
+            index = random.randint(0, len(ratelist[user])-1)
+            item = random.choice(ratelist[user].keys())
+            rate = ratelist[user].pop(item)
             test_data[user][item] = rate
 
     # 学習用データ作成
@@ -44,9 +55,9 @@ def create_matrix_dicVec():
     labels = v.get_feature_names()
     targets = np.array(targets)
 
-    test_matrix = create_test_matrix(test_data, labels, test_nums)
+    test_matrix, test_targets = create_test_matrix(test_data, labels, test_nums)
 
-    return learn_matrix, test_matrix, test_data, labels, targets
+    return learn_matrix, test_matrix, test_targets, test_data, labels, targets
 
 def create_element(filepass):
 
@@ -97,10 +108,11 @@ def create_test_matrix(test_data, data_labels, test_nums):
 
     test_matrix = np.zeros((test_nums, len(data_labels)))
     col = 0
-    for user, items in test_data.items():
+    test_targets = []
+    for user, values in test_data.items():
         user_index = data_labels.index("user="+user)
         not_learn_items = []
-        for index, item in enumerate(items):
+        for item, rate in values.items():
             item_label_name = "item=" + item
             if item_label_name not in data_labels:
                 not_learn_items.append(item)
@@ -108,10 +120,13 @@ def create_test_matrix(test_data, data_labels, test_nums):
                 item_index = data_labels.index(item_label_name)
                 test_matrix[col][user_index] = 1.0
                 test_matrix[col][item_index] = 1.0
+                test_targets.append(rate)
                 col += 1
-        for not_learn_item in not_learn_items:
-            test_data[user].remove(not_learn_item)
-    test_matrix = test_matrix[:col]
 
-    return test_matrix
+        for not_learn_item in not_learn_items:
+            test_data[user].pop(not_learn_item)
+    test_matrix = test_matrix[:col]
+    test_targets = np.array(test_targets)
+
+    return test_matrix, test_targets
 
