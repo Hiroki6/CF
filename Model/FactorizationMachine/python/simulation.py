@@ -6,6 +6,7 @@ import sys
 sys.dont_write_bytecode = True 
 import numpy as np
 import create_matrix
+import math
 
 """
 @params(user) テストするユーザー
@@ -58,3 +59,15 @@ def evaluation_rankings(rankings, test_items):
             ap_num += pow(2, (-rank+1)/5)
     ap = ap_num / 5
     return ap
+
+def calc_rmse(fm_obj, test_matrixs, test_targets):
+
+    print "精度計測開始"
+    sum_error = 0.0
+    for index, test_matrix in enumerate(test_matrixs):
+        sum_error += pow((fm_obj.cython_FM.predict(test_matrix) - test_targets[index]), 2)
+        print index
+
+    rmse = math.sqrt(sum_error/len(test_matrix))
+    return rmse
+

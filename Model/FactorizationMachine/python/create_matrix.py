@@ -13,30 +13,21 @@ import random
 """
 def create_matrix_dicVec():
 
-    ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
+    ratelist = create_ratelist("../../../data/ml-100k/u1.base")
+    test_ratelist = create_ratelist("../../../data/ml-100k/u1.test")
     
     rate_array= []
     targets = [] # 教師データ
-    test_users = create_test_user()
-    test_data = {}
-    # テスト用データ作成
-    print "テストデータ作成"
+    regs_data = {}
+    print "正規化項用データ作成"
     test_nums = 0
-    for user in test_users:
-        test_data.setdefault(user, {})
-        test_nums += 10
-        for i in xrange(10):
-            item, rate = ratelist[user].popitem()
-            test_data[user][item] = rate
     for user, values in ratelist.items():
-        test_num = int(len(values) * 0.2)
-        test_data.setdefault(user, {})
-        test_nums += test_num
-        for i in xrange(test_num):
-            index = random.randint(0, len(ratelist[user])-1)
-            item = random.choice(ratelist[user].keys())
-            rate = ratelist[user].pop(item)
-            test_data[user][item] = rate
+        regs_data.setdefault(user, {})
+        index = random.randint(0, len(ratelist[user])-1)
+        item = random.choice(ratelist[user].keys())
+        rate = ratelist[user].pop(item)
+        regs_data[user][item] = rate
+        test_nums += 1
 
     # 学習用データ作成
     print "学習用データ作成"
@@ -55,16 +46,18 @@ def create_matrix_dicVec():
     labels = v.get_feature_names()
     targets = np.array(targets)
 
-    test_matrix, test_targets = create_test_matrix(test_data, labels, test_nums)
+    print "テストデータ作成"
+    test_matrix, test_targets = create_test_matrix(test_ratelist, labels, 20000)
+    regs_matrix, regs_targets = create_test_matrix(regs_data, labels, test_nums)
 
-    return learn_matrix, test_matrix, test_targets, test_data, labels, targets
+    return learn_matrix, targets, test_matrix, test_targets, regs_matrix, regs_targets
 
 def create_element(filepass):
 
     ret = []
     with open(filepass) as f:
         for line in f:
-            ret.append(line.replace("\n","").split('::')[0])
+            ret.append(line.replace("\n","").split('\t')[0])
     
     return ret
 
@@ -75,7 +68,7 @@ def create_ratelist(filepass):
 
     with open(filepass) as f:
         for line in f:
-            rating = line.replace("\n","").split('::')
+            rating = line.replace("\n","").split('\t')
             user = rating[0]
             item = rating[1]
             rate = int(rating[2])
@@ -91,7 +84,7 @@ userを8:2に分割する
 """
 def create_test_user():
 
-    userlist = create_element("../../../data/ml-1m/users.dat")
+    userlist = create_element("../../../data/ml-100k/u.user")
     test_users = []
     number_of_test = int(len(userlist) * 0.2)
     for i in xrange(number_of_test):

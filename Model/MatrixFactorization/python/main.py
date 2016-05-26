@@ -40,7 +40,7 @@ def calc_rmse(learnedObj, testData):
     print "精度計測開始"
     sum_error = 0.0
     for test in testData:
-        sum_MF_error += pow((learnedObj.predict(test[0], test[2]) - test[3]), 2)
+        sum_error += pow((learnedObj.predict(test[0], test[2]) - test[3]), 2)
 
     rmse = math.sqrt(sum_error/len(testData))
     print rmse 

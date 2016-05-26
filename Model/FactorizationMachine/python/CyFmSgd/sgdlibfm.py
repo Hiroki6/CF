@@ -30,11 +30,10 @@ class CyFmSgd:
     regs : regulations 配列 K+2 (0: w_0, 1: W, 2~K+2: V)
     """
 
-    def __init__(self, R, R_v, labels, targets, test_targets, seed=20, init_stdev=0.01):
+    def __init__(self, R, R_v, targets, regs_targets, seed=20, init_stdev=0.01):
         self.R = R #評価値行列
-        self.labels = labels
         self.targets = targets # 教師配列
-        self.test_targets = test_targets
+        self.regs_targets = regs_targets
         self.R_v = R_v
         self.n = len(self.R[0])
         self.N_v = len(self.R_v)
@@ -50,8 +49,11 @@ class CyFmSgd:
         np.random.seed(seed=self.seed)
         self.V = np.random.normal(scale=self.init_stdev,size=(self.n, K))
         self.regs = np.zeros(K+2)
-        self.cython_FM = cy_fm_sgd.CyFmSgd(self.R, self.R_v, self.targets, self.test_targets, self.W, self.V, self.w_0, self.n, self.N, self.N_v, self.E, self.regs, l_rate, K, step)
+        self.cython_FM = cy_fm_sgd.CyFmSgd(self.R, self.R_v, self.targets, self.regs_targets, self.W, self.V, self.w_0, self.n, self.N, self.N_v, self.E, self.regs, l_rate, K, step)
         self.cython_FM.learning()
+
+    def predict(self, test_matrix):
+        return self.cython_FM.predict(test_matrix)
 
     def recommendations(self, test_matrix, items, rank = 500):
         rankings = [(self.cython_FM.predict(test), item) for test, item in zip(test_matrix, items)]
