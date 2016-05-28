@@ -24,7 +24,7 @@ def learn_fm_sgd(learn_data, regs_matrix, targets, regs_targets):
     print "FMクラス初期化"
     fm_obj = sgdlibfm.CyFmSgd(learn_data, regs_matrix, targets, regs_targets)
     print "SGDで学習開始"
-    fm_obj.learning(0.005, step=1)
+    fm_obj.learning(0.005, step=10)
     return fm_obj
 
 if __name__ == "__main__":

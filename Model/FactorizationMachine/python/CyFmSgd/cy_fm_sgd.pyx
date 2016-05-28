@@ -60,6 +60,7 @@ cdef class CyFmSgd:
         double l_rate
         int K
         int step
+        double error
 
     def __cinit__(self,
                     np.ndarray[DOUBLE, ndim=2, mode="c"] R,
@@ -92,6 +93,18 @@ cdef class CyFmSgd:
         self.l_rate = l_rate
         self.K = K
         self.step = step
+
+    def get_sum_error(self):
+
+        cdef:
+            long data_index
+            int f
+
+        self.error = np.sum(self.E**2)
+
+        self.error += self.regs[0] * pow(self.w_0, 2) + self.regs[1] * np.sum(self.W**2)
+        for f in xrange(self.K):
+            self.error += self.regs[f+2] * np.sum(np.transpose(self.V)[f]**2)
 
     def get_all_error(self):
         """
@@ -132,7 +145,7 @@ cdef class CyFmSgd:
         self.adagrad_w_0 += grad_value * grad_value
         update_value = self.l_rate * grad_value / sqrt(self.adagrad_w_0)
         self.w_0 -= update_value
-        self.E[data_index] -= update_value
+        #self.E[data_index] -= update_value
 
     cdef void _update_W(self, long data_index, long i):
         """
@@ -146,7 +159,7 @@ cdef class CyFmSgd:
         self.adagrad_W[i] += grad_value * grad_value
         update_value = self.l_rate * grad_value / sqrt(self.adagrad_W[i])
         self.W[i] -= update_value
-        self.E[data_index] -= update_value
+        #self.E[data_index] -= update_value
 
     cdef void _update_V(self, long data_index, long i, int f):
         """
@@ -163,7 +176,7 @@ cdef class CyFmSgd:
         self.adagrad_V[i][f] += grad_value * grad_value
         update_value = self.l_rate * grad_value / sqrt(self.adagrad_V[i][f])
         self.V[i][f] -= update_value
-        self.E[data_index] -= update_value
+        #self.E[data_index] -= update_value
 
     def repeat_optimization(self):
  
@@ -244,7 +257,8 @@ cdef class CyFmSgd:
             print "Step %d" % s
             self.repeat_optimization()
             self.get_all_error()
-            if np.sum(self.E) <= 100:
+            self.get_sum_error()
+            if self.error <= 100:
                 break
 
     cdef double _calc_rating(self,
@@ -276,3 +290,6 @@ cdef class CyFmSgd:
 
     def get_v(self):
         return self.V
+    
+    def get_self_error(self):
+        return self.error
