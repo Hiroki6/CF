@@ -15,7 +15,7 @@ def create_element_map(filepass):
     id = 0
     with open(filepass) as f:
         for line in f:
-            element = line.replace("\n","").split('::')[0]
+            element = line.replace("\n","").split('|')[0]
             element_dic[element] = id
             id += 1
 
@@ -28,7 +28,7 @@ def create_ratelist(filepass):
     
     with open(filepass) as f:
         for line in f:
-            ret.append(line.replace("\n","").split('::'))
+            ret.append(line.replace("\n","").split('\t'))
 
     return ret
 
@@ -55,15 +55,28 @@ def create_test_data(rate_matrix):
 
   return rate_matrix, testData
 
+def create_test_data_by_testfile(usermap, itemmap):
+    
+    ratelist = create_ratelist("../../../data/ml-100k/u1.test")
+    test_matrix = np.zeros((len(usermap),len(itemmap)))
+    test_data = []
+    for rate in ratelist:
+        user_id = int(usermap[rate[0]])
+        item_id = int(itemmap[rate[1]])
+        test = [user_id, item_id, int(rate[2])]
+        test_data.append(test)
+
+    return test_data
+
 """
 numpy.array化する
 """
 def create_matrix():
 
-    usermap = create_element_map("../../../data/ml-1m/users.dat")
-    itemmap = create_element_map("../../../data/ml-1m/movies.dat")
+    usermap = create_element_map("../../../data/ml-100k/u.user")
+    itemmap = create_element_map("../../../data/ml-100k/u.item")
     # userID::movieID::rating::timestamp
-    ratelist = create_ratelist("../../../data/ml-1m/ratings.dat")
+    ratelist = create_ratelist("../../../data/ml-100k/u1.base")
    
     rate_matrix = np.zeros((len(usermap),len(itemmap)))
     for rate in ratelist:

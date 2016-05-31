@@ -24,7 +24,7 @@ def create_cy_mf(rate_matrix):
 
     print "学習開始"
     cyMF = cylibmf.BasicMF(rate_matrix)
-    cyMF.learning(20, 500)
+    cyMF.learning(20, 200)
 
     return cyMF
 
@@ -40,7 +40,7 @@ def calc_rmse(learnedObj, testData):
     print "精度計測開始"
     sum_error = 0.0
     for test in testData:
-        sum_error += pow((learnedObj.predict(test[0], test[2]) - test[3]), 2)
+        sum_error += pow((learnedObj.predict(test[0], test[1]) - test[2]), 2)
 
     rmse = math.sqrt(sum_error/len(testData))
     print rmse 
@@ -60,8 +60,7 @@ def predict_basic_mf(basicMF, user):
 if __name__ == "__main__":
     print "データ作成"
     rate_matrix, usermap, itemmap = common.create_matrix() # 評価値行列作成
-    learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
-    cyMF = create_cy_mf(learningData)
-    calc_rmse(cyMF, testData)
-
-
+    #learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
+    cyMF = create_cy_mf(rate_matrix)
+    test_data = common.create_test_data_by_testfile(usermap, itemmap)
+    calc_rmse(cyMF, test_data)
