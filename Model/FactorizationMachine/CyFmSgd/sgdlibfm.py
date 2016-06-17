@@ -10,6 +10,7 @@ import numpy as np
 import math
 import cy_fm_sgd
 import sys
+import redis
 sys.dont_write_bytecode = True 
 
 class CyFmSgd:
@@ -61,3 +62,51 @@ class CyFmSgd:
         rankings.reverse()
         return rankings[:rank]
 
+
+    def save_redis(self):
+        """
+        パラメータのredisへの保存
+        """
+        r = redis.Redis(host='localhost', port=6379, db=1)
+
+        """
+        w_0, W, Vの保存
+        """
+        w_0 = self.cython_FM.get_w_0()
+        # w_0の保存
+        self.save_scalar(r, "bias", "w_0", w_0)
+        # Wの保存
+        self.save_one_dim_array(r, "W", self.W)
+        # Vの保存
+        self.save_two_dim_array(r, "V_", self.V)
+
+        """
+        regsの保存
+        """
+        self.save_one_dim_array(r, "regs", self.regs)
+        
+        """
+        adagradの保存
+        """
+        adagrad_w_0 = self.cython_FM.get_adagrad_w_0()
+        adagrad_W = self.cython_FM.get_adagrad_W()
+        adagrad_V = self.cython_FM.get_adagrad_V()
+        # adagrad_w_0の保存
+        self.save_scalar("bias", "adagrad", adagrad_w_0)
+        # adagrad_Wの保存
+        self.save_one_dim_array(r, "adagrad_W", adagrad_W)
+        # adagrad_Vの保存
+        self.save_two_dim_array(r, "adagrad_V_", adagrad_V)
+
+    def save_scalar(self, redis_obj, table, key, param):
+        redis_obj.hset(table, key, param)
+
+    def save_one_dim_array(self, redis_obj, key, params):
+        for param in params:
+            redis_obj.rpush(key, param)
+
+    def save_two_dim_array(self, redis_obj, pre_key, params):
+        for i in xrange(len(params)):
+            key = pre_key + str(i)
+            for param in params[i]:
+                redis_obj.rpush(key, param)

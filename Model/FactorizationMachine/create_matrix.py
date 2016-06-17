@@ -61,7 +61,6 @@ def create_element(filepass):
     
     return ret
 
-
 def create_ratelist(filepass):
 
     rate_dic = {}
@@ -77,6 +76,7 @@ def create_ratelist(filepass):
             rate_dic[user][item] = rate
 
     return rate_dic
+
 
 """
 userを8:2に分割する
