@@ -13,8 +13,8 @@ import random
 """
 def create_matrix_dicVec():
 
-    ratelist = create_ratelist("../../../data/ml-100k/u1.base")
-    test_ratelist = create_ratelist("../../../data/ml-100k/u1.test")
+    ratelist = create_ratelist("../../data/ml-100k/u1.base")
+    test_ratelist = create_ratelist("../../data/ml-100k/u1.test")
     
     rate_array= []
     targets = [] # 教師データ
@@ -84,7 +84,7 @@ userを8:2に分割する
 """
 def create_test_user():
 
-    userlist = create_element("../../../data/ml-100k/u.user")
+    userlist = create_element("../../data/ml-100k/u.user")
     test_users = []
     number_of_test = int(len(userlist) * 0.2)
     for i in xrange(number_of_test):
