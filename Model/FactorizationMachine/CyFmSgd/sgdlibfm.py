@@ -43,7 +43,7 @@ class CyFmSgd:
         self.seed = seed
         self.init_stdev = init_stdev
 
-    def learning(self, l_rate, K=8, step=30):
+    def learning(self, l_rate, K=16, step=30):
 
         self.w_0 = 0.0
         self.W = np.zeros(self.n)
