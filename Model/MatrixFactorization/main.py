@@ -24,7 +24,7 @@ def create_cy_mf(rate_matrix):
 
     print "学習開始"
     cyMF = cylibmf.BasicMF(rate_matrix)
-    cyMF.learning(20, 200)
+    cyMF.learning(K = 100, steps = 100)
 
     return cyMF
 

@@ -69,7 +69,8 @@ cdef class FastMF(object):
                     continue
                 error += pow(self._get_rating_error(user_index, item_index), 2)
 
-        error += self.beta * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
+        print(error)
+        error += self.beta / 2 * (np.linalg.norm(self.P) + np.linalg.norm(self.Q))
         return error
 
     def learning(self):
@@ -91,8 +92,8 @@ cdef class FastMF(object):
                     if not rating:
                         continue
                     err = self._get_rating_error(user_index, item_index)
-                    np.transpose(self.P)[user_index] += self.gamma * (err * np.transpose(self.Q)[item_index] - self.beta * np.transpose(self.P)[user_index])
-                    np.transpose(self.Q)[item_index] += self.gamma * (err * np.transpose(self.P)[user_index] - self.beta * np.transpose(self.Q)[item_index])
+                    np.transpose(self.P)[user_index] += self.gamma * (2 * err * np.transpose(self.Q)[item_index] - self.beta * np.transpose(self.P)[user_index])
+                    np.transpose(self.Q)[item_index] += self.gamma * (2 * err * np.transpose(self.P)[user_index] - self.beta * np.transpose(self.Q)[item_index])
            
             all_error = self._get_error()
             print all_error
