@@ -57,7 +57,7 @@ def create_test_data(rate_matrix):
 
 def create_test_data_by_testfile(usermap, itemmap):
     
-    ratelist = create_ratelist("../../../data/ml-100k/u1.test")
+    ratelist = create_ratelist("../../data/ml-100k/u1.test")
     test_matrix = np.zeros((len(usermap),len(itemmap)))
     test_data = []
     for rate in ratelist:
@@ -73,10 +73,10 @@ numpy.array化する
 """
 def create_matrix():
 
-    usermap = create_element_map("../../../data/ml-100k/u.user")
-    itemmap = create_element_map("../../../data/ml-100k/u.item")
+    usermap = create_element_map("../../data/ml-100k/u.user")
+    itemmap = create_element_map("../../data/ml-100k/u.item")
     # userID::movieID::rating::timestamp
-    ratelist = create_ratelist("../../../data/ml-100k/u1.base")
+    ratelist = create_ratelist("../../data/ml-100k/u1.base")
    
     rate_matrix = np.zeros((len(usermap),len(itemmap)))
     for rate in ratelist:
