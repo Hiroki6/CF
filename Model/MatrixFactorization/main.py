@@ -23,7 +23,7 @@ def create_basic_mf(rate_matrix):
 def create_cy_mf(rate_matrix):
 
     print "学習開始"
-    cyMF = cylibmf.BasicMF(rate_matrix)
+    cyMF = cylibmf.CythonMF(rate_matrix)
     cyMF.learning(K = 100, steps = 100)
 
     return cyMF
@@ -59,7 +59,7 @@ def predict_basic_mf(basicMF, user):
 
 if __name__ == "__main__":
     print "データ作成"
-    rate_matrix, usermap, itemmap = common.create_matrix() # 評価値行列作成
+    rate_matrix, usermap, itemmap = common.create_matrix("../../data/ml-100k/u1.base") # 評価値行列作成
     #learningData, testData = common.create_test_data(rate_matrix) # 教師データとテストデータ作成
     cyMF = create_cy_mf(rate_matrix)
     test_data = common.create_test_data_by_testfile(usermap, itemmap)

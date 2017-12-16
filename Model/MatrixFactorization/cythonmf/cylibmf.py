@@ -14,7 +14,7 @@ sys.dont_write_bytecode = True
 """
 cython化したMF
 """
-class BasicMF:
+class CythonMF:
     
     def __init__(self, R):
         self.R = R # 評価値行列

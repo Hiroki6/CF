@@ -91,9 +91,10 @@ cdef class FastMF(object):
                 for item_index, rating in enumerate(user_matrix):
                     if not rating:
                         continue
+                    pre_u = np.transpose(self.P)[user_index]
                     err = self._get_rating_error(user_index, item_index)
                     np.transpose(self.P)[user_index] += self.gamma * (2 * err * np.transpose(self.Q)[item_index] - self.beta * np.transpose(self.P)[user_index])
-                    np.transpose(self.Q)[item_index] += self.gamma * (2 * err * np.transpose(self.P)[user_index] - self.beta * np.transpose(self.Q)[item_index])
+                    np.transpose(self.Q)[item_index] += self.gamma * (2 * err * pre_u - self.beta * np.transpose(self.Q)[item_index])
            
             all_error = self._get_error()
             print all_error
