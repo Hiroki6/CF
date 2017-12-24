@@ -5,8 +5,8 @@ sys.dont_write_bytecode = True
 import numpy as np
 import create_matrix
 import simulation
-from CyFmAls import alslibfm
-from CyFmSgd import sgdlibfm
+from cy_fm_als import alslibfm
+from cy_fm_sgd import sgdlibfm
 
 def setup():
 
