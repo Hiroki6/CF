@@ -2,7 +2,7 @@
 import sys
 sys.dont_write_bytecode = True 
 from mf import mf
-from cythonmf import cylibmf
+from cython_mf import cylibmf
 import common
 import math
 
